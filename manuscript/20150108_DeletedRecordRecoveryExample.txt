@@ -1,0 +1,106 @@
+# Deleted Record Recovery Example
+
+Posted: 8th January 2015
+
+Last night some work was done on starting to correlate recovered records with each other.
+
+So far I have associated deleted keys to the values they contain. The next step is building a tree of deleted keys/subkeys (you can do this manually below by matching up Parent Cell Offset to Rel offset). The final step is then looking for keys in the active registry to reassociate the deleted data with. Either way, all of the details will be available.
+
+During development, i often write out summaries of data structures so i can eyeball things as a sanity check. Once the code is completed the data below will be available programmatically via a collection of recovered registry keys that can be iterated like active keys. This then allows for wrapping a GUI around the collection for easy viewing, sorting, etc vs looking at thousands of lines of text.
+
+Below is some partial data showing what is being recovered (there are over 1700 lines in the full recovered data output. this is 89 lines!)
+
+### **Example data**
+
+```
+KeyName-ValueCount RelativeOffset, ParentCellIndex
+ Values (Name-->Value)
+
+\en-US-static-ZA102692154.png-1, Rel offset: 0x5D268, Parent Cell Offset: 0x5C988
+ Last--->0
+---------------------------
+\0-5, Rel offset: 0x5D6B0, Parent Cell Offset: 0x5D618
+ FilePath--->C:\Users\eric\AppData\Local\Microsoft\Office\15.0\WebServiceCache\AllUsers\support.content.office.microsoft.com\en-US-static-ZA102800245.png0
+ StartDate--->System.Byte[]
+ EndDate--->System.Byte[]
+ Properties--->0
+ Url--->http://support.content.office.microsoft.com/en-US/static/ZA102800245.png
+---------------------------
+\en-US-static-ZA102800245.png-1, Rel offset: 0x5D618, Parent Cell Offset: 0x5C988
+ Last--->0
+---------------------------
+\en-US-static-ZA103202581.png-1, Rel offset: 0x5D9B8, Parent Cell Offset: 0x5C988
+ Last--->0
+---------------------------
+\0-5, Rel offset: 0x5DA90, Parent Cell Offset: 0x5D9B8
+ FilePath--->C:\Users\eric\AppData\Local\Microsoft\Office\15.0\WebServiceCache\AllUsers\support.content.office.microsoft.com\en-US-static-ZA103202581.png0
+ StartDate--->System.Byte[]
+ EndDate--->System.Byte[]
+ Properties--->0
+ Url--->http://support.content.office.microsoft.com/en-US/static/ZA103202581.png
+---------------------------
+\0-0, Rel offset: 0x5D328, Parent Cell Offset: 0x5D268
+---------------------------
+\0-2, Rel offset: 0x5DE08, Parent Cell Offset: 0x5DD78
+ FilePath--->C:\Users\eric\AppData\Local\Microsoft\Office\15.0\WebServiceCache\AllUsers\support.content.office.microsoft.com\en-US-static-ZA103202981.png0
+ StartDate--->System.Byte[]
+---------------------------
+\en-US-static-ZA103202981.png-1, Rel offset: 0x5DD78, Parent Cell Offset: 0x5C988
+ Last--->0
+---------------------------
+\Document 2-3, Rel offset: 0x94600, Parent Cell Offset: 0x93E68
+ File Path--->C:\Users\eric\AppData\Local\Temp\SAMPLE OF OLD CRT AND NEW SAGE QUESTIONS.docx
+ Datetime--->2014-11-04T12:30
+ Position--->0 0
+---------------------------
+\IncompatibleList-5, Rel offset: 0x13D340, Parent Cell Offset: 0x13CBF8
+ guidCOMPlusNativeEng--->{92EF0900-2251-11D2-B72E-0000F87572EF}
+ guidCOMPlusOnlyEng--->{449EC4CC-30D2-4032-9256-EE18EB41B62B}
+ guidNativeOnlyEng--->{3B476D35-A401-11D2-AAD4-00C04F990171}
+ guidScriptEng--->{F200A7E7-DEA5-11D0-B854-00A0244A1DE2}
+ GUID_WorkflowDebugEngine--->{6589AE11-3B51-494A-AC77-91DA1B53F35A}
+---------------------------
+\{1202F5B4-3522-4149-BAD8-58B2079D704F}-12, Rel offset: 0x13D668, Parent Cell Offset: 0x13CB88
+ CLSID--->{3B476D3A-A401-11D2-AAD4-00C04F990171}
+ AlwaysLoadLocal--->1
+ FunctionBP--->1
+ HitCountBP--->1
+ Attach--->1
+ PortSupplier--->{708C1ECA-FF48-11D2-904F-00C04FA302A1}
+ ProgramProvider--->{4FF9DEF4-8922-4D02-9379-3FFA64D1D639}
+ AlwaysLoadProgramProviderLocal--->1
+ RemoteDebugging--->1
+ AutoSelectPriority--->10
+ Name--->resource=C:\Program Files (x86)\Microsoft Visual Studio 12.0\\Common7\Packages\Debugger\*\vsdebugui.dll#6007
+ (default)--->guidSQLEng2
+---------------------------
+\{22189D02-CCA4-40AE-A874-6C2A764FB071}-26, Rel offset: 0x13DB08, Parent Cell Offset: 0x13CB88
+ Name--->resource=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Silverlight\MacDebugging\*\SilverlightPortSupplierUI.dll#1000
+ CLSID--->{7386310B-D5CB-4369-9BDD-609B3F103914}
+ Attach--->1
+ Embedded--->1
+ Disassembly--->0
+ DumpWriting--->0
+ ENC--->0
+ JITDebug--->0
+ Registers--->0
+ Interop--->0
+ JustMyCodeStepping--->1
+ UseShimAPI--->0
+ SqlClr--->0
+ Runtime--->{8bd1daae-188e-42f4-b009-08fafd17813b}
+ AutoSelectPriority--->32
+ NativeInteropOK--->0
+ PortSupplier--->{F561BF8D-BFBA-4FC6-AEA7-2445D0EAC1C5}
+ FunctionBP--->1
+ HitCountBP--->1
+ SetNextStatement--->1
+ ConditionalBP--->1
+ DataBP--->0
+ CallStackBP--->1
+ Exceptions--->1
+ RemoteDebugging--->1
+ SuspendThread--->1
+---------------------------
+```
+
