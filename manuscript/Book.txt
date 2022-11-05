@@ -1,5 +1,2 @@
 introduction.txt
-switches.txt
-commandexamples.txt
-output.txt
-references.txt
+20150103_TheFirstOfMany.txt
