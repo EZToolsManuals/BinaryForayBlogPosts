@@ -47,4 +47,4 @@ Finally, during the course of my research and coding I have found several "issue
 
 All of my work for my registry parser is open source. I encourage you to take the time to explore the code (and if you are so inclined, to contribute) so you, as the examiner who will be making conclusions about the data you find in the registry, will be in a better position to explain and defend your conclusions. For the non-programmers out there, future blog posts will unpack and explain how the code works at a high level.
 
-You can find my code at: https://github.com/EricZimmerman
+You can find my code at: <https://github.com/EricZimmerman>
