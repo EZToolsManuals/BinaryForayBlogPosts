@@ -18,6 +18,8 @@ Here the tree viewer has been sorted 2 different ways. By being able to sort (an
 
 ![](20150108_RegistryExplorerScreenshots\image2.jpg)
 
+{pagebreak}
+
 ### **Value slack support**
 
 Here we have a key selected (it happens to be a deleted key, but that doesn't matter) and the key's values are shown on the right. To the far right the value slack is shown as hex characters. 
