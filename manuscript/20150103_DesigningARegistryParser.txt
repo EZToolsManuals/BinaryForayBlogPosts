@@ -1,0 +1,50 @@
+# Designing a Registry Parser
+
+Posted: 3rd January 2015
+
+Several months ago I had a need to parse offline registry hives in .net. (I do all my work in Microsoft .net, specifically C#, but thats another post for another day). I looked around in the usual places and found a GitHub project that initially met my needs. This is the project that I used in Shellbags Explorer to get access to the BagMRU key. It worked well but I found a few issues here and there. Since it was in GitHub I forked the project and fixed the issues I found.
+
+Fast forward a few months later and I started working on my next project, a registry viewer. I initially developed my viewer around the same parsing code as explained above to design the initial interface. After getting the basics of the interface down, I started finding more areas where the parser was not handling certain keys at all. In reviewing the code it also did not support deleted keys, value slack, and other forensically relevant things.
+
+At this point I started tracking down as much information as I could find as possible on how Windows Registry files are structured. I found  some great information and a lot of good information. Some of the resources I found were:
+
+
+* <http://amnesia.gtisc.gatech.edu/~moyix/suzibandit.ltd.uk/MSc/Registry%20Structure%20-%20Main%20V4.pdf>
+* <http://amnesia.gtisc.gatech.edu/~moyix/suzibandit.ltd.uk/MSc/Registry%20Structure%20-%20Appendices%20V4.pdf>
+* <http://sentinelchicken.com/data/JolantaThomassenDISSERTATION.pdf>
+* <https://github.com/williballenthin/python-registry>
+* <http://sentinelchicken.com/data/TheWindowsNTRegistryFileFormat.pdf>
+* <http://www.dfrws.org/2008/proceedings/p33-morgan_pres.pdf>
+* <https://a3cb3bf63cb50e7ac3c8090bac99e80f53fdbec8.googledrive.com/host/0B3fBvzttpiiSSC1yUDZpb3l0UHM/Windows%20NT%20Registry%20File%20%28REGF%29%20format.pdf>
+* <http://projects.sentinelchicken.org/data/doc/reglookup/regfi/index.html>
+
+By far the most complete and thorough information was found in the first 2 URLs. Thomassen's research was also interesting. In other posts I will drill down into some of the specifics mentioned in the resources above.
+
+With information in hand, I loaded several hives into WinHex and began exploring the binary layout of hive files. I compared the information from the specifications found in the above documents to what I was seeing in WinHex. From here I started my design work on how I wanted my registry parser to work.
+
+The goals I had in mind are:
+ * Full decoding of all known registry records including header, hbin, vk, nk, sk, the various lists, and data cells. These will be explained in future posts.
+ * Related to the point above, it is imperative to account for all bytes in a hive and a given record. In other words, if a record is 128 bytes long, the parser should run out of bytes when a record is "processed." There should not be 15 extra bytes at the end that are just ignored. By ensuring we processed all bytes given for a record (and, since we do this for all records, the file in its entirety) we can be sure we have access to every record and data cell that exists in a given hive.
+ * Expose value slack. More on this later
+ * Recover deleted keys and values when possible, but in all cases make deleted records available via the API
+ * Never silently fail when a parsing error happens. When an error occurs, report it to the end user and make best efforts to recover.
+ * Read a hive and create a hierarchy of objects that represents the hive in memory vs. continually reading bytes from the hive as keys are accessed. Strongly typed collections for records allow for a wide variety of post parsing processing to happen.
+ * Expose both the raw data that makes up a record along with usable objects for each data structure. In other words, parse out the bytes to a higher level object, but maintain access to the underlying data in order to aid in research, validation, etc.
+ * Make no assumptions about the validity or correctness of other people's pre-existing code
+ * Differentiate between referenced and unreferenced records in a hive.
+ * I am sure I had more goals, but those are the ones I recall right now. Each will be discussed in turn (hopefully) in a blog post. I know some of those are vague or do not make much sense out of context but they will be elaborated on.
+
+With these things in mind I fired up Visual Studio and started a new project. My initial goal was to simply walk the file from offset 0 to the end of the file, without associating any one record to another. This approach allowed me to ensure my parsing code was solid for all of the various record types across a wide range of registry hives (over 100 were used in testing. Statistics are available on the project's GitHub page, linked below). Once I reached the end of the hive I now had collections of objects in memory that I could then start iterating to build the tree of keys, subkeys, and values.
+
+Once this was done we now have:
+ * An object that represented the registry as viewed in RegEdit and most forensic tools, along with all other available records not exposed by other tools.
+ * The ability to look in my collections for things that were not referenced by anything in the object above
+ * The ability to look for deleted keys and values and, when possible, associate them with existing keys.
+ * The ability to dump a hive to a common format for comparison with other registry parsers
+ * Each of these will be expanded upon too as we dive into the code and thought process for why things work the way they do.
+
+Finally, during the course of my research and coding I have found several "issues" with existing code bases and forensic utilities, many that are used by a lot of forensics professionals. As I elaborate on the areas above in future posts I will explain these issues. The other big takeaway is that there are a lot of subtleties in processing the registry beyond what is contained in the above references.
+
+All of my work for my registry parser is open source. I encourage you to take the time to explore the code (and if you are so inclined, to contribute) so you, as the examiner who will be making conclusions about the data you find in the registry, will be in a better position to explain and defend your conclusions. For the non-programmers out there, future blog posts will unpack and explain how the code works at a high level.
+
+You can find my code at: https://github.com/EricZimmerman
