@@ -1,6 +1,6 @@
 # Registry Explorer screenshots
 
-Posted: 3rd January 2015
+Posted: 8th January 2015
 
 Now that deleted key support is available in the parser, we can make the results usable via a nice GUI!
 
