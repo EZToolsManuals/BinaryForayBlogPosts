@@ -3,3 +3,4 @@ introduction.txt
 20150103_DesigningARegistryParser.txt
 20150107_RegistryHiveBasicsPart1.txt
 20150108_DeletedRecordRecoveryExample.txt
+20150108_RegistryExplorerScreenshots.txt
