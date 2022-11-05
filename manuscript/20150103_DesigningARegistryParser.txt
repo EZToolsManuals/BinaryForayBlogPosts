@@ -8,7 +8,6 @@ Fast forward a few months later and I started working on my next project, a regi
 
 At this point I started tracking down as much information as I could find as possible on how Windows Registry files are structured. I found  some great information and a lot of good information. Some of the resources I found were:
 
-
 * <http://amnesia.gtisc.gatech.edu/~moyix/suzibandit.ltd.uk/MSc/Registry%20Structure%20-%20Main%20V4.pdf>
 * <http://amnesia.gtisc.gatech.edu/~moyix/suzibandit.ltd.uk/MSc/Registry%20Structure%20-%20Appendices%20V4.pdf>
 * <http://sentinelchicken.com/data/JolantaThomassenDISSERTATION.pdf>
