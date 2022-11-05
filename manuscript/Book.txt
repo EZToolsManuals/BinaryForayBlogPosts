@@ -4,3 +4,4 @@ introduction.txt
 20150107_RegistryHiveBasicsPart1.txt
 20150108_DeletedRecordRecoveryExample.txt
 20150108_RegistryExplorerScreenshots.txt
+20150126_RegistryHiveBasicsPart2.txt
