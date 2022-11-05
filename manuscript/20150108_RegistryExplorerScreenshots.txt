@@ -1,0 +1,32 @@
+# Registry Explorer screenshots
+
+Posted: 3rd January 2015
+
+Now that deleted key support is available in the parser, we can make the results usable via a nice GUI!
+
+The screenshots below show a name of "Registry Viewer Z" but I am renaming it to simply "Registry Explorer" which is more inline with what the tool can do (vs simply view things as they exist in the registry).
+
+### **Deleted records collection**
+
+In this screenshot we see the root node and Deleted records node. Deleted records has been expanded and a key selected. The values for the selected keys are shown on the right.
+
+![](20150108_RegistryExplorerScreenshots\image1.jpg)
+
+### **Sorting in the tree and grid**
+
+Here the tree viewer has been sorted 2 different ways. By being able to sort (and group and filter, etc) you can get to the data you need quickly.
+
+![](20150108_RegistryExplorerScreenshots\image2.jpg)
+
+### **Value slack support**
+
+Here we have a key selected (it happens to be a deleted key, but that doesn't matter) and the key's values are shown on the right. To the far right the value slack is shown as hex characters. 
+
+In a future version Registry Explorer will convert the slack space to several different formats and display it in the type viewer at the bottom so you can see if its a unicode string, etc.
+
+Notice also that the deleted key is shown where it used to exist before it was deleted. Of course the key will also be in the Deleted records section, but seeing it in context is often more useful.
+
+![](20150108_RegistryExplorerScreenshots\image3.jpg)
+
+Much more to come!
+
