@@ -1,0 +1,13 @@
+# The First of Many
+
+Posted: 3rd January 2015
+
+## **Binary**
+
+   : relating to or involving a method of calculating and of representing information especially in computers by using the numbers 0 and 1
+
+## **Foray**
+
+   :  to ravage in search of spoils
+
+The purpose of this blog is to delve into the depths of forensic artifacts in order to fully realize all of the information available in said artifacts. It will involve discussing code, algorithms, and design decisions related to such things as parsers and higher level tools that help to make sense of voluminous amounts of information.
