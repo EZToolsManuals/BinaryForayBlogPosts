@@ -1,0 +1,41 @@
+# ShellBags Explorer 0.5.1.0 released!
+
+Posted: 27th January 2015
+
+Changes
+By far the biggest change in this version is replacing the offline Registry parsing code with my own. Read on for why.
+
+NEW: Added GUID for Hyper-V Remote file browsing
+NEW: Added support for type 0x02 shellbags, seen when browsing Hyper-V servers
+NEW: General support for browsing Hyper-V resources including server, drive letter, and paths (including MAC timestamps for folders)
+
+CHANGE: Tweak several existing shell bag types to account for new data related to Hyper-V
+CHANGE: Replace woanware Registry parsing code with [my own](https://github.com/EricZimmerman/Registry)
+
+NOTE: Due to the new Registry parsing code you may see additional warnings in the messages window. If they do not mention ShellBags they can be safely ignored. As always, I appreciate getting any hives that cause problems so I can take a look at tweaking things in the code.
+Elaborations
+While replacing the old offline Registry parsing code with my code, I got a few errors, as shown below.
+
+![](20150127_ShellbagsExplorer0510Released\SBEUnknownGUID.png)
+
+After searching the Google for 0907616e-f5e6-48d8-9d61-a91c3d28106d, I found a reference to Microsoft Hyper-V Remote file management. That fixes the GUID problem, but there was also some parsing errors and unknown types as we can see from the stop signs, crazy prefix to the drive label, and some unknown types.
+
+After using SBE and the data interpreter to look at the raw contents of the shell bag I was able to add support for the unknowns. The result is shown below.
+
+![](20150127_ShellbagsExplorer0510Released\SBEFixedHyperV.png)
+
+It is quite possible the new and adjusted bag types will be seen elsewhere. For now the new types and tweaks identify with being related to Hyper-V server as this is, to date, the only place these new bags have been seen.
+
+Another benefit from the new offline parsing code is its robustness. On one particular hive, the old parsing code generated 325 parsing errors related to bad nk records. My code generates no errors when processing the same hive. My code also parses hives faster as well.
+
+The old code generated these results:
+
+![](20150127_ShellbagsExplorer0510Released\oldSBECode.png)
+
+My parsing code generates these results:
+
+![](20150127_ShellbagsExplorer0510Released\newSBECode.png)
+
+That's a difference of +620 shellbags and ~9 times faster!
+
+To add another comparison, sbags v0.37 took approximately 2 minutes to process the same hive and it found 4,321 shellbags, a difference of -122 shellbags.
