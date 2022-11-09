@@ -23,7 +23,7 @@ You can access Proxy settings via the Tools menu. XWFIM has been tested by mysel
 
 ![](20150204_XWFIMandXWFRTv10Released\xwfproxy.png)
 
-XWFRT Changes include:
+#### **XWFRT Changes include:**
 
 CHANGE: Fix parsing of v18 report files
 
