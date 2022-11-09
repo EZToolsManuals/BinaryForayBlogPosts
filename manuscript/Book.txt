@@ -5,3 +5,6 @@ introduction.txt
 20150108_DeletedRecordRecoveryExample.txt
 20150108_RegistryExplorerScreenshots.txt
 20150126_RegistryHiveBasicsPart2.txt
+20150129_RegistryHiveBasicsPart3VkRecords.txt
+20150202_RegistryHiveBasicsPart4SkRecords.txt
+20150204_XWFIMandXWFRTv10Released.txt
