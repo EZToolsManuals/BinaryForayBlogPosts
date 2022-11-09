@@ -1,0 +1,32 @@
+# TITLE
+
+Posted: 3rd January 2015
+
+### **XWFIM and XWFRT version 1.0 now available!**
+
+XWFIM Changes include:
+
+NEW: Full proxy support via Tools menu
+NEW: Support for BYOD downloads
+CHANGE: You can now make a portable installation on any device vs removable only
+FIX: Detect when 'Append version #' option is active when creating portable install
+
+You can download the update here or just start XWFIM to get the latest version.
+
+#### **BYOD**
+
+You don't have to do anything differently for BYOD downloads. Just enter the username and password you received for the BYOD download and XWFIM will detect it and do the rest
+
+#### **Proxy support**
+
+You can access Proxy settings via the Tools menu. XWFIM has been tested by myself and several users. I tested it against a Squid proxy without issue.
+
+![](20150204_XWFIMandXWFRTv10Released\xwfproxy.png)
+
+XWFRT Changes include:
+
+CHANGE: Fix parsing of v18 report files
+
+Note: Only the latest version of X-Ways Forensics is supported!
+
+You can download the update here or just start XWFRT to get the latest version.
