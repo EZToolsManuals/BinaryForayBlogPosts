@@ -1,10 +1,39 @@
-# TITLE
+# Exploring the Registry at the hex level
 
-Posted: 3rd January 2015
+Posted: 10th February 2015
 
-BLOG POST GOES HERE
+Exploring the Registry at the hex level
 
-## 
+If you want to open your hives and browse the structure you can of course use any hex editor. There are several hex editors out there that let you define templates to parse data. One of these hex editors is [010 Editor](http://www.sweetscape.com/010editor/).
 
-![description](FOLDER\FILENAME)
+010 has a C/C++ like syntax for defining templates. I wrote a template for Registry hives that you can get on the [Template Archive](https://www.sweetscape.com/010editor/repository/templates/) (at some point), but it will also always be available here (note: dead link in original post).
 
+The template currently supports all the major structures found in hives including NK, VK. SK. and lists (LH, LF, and LI).
+
+### **How to use it**
+
+After saving the template to your computer, add it to 010 editor via the Templates | Edit Templates List option.
+
+![](20150210_ExploringTheRegistryAtHexLevel\AddTemplate.png)
+
+Click New, change the name to "Registry hive", then browse to the template you saved above. Once that is done click OK.
+
+![](20150210_ExploringTheRegistryAtHexLevel\AddingTemplate.png)
+
+Open a hive in 010 and then select Templates | Registry hive from the list.
+
+![](20150210_ExploringTheRegistryAtHexLevel\RunTemplate.png)
+
+Here is an example of what you would see before applying the template:
+
+![](20150210_ExploringTheRegistryAtHexLevel\beforetemplate.png)
+
+And after applying the template.
+
+As you browse the data at the bottom the relevant bytes are selected in the hex view. In the image below I selected the Descriptor struct and all the bytes that make up that struct are selected. If I select a member of a struct, the bytes belonging to that member are selected.
+
+![](20150210_ExploringTheRegistryAtHexLevel\aftertemplate1.png)
+
+From here you can explore at will and verify hives by hand (just be sure to add 0x1000 to any offsets to get to the proper position in the file).
+
+Enjoy!
