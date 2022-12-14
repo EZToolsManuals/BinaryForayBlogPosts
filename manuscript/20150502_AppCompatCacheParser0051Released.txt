@@ -1,10 +1,19 @@
-# TITLE
+# AppCompatCacheParser v0.0.5.1 released
 
-Posted: 3rd January 2015
+Posted: 2nd May 2015
 
-BLOG POST GOES HERE
+Changes include:
 
-## 
+NEW: Added CacheEntryPosition to allow for sorting in the order cache entries were found in the Registry
+NEW: Changed format of last modified timestamp to allow for sorting. Format is yyyy-MM-dd HH:mm:ssZ
+NEW: Added -t switch that sorts the timestamps in descending order (most recent first)
+NEW: Added a sweet icon
 
-![description](FOLDER\FILENAME)
+CHANGE: Removed -f switch (it was fun while it lasted)
+CHANGE: Added GitHub URL to console window
+CHANGE: Cleaned up command line switches and added explanation for short vs. long names
+CHANGE: Reflect Windows 2012 along with Windows 8.1 as they use the same format
 
+![](20150502_AppCompatCacheParser0051Released\2015-05-01_16-46-12.png)
+
+You can get the update here or via the Software page above
