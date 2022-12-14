@@ -1,10 +1,17 @@
-# TITLE
+# ShellBags Explorer 0.5.4.0 released!
 
-Posted: 3rd January 2015
+Posted: 17th February 2015
 
-BLOG POST GOES HERE
+This release contains the following changes:
 
-## 
+CHANGE: Replace custom logging code with NLog
+FIX: A few cosmetic fixes to ShellBag details output
+FIX: Registry parser bug fixes on some fringe cases
 
-![description](FOLDER\FILENAME)
+The biggest change for this version is swapping out old custom logging stuff with NLog. This makes things much more flexible as any of the NLog targets can now be used for logging. Future releases will possibly support using an NLog.config file so end users can control what gets logged and to where (files, databases, email, etc).
 
+ShellBags Explorer is also using the new logging under the hood, but it will look and feel pretty much the same since all output goes to the Messages window.
+
+Here is what SBECmd.exe looks like now:
+
+![](20150217_ShellbagsExplorer0540Released\SBENew.png)
