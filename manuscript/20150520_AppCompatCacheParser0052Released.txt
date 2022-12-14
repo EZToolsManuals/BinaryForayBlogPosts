@@ -1,10 +1,9 @@
-# TITLE
+# AppCompatCacheParser v0.0.5.2 released
 
-Posted: 3rd January 2015
+Posted: 20th May 2015
 
-BLOG POST GOES HERE
+This version tweaks the format of the LastModifiedTimeUTC column so that it is in the form MM-dd-yyyy HH:mm:ss which allows for easy sorting and grouping in Excel.
 
-## 
+![](20150520_AppCompatCacheParser0052Released\sort.png)
 
-![description](FOLDER\FILENAME)
-
+You can get the update here or via the Software page above
