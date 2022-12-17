@@ -1,10 +1,187 @@
-# TITLE
+# Registry Explorer 0.0.2.0 released!
 
-Posted: 3rd January 2015
+Posted: 6th March 2015
 
-BLOG POST GOES HERE
+Lots of good changes in this version including:
 
-## 
+Known issues:
+- Large hives (SOFTWARE 100+ Mb) can be slow to load the tree due to the number of data in these hives (100s of thousands of keys and values). They will load thought!
 
-![description](FOLDER\FILENAME)
+NEW: Added new tab in upper left, Available bookmarks, that shows all available bookmarks across all loaded Registry hives
+NEW: Added 'Technical details' option to context menu. Use this to view all the down and dirty details about a key including its bytes, its security key, subkeys, values, etc. This provides an easy to use way to explore and validate Registry tools
+NEW: Added several hotkeys for commonly used key context menu items
+NEW: Allow exporting of keys either individually or recursively to .reg format via the context menu
+NEW: Add 'Collapse all hives' button to status bar. 
+NEW: Added more bookmarks
 
+CHANGE: Prevent illegal file name characters in category names (\, /, |, and so on). Any illegal characters will be replaced with an underscore
+CHANGE: Nlog logging added
+CHANGE: Registry parsing is now ~150% faster and memory usage reduced by 40-80%
+CHANGE: Prevent the same hive from being loaded more than once
+CHANGE: Expand the top level node after loading a hive
+CHANGE: Hide or unhide all matching keys in all open hives vs only the active hive
+
+FIX: When removing keys from auto hide list, remove any hidden keys in the tree that match as well
+FIX: Actually export the timestamp when exporting Messages
+FIX: GUI polish
+
+### General changes
+
+The first thing to notice about this version is SPEED! The back end Registry parser has undergone significant performance tuning as well as memory usage optimization. The result is much faster loading of hives.
+
+Several of the most used context menu items were given shortcut keys.
+
+![](20150306_RegistryExplorer0020Released\contextNew.png)
+
+An option to collapse all opened Registry hives was added to the lower right corner. This is useful to reset things if many hives/keys are expanded vs scrolling around all over the place. Clicking this button resets the Registry hives tree to what it looked like after initially loading hives.
+
+![](20150306_RegistryExplorer0020Released\collapse.png)
+
+The Quick help menu now works and a Legend menu item has been added to the Help menu.
+
+![](20150306_RegistryExplorer0020Released\legend.png)
+
+This version also adds a lot of GUI polish, new bookmarks, and general fixes.
+
+#### Changes to hiding and unhiding keys
+
+The last change to point out is that hiding a key in one hive results in that key being hidden in all other open hives where that key exists.
+
+In the screenshot below, i have hidden several keys (MuiCache and VirtualStore). Note the Windows key in each of the hives (highlighted in green). The Options | Show hidden keys option is on so we can see currently hidden keys (the keys that have the little red mark on them).
+
+![](20150306_RegistryExplorer0020Released\allHideStart.png)
+
+In the screen shot below, The key indicated was selected and the hide key option was selected for the key.
+
+![](20150306_RegistryExplorer0020Released\allHide2.png)
+
+After selecting a hide option, notice how ALL of the 'Local Settings\Software\Microsoft\Windows' keys are now marked hidden
+
+![](20150306_RegistryExplorer0020Released\allHide3.png)
+
+Unhiding keys works the same way in that when you unhide a key in a hive, any other keys that match that key are also unhidden.
+
+Finally, in the lower right corner is an indicator of how many keys are hidden.
+
+![](20150306_RegistryExplorer0020Released\hiddenKeys.png)
+
+#### Available bookmarks
+
+This is a new tab that lives next to the original tree in previous versions. Here we see where the new tab is located. The "Registry hives" tab works exactly as the tree did in previous versions.
+
+![](20150306_RegistryExplorer0020Released\newtab.png)
+
+Before showing what the "Available bookmarks" tab looks like and how it works, lets talk about bookmarks in general again. Recall from the last post that the Bookmarks menu contains a list of bookmarks that a) exist for the currently selected hive type and b) the hive actually contains the key reflected by the bookmark. 
+
+![](20150306_RegistryExplorer0020Released\bookmarks.png)
+
+This is all well and good for quickly moving around a Registry hive, but there can be a lot of noise in the way in the Registry. The Available bookmarks tab seeks to make things easier by showing you the keys that relate to all available bookmarks for the currently loaded hives.
+
+At first, Available bookmarks will be empty, like this:
+
+![](20150306_RegistryExplorer0020Released\availEmp.png)
+
+But if we load a few hives, say a UsrClass and NTUser hive, things change. The Registry hive tab will show the hives in their entirety.
+
+![](20150306_RegistryExplorer0020Released\hivesloaded.png)
+
+But if we now look at the Available bookmarks tab, we see something very different.
+
+The first thing to notice is the numbers at the end. The first is the total number of Common bookmarks that were found across all hives. The second is the total number of User bookmarks that were found across all hives. These numbers will dynamically update as new bookmarks are added or hives are loaded.
+
+![](20150306_RegistryExplorer0020Released\avbm.png)
+
+Here we see each of our loaded hives. but only the bookmarks that exist in each hive show up. The rest of the keys are not shown at all (but subkeys of bookmarked keys are).
+
+Of course you can click on any of those keys and view all of the values, etc.
+
+![](20150306_RegistryExplorer0020Released\bmSel.png)
+
+As you click on any of the bookmarked keys (or subkeys), the Bookmark information will be updated to show the details related to the active bookmark. This lets you drill down into the key areas of all loaded Registry hives in a succinct and easy to use way.
+
+You can also sort and filter on the available bookmarks tab, just like the main Registry hives tab.
+
+#### Technical details
+
+This feature bridges the gap between using a hex editor and blindly trusting Registry Explorer (or any tool for that matter) when it comes to reviewing Registry hives.
+
+The idea is to be able to browse Registry data structures for a given key and see all the gory details in an easy to use way that also allows for exploring up or down from a given key. In other words, you can browse to a key's parent or any of its subkeys, explore values, security keys, hive details, and so on. 
+
+Let's look at some examples.
+
+To view technical details, select a key and invoke the appropriate option from the context menu, or press F5.
+
+![](20150306_RegistryExplorer0020Released\tdContext.png)
+
+Once that is done, the technical details form will be displayed.
+
+![](20150306_RegistryExplorer0020Released\fulldetails.png)
+
+At the top of the form are tabs that convey information about the selected key.
+
+* NK record: Shows all the details about the key itself
+* Values: Contains a list of values. Selecting a value will display the associated VK record
+* Subkeys: Contains a list of subkeys. Double clicking a subkey will bring up a Technical details report for that key
+* SK record: Shows all the details about the key's security key
+* Full details as text: All the details about this key in text format
+* Hive details: Metadata about the hive file itself
+
+If a key doesn't have subkeys, values, or an SK record (in the case of a free NK record), those tabs will not be displayed. In the example below, the Values tab is hidden because there are no values to show.
+
+![](20150306_RegistryExplorer0020Released\muicache.png)
+
+As you click around on the properties on any of the tabs. the hex editor will highlight the bytes that make up the selected property. If nothing is selected for a property, the property value comes from elsewhere (such as the relative offset, whether or not its free, etc). 
+
+Here the Name property is selected. Notice how the hex editor has highlighted the bytes that make up the Name property. The number of bytes selected and the offset are also displayed in the lower right.
+
+![](20150306_RegistryExplorer0020Released\SelectedNK.png)
+
+On the values tab, all values for the key are listed on the top left. Selecting a value will display its properties on the top right as well as displaying the raw VK record in the hex editor at the bottom. Selecting a property works the same as it did in the NK record.
+
+![](20150306_RegistryExplorer0020Released\ValueSelected.png)
+
+On the subkeys tab is a list of all subkeys for the selected key. Double clicking a subkey will bring up another Technical details form for the double clicked subkey.
+
+![](20150306_RegistryExplorer0020Released\subkeys.png)
+
+On the SK record tab, things again work as we have already seen. In this example, I have selected the "ACE record 0" structure. As a result, Registry Explorer highlighted the 36 bytes for that record. As we have already seen selecting any of the properties at any level selects those bytes.
+
+![](20150306_RegistryExplorer0020Released\skrecord.png)
+
+On the hive details tab we can see things like the sequence numbers, time stamps, checksum, embedded file name, etc.
+
+![](20150306_RegistryExplorer0020Released\hivedetails.png)
+
+### Exporting Registry keys
+
+On the context menu in the Registry hives tree is an Export option.
+
+![](20150306_RegistryExplorer0020Released\context.png)
+
+If a key is selected that has subkeys, the recursive export option is available, else it is disabled.
+
+After selecting one of the export options you will be prompted where to save the hive.
+
+![](20150306_RegistryExplorer0020Released\exportReg.png)
+
+By default, the name of the key being exported will be used for the file name. When exporting recursively, '_Recursive' will be appended to the key name to indicate this.
+
+Clicking 'Save' will export the hive
+
+![](20150306_RegistryExplorer0020Released\exportDone.png)
+
+The resulting file is a plain text file that can then be imported back into the Registry.
+
+Lines starting with a semicolon are comments.
+
+![](20150306_RegistryExplorer0020Released\exportexample1.png)
+
+An example of an exported key with values looks like this:
+
+![](20150306_RegistryExplorer0020Released\exportexample2.png)
+
+And finally, when exporting deleted keys, Registry Explorer will note this in the .reg file.
+
+![](20150306_RegistryExplorer0020Released\exportexample3.png)
+
+Registry Explorer exports keys in almost the same exact format as RegEdit does. Many hives and keys were compared using Beyond Compare to ensure the data being exported was consistent with RegEdit. In some cases, Registry Explorer will have a slightly different layout for some binary values, but in every case the data is imported exactly as it would be if the export were done via RegEdit.
