@@ -1,10 +1,41 @@
-# TITLE
+# ShellBags Explorer v0.5.2.0 released!
 
-Posted: 3rd January 2015
+Posted: 4th February 2015
 
-BLOG POST GOES HERE
+Changes include:
 
-## 
+NEW: Detect deleted ShellBags. When deleted ShellBags are found they will have a red X after the name of the bag. Deleted ShellBags will also be denoted in the Miscellaneous column
+NEW: Added GUID for Network Neighborhood
 
-![description](FOLDER\FILENAME)
+CHANGE: Expanded coverage for MTP type 2 devices (a lot of new detail available in Details view)
+CHANGE: Expanded coverage for MTP type 1 devices (a lot of new detail available in Details view)
 
+FIX: Cosmetic clean up in SBECmd output (showing results twice)
+
+You can get it [here](https://binaryforay.blogspot.com/p/software.html)  or by starting ShellBags Explorer and using the update functionality.
+
+### Expanded MTP coverage
+
+MTP type 1 and 2 improvements include showing details on GUIDs, file system name, ClassID, and Storage ID name.
+
+### Type 2:
+
+![](20150204_ShellBagsExplorerv0520Released\MTP2Changes.png)
+
+### Type 1:
+
+![](20150204_ShellBagsExplorerv0520Released\MTP1Changes.png)
+
+### Deleted ShellBags
+
+Registry Explorer has the ability to recover and display deleted keys and values. Looking at a hive with deleted ShellBags looks like this:
+
+![](20150204_ShellBagsExplorerv0520Released\redeleted.png)
+
+Since Registry Explorer and SBE both use the same back end to parse hives, SBE now has the ability to detect deleted ShellBag entries. When they are found, a red X will be displayed to the right of the name in the tree and the Details view will also note the fact that the ShellBag was deleted.
+
+![](20150204_ShellBagsExplorerv0520Released\SBEDeletedKeys.png)
+
+Here we see the grid reflects the deleted ShellBags as well.
+
+![](20150204_ShellBagsExplorerv0520Released\SBEDeleted2.png)
