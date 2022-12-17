@@ -1,10 +1,271 @@
-# TITLE
+# Introducing Registry Explorer
 
-Posted: 3rd January 2015
+Posted: 11th February 2015
 
-BLOG POST GOES HERE
+Registry Explorer is a new approach to interacting with Registry hives. It has several unique capabilities not found in other programs.
 
-## 
+The version being discussed here is 0.0.1.8 (some of the screenshots may reflect v0.0.1.7). It is an early beta version of RE compared to where it will be but the features discussed below are ready for general use.
 
-![description](FOLDER\FILENAME)
+### Known issues:
 
+Large hives (SOFTWARE hives especially) can be slow to load in RE due to the number of keys that exist (often hundreds of thousands). Give RE a few minutes to load them tho and it will work. This is being addressed.
+
+## Getting started
+
+To get started, lets take a look at the main interface.
+
+![](20150211_IntroducingRegistryExplorer\main.png)
+
+There is of course a standard menu bar at the top of the screen. Most of the options are self-explanatory, but lets look at a few of them.
+
+### View | Messages
+
+The Messages window is automatically displayed when RE starts. It will contain information about loading hives, warnings, errors, etc. If you have used ShellBags Explorer, it looks and feels pretty much the same as in SBE.
+
+![](20150211_IntroducingRegistryExplorer\messages.png)
+
+### Options menu
+
+![](20150211_IntroducingRegistryExplorer\Options.png)
+
+We will drill down into these options in detail below, but at a high level, the items in the Options menu work as follows:
+* Recover deleted keys/values: When enabled, RE will search for and reassociate deleted Registry keys and values from a hive.
+* Show hidden keys: When enabled, any keys that have been hidden will be visible in the hive (and a different icon will be used to denote the key is hidden)
+* Manage hidden keys: Brings up an interface to delete any keys that have been added to the auto hide list
+
+### Bookmarks
+
+![](20150211_IntroducingRegistryExplorer\bookmarks.png)
+
+The Bookmarks menu contains two submenus: Common and User created. Common bookmarks are those included in RE and User created are those created by an end user of RE. We will discuss bookmarks in detail below.
+
+There is also an option for managing user created bookmarks which will be included in the more detailed bookmark discussion below.
+
+### Loading hives
+
+There are two ways to load Registry hives in RE. The easiest is to simply drag and drop hives on the left side of the main interface. This method allows for loading several hives at once. The File menu can also be used to load hives. 
+
+Once one or more hives are loaded, they will be seen on the left side of RE.
+
+![](20150211_IntroducingRegistryExplorer\ini.png)
+
+To expand nodes, click the arrow to the left of the folder for a hive or simply double click on a node.
+
+![](20150211_IntroducingRegistryExplorer\expandedIniitial.png)
+
+In the first hive that is expanded (1UsrClass.dat) we see the root node (S-1-5-21-1141529136-2431258765-826847743-1000_Classes), the number of values present in that key, and the last write timestamp of the key. Of course the status bar will also update to show this information.
+
+In the last two hives we see a few additional child objects of the hive. Since the Recover deleted keys/values was enabled when we loaded the hives, RE recovered keys and values.
+
+### Registry Explorer and deleted keys/values
+
+RE handles deleted keys and values differently than other viewers. In the image above we can see there is a node for Associated deleted records and Unassociated deleted records. The difference between the two is that the associated records are associated with keys in the active registry (ie keys that are not deleted).  The unassociated records are all of the keys and values that could not be associated with an active key. Deleted values that could not be associated with a key are not displayed (but could be. If this interests you, please let me know).
+
+#### Associated deleted records
+
+If we expand the Associated deleted records node a few times, we see the following.
+
+![](20150211_IntroducingRegistryExplorer\associatedExpand.png)
+
+The green Registry icon means that the path exists in the active Registry and as such, the same path will be found under the root node above. If we find the same key in the active Registry, it looks like this:
+
+![](20150211_IntroducingRegistryExplorer\active.png)
+
+As you can see, the associated deleted keys are available in the active tree as well as Associated deleted records. The green icons in Associated deleted records correspond to the paths that exist in the active Registry. This tells you where you can find the deleted keys in the active Registry.
+
+In both places, deleted keys have a different icon vs. an active key.
+
+You can also see the number of values and the last write timestamps of each of the keys now that we have some rows expanded.
+
+### Unassociated deleted records
+
+In the image above Unassociated deleted records does not have the indicator showing there are subkeys. This is because for this hive there are no unassociated deleted records (in the version you can get now, this will not be there if there are no unassociated records to display).
+
+When there are unassociated records, they would be displayed just as we saw with Associated deleted records.
+
+![](20150211_IntroducingRegistryExplorer\unassociated.png)
+
+### Viewing key values
+
+For both active and deleted keys, selecting a key on the left results in the values for that key being displayed in the upper right.
+
+![](20150211_IntroducingRegistryExplorer\values.png)
+
+In the Values grid we see the value name, type, data, and any value slack.
+
+Clicking on a value will display the details of that value in the viewer area below the values grid. The type viewer will dynamically change depending on the Value type of the selected value.
+
+Here we see a RegBinary value selected:
+
+![](20150211_IntroducingRegistryExplorer\binary.png)
+
+And here we see a RegDWord value selected:
+
+![](20150211_IntroducingRegistryExplorer\dword.png)
+
+In upcoming versions, the viewers available will be expanded and improved to include dynamically generating viewers based on plugins available for Registry keys, displaying value slack in a hex editor (as well as decoding common items such as strings, etc), and so on.
+
+### Bookmarks
+
+The bookmarking capabilities of RE makes it easy to see exactly what keys of forensic interest are available in a given hive. Bookmarks are available in the menu at the top of RE.
+
+Bookmarks are specific to certain Registry hive types such as ntuser, usrclass, software, etc. Depending on what kind of hive is selected in the tree, the available bookmarks will dynamically update to only show bookmarks available for that kind of hive.
+
+In the example below, notice the NTUser.dat hive is selected (based on the black triangle to the left of the name). After selecting this hive (or any subkey in it), the Bookmarks menu adjusts to show:
+
+* In the main menu, the total number of bookmarks available (3 in this case)
+* In the submenus, the total number of Common and User created bookmarks available
+
+![](20150211_IntroducingRegistryExplorer\bmntuser.png)
+
+In this example, usrClass.dat is selected. Since this is a different hive type, the ntuser bookmarks are not even shown.
+
+![](20150211_IntroducingRegistryExplorer\bmusr.png)
+
+This lets you quickly see how many bookmarks are available in a given hive without clicking on a bunch of bookmarks to see if a particular key is present. This can save a lot of time, especially with more esoteric keys related to malware, etc.
+
+But thats not all! After bookmarks are filtered by hive type, RE goes a step further and checks to see if the path to the Registry key for a bookmark actually exists in the hive. This further reduces needless clicking on bookmarks that point to non-existent keys in a hive.
+
+### Creating bookmarks
+
+To create bookmarks, load a hive and find a key you are interested in. Right click on the key and select Add bookmark.
+
+![](20150211_IntroducingRegistryExplorer\addbookmark.png)
+
+The Bookmark editor is now displayed. Since RE knows what kind of hive this is, it has prepopulated the Hive type (NTUSER in this case). Next, select a Category from the dropdown. To add a new one, simply enter a new one and it will be saved. The initial list of categories was borrowed from @corey_harrell and his Auto_Rip script.
+
+![](20150211_IntroducingRegistryExplorer\editbm1.png)
+
+Once a category is selected, enter short and long descriptions. Short description will be used in the Bookmarks menu to give you some context as to what the key means. The long description will be used in reports so others will have some background on what the key is used for, why its important, and other links. A completed bookmark will look like this:
+
+![](20150211_IntroducingRegistryExplorer\editbm2.png)
+
+Click OK to save the bookmark. 
+
+The Bookmarks menu will be immediately updated showing the availability of the new bookmark.
+
+![](20150211_IntroducingRegistryExplorer\bmUpdated.png)
+
+### Managing bookmarks
+
+The Bookmarks menu also has an option to manage user created bookmarks. 
+
+![](20150211_IntroducingRegistryExplorer\bmmanager.png)
+
+The bold columns indicate read-only values. All other columns can be edited  by clicking on the cell you wish to edit. In the image above, I am editing the long description column.
+
+Bookmarks are saved on closing the Bookmark Manager.
+
+### Sharing bookmarks
+
+All bookmarks (and for that matter, all settings) in RE are simple json files. Bookmarks live in a subdirectory of where the RE executable is called Bookmarks. Under that directory are two more directories, one for Common and one for User bookmarks.
+
+![](20150211_IntroducingRegistryExplorer\bmlocation.png)
+
+Here we see the bookmark we just created. On disk, bookmarks are named using the following method:
+
+Category_HiveType_Name_InternalGUID
+
+The internal GUID is automatically assigned by RE and is simply used to guarantee a unique name exists when saving bookmarks.
+
+If we look at the bookmark in a text editor, we see a very simple json formatted file:
+
+![](20150211_IntroducingRegistryExplorer\jsonbookmark.png)
+
+Using a common and well understood format like json to store bookmarks allows for scripting of existing Registry key repositories to RE bookmarks as well as editing said bookmarks using whatever other means people want to come up with.
+
+Notice in the json file the KeyPath points to the key below the root key in a hive (vs. including the root hive name). This is because root keys, depending on which hive you are talking about, are all named differently. When creating bookmarks outside RE, keep this in mind.
+
+There is no difference between a Common and User bookmark other than the directory the bookmark lives in. The reason for a Common folder and a User folder is so that any User created bookmarks will not be overwritten on version updates (although this is highly unlikely since RE uses a GUID for uniqueness).
+
+It is my hope the community will contribute bookmarks to the RE project. To help facilitate this, I have set up a Github repository to push bookmarks into. These bookmarks will become the Common bookmarks in RE as time goes on. You can find the repository here.
+
+#### Using bookmarks
+
+To use a bookmark, simply click it and the key associated with the bookmark will be instantly selected in the tree. If you have multiple hives of the same type open, the key in the currently selected hive will be selected.
+
+### Context menu on keys
+
+In the bookmark discussion, we saw the context menu that is available for keys. The context menu changes depending on what is selected in the tree. If a hive is selected, the following options are available:
+
+![](20150211_IntroducingRegistryExplorer\hivesel.png)
+
+Since some context options do not make sense depending on what is selected, certain options get disabled (bookmarking, hiding, etc. in this case)
+
+If we select a key (other than the root key), more options become available:
+
+![](20150211_IntroducingRegistryExplorer\keysel.png)
+
+The context menu options are as follows:
+
+* Key: <Key name>: This is the name of the key that was selected when the context menu was invoked.
+* Remove hive: Only available for hives. When selected, you will be prompted to remove the hive from RE.
+* Add bookmark: Creates a new bookmark for the selected key
+* Hide key
+   * For this session only: Temporarily hides the selected key (and all subkeys) until RE is restarted
+   * Hide and add to autohide: Hides the selected key (and all subkeys) which persist between RE being restarted
+* Copy
+   * Key name: Copies only the key name to the clipboard
+   * Key path: Copies full path to the clipboard
+   * Last write time: Copies last write time to the clipboard
+* Expand child nodes: Recursively expands the selected key's subkeys
+* Collapse child nodes: Collapses the selected key's subkeys
+
+You can also copy the Key Path and Last write time by double clicking on the relevant section of the status bar.
+
+![](20150211_IntroducingRegistryExplorer\statusbar.png)
+
+Finally, selecting a key and pressing CTRL-C copies details about that key to the clipboard
+
+Key name # values Last write timestamp
+eMule 3 9/2/2014 7:56:39 PM +00:00
+
+### Hiding keys (for fun and profit)
+
+The Registry is a busy place with a lot of distractions. To help alleviate this problem, RE can hide keys so you do not have to look at them when doing your work.
+
+To hide a key, select one of the two context menu items according to your needs.
+
+As an example, take the screen shot below as a starting point.
+
+![](20150211_IntroducingRegistryExplorer\hideStart.png)
+
+As you can see, this is an NTUSER hive. There is a lot of good information in there, but if I were to expand all of the keys and try to navigate to the keys I am interested in there would be a lot of keys in the way that are not of interest to me. 
+
+In this case, lets assume the Printers key (CsiTool-CreateHive-{00000000-0000-0000-0000-000000000000}\Printers) and the MediaProperties key (CsiTool-CreateHive-{00000000-0000-0000-0000-000000000000}\System\CurrentControlSet\Control\MediaProperties) are of no interest to me.
+
+If I right click on MediaProperties and select Hide key | For this session only the key (and all subkeys) will be immediately hidden from the tree.
+
+For the Printers key, I will select Hide key | Hide and add to autohide. This also results in the key being immediately hidden.
+
+Our tree now looks like this:
+
+![](20150211_IntroducingRegistryExplorer\hiddenKeys.png)
+
+We just cleaned up some of the noise that distracts from the core keys we are interested in. 
+
+At some point you may want to view the keys you have hidden. To do this, simply select Options | Show hidden keys from the menu at the top of RE. When this option is enabled, our tree looks like this:
+
+![](20150211_IntroducingRegistryExplorer\hiddenshown.png)
+
+Notice how the hidden keys have a different icon (a bigger example of that icon is shown to the right). This lets you easily differentiate hidden and non-hidden keys when Show hidden keys is enabled. To hide the keys, simply disable the option.
+
+As mentioned above, any keys hidden for the current session will be shown normally after RE is started and any keys added to the auto list will always be hidden. To manage the auto hidden keys, select Options | Manage hidden keys and a dialog will be displayed allowing you to remove auto hidden keys. In this example I added a few more keys to the auto hide list.
+
+![](20150211_IntroducingRegistryExplorer\managekeys.png)
+
+So to wrap up, if we hide keys and then show them via the Options menu, the interface would change. Here is a separate example using different hidden keys to illustrate the point further. Here, the Appearance, Printers and WAB keys have been hidden
+
+[Link to GIF here](https://github.com/EZToolsManuals/BinaryForayBlogPosts/blob/main/manuscript/resources/20150211_IntroducingRegistryExplorer/output_45SaUq.gif)
+
+### Other features to try
+
+* To quickly select a key in a hive, select a hive and just start typing the key name. For example, if loading a UsrClass hive, start typing 'BAGMRU' and RE will start expanding the keys and selecting key that matches what you are typing.
+* With a key selected in the tree, press CTRL-F to bring up a search interface. You can then enter a value for Re to find in VISIBLE key names. This does not auto expand things but if you recursively expand a hive and then use find you can narrow down the keys you are looking at in no time.
+* Filtering on key names is also a powerful way to narrow down your focus. You can enter a key name to filter on, enter a minimum number of values, or any other criteria.
+
+![](20150211_IntroducingRegistryExplorer\filters.png)
+
+That does it for now. Please give it a try and let me know what else you want to see it do!
+
+If you have an earlier version of RE, it should auto update on startup. If not, you can always get the latest version here.
