@@ -1,10 +1,56 @@
 # TITLE
 
-Posted: 3rd January 2015
+Posted: 1st May 2015
 
-BLOG POST GOES HERE
+Yesterday I got a request to put together a utility to dump shimcache entries from the Registry. Today it is available!
 
-## 
+Windows 7 (x86 and x84), Windows 8.x (Server 2012* as well), and Windows 10 are all supported.
 
-![description](FOLDER\FILENAME)
+You can get the binary here or browse the source on GitHub, so if you want to contribute or see how it works, [check it out](https://github.com/EricZimmerman/AppCompatCacheParser).
+
+There are 2 files included:
+
+AppCompatCacheParser.exe
+NLog.config
+
+Both are required. You can adjust the nlog.config file as needed to push logging to any other source you need to.
+
+Usage is pretty straightforward:
+
+![](20150501_IntroducingAppCompatCacheParser\cmdLine.png)
+
+The only required option is -s, so the program knows where to save things to. If you omit the -h option, the live Registry is dumped.
+
+![](20150501_IntroducingAppCompatCacheParser\win10live.png)
+
+Notice the name of the machine is used (HAX0R in this case) when dumping the live system.
+
+Here are some more examples. The program will take less than a second to run.
+
+![](20150501_IntroducingAppCompatCacheParser\win7.png)
+
+![](20150501_IntroducingAppCompatCacheParser\win10.png)
+
+![](20150501_IntroducingAppCompatCacheParser\win81.png)
+
+Output is in TSV format and entries are saved in files as follows:
+
+Windows7X64_SYSTEM_AppCompatCache.tsv
+Windows7X86_SYSTEM_AppCompatCache.tsv
+Windows10_SYSTEM_AppCompatCache.tsv
+Windows81_SYSTEMWin81_AppCompatCache.tsv
+
+In short, its {OperatingSystem}_{HiveName}_AppCompatCache.tsv
+
+![](20150501_IntroducingAppCompatCacheParser\file.png)
+
+All times are UTC.
+
+Please hit me up if you want any additional features.
+
+Enjoy!
+
+PS If you are wondering what that console thing is, its cmder and its awesome.
+
+
 

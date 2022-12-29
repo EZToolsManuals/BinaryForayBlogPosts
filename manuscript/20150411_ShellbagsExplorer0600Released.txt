@@ -1,10 +1,38 @@
-# TITLE
+# ShellBags Explorer 0.6.0.0 released!
 
-Posted: 3rd January 2015
+Posted: 11th April 2015
 
-BLOG POST GOES HERE
+This version contains the following changes:
 
-## 
+NEW: Added NodeSlot info. This column is hidden by default in the grid, but will always be shown in Details view
 
-![description](FOLDER\FILENAME)
+CHANGE: Updated Registry parser code (~150% faster and significant memory reduction)
 
+FIX: Correct FAT vs exFAT file system hint in BEEF0004 blocks
+FIX: Correctly detect end of ShellBag in C3 bags
+
+Thanks to Dan P @4n6k for the NodeSlot request and testing!
+
+### Node slot
+
+Both the grid and the details view now contain information on the ShellBag's NodeSlot value. This value points to a subkey under Bags. This key contains other keys and values that contain such information such as sort order, icon settings, size, and so on.
+
+This is what NodeSlot looks like in RegEdit.exe
+
+![](20150411_ShellbagsExplorer0600Released\nodeslotRegedit.png)
+
+One thing to be aware of is that the NodeSlot value seen in RegEdit does NOT correspond to the ShellBags in the key where the NodeSlot value is. The NodeSlot shown is associated with the currently open key (BagMRU\0\0\0 in the example above). To see the ShellBag associated with a given NodeSlot, go up one level and find the value as shown below.
+
+![](20150411_ShellbagsExplorer0600Released\nodeSlotParent.png)
+
+ShellBags Explorer does all of this for you, so you can just go to the corresponding Bags subkey to find the related data.
+
+NOTE: Not all Shellbags have a NodeSlot value (Control Panel categories for example). In these cases, a Node Slot value of -1 will be shown in SBE.
+
+Node Slot is hidden by default in the grid, so use the field chooser to show as required.
+
+![](20150411_ShellbagsExplorer0600Released\nodeslotGrid.png)
+
+Node Slot will always be visible in Details view.
+
+![](20150411_ShellbagsExplorer0600Released\nodeslotdetails.png)

@@ -1,10 +1,31 @@
-# TITLE
+# AppCompatCache changes in Windows 10
 
-Posted: 3rd January 2015
+Posted: 22nd April 2015
 
-BLOG POST GOES HERE
+The AppCompatCache value lives at SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache.
 
-## 
+In Windows 7, 8.0, and 8.1, the header is 128 bytes in size (more details here)
 
-![description](FOLDER\FILENAME)
+I recently added AppCompatCache support to my live response tool and when I tested it on Windows 10, I didn't get any shimcache entries.
 
+Looking at a Windows 10 SYSTEM hive in a hex editor shows:
+
+![](20150422_AppCompatCacheChangesInWindows10\win10Sys.png)
+
+As you can see, the header is now 48 bytes in length. The signature, 10ts, remains the same in Windows 10 as it was for Windows 8.1.
+
+As one would expect when it comes to this artifact, Microsoft has once again introduced another format. From my testing it looks like it breaks down as follows (subject to change):
+
+![](20150422_AppCompatCacheChangesInWindows10\layout.png)
+
+Using this information I was able to extract 350 cache entries from my Windows 10 SYSTEM hive. This matches the value we see in the header as well.
+
+Another very interesting thing that I found in cache entries were things like this:
+
+![](20150422_AppCompatCacheChangesInWindows10\cache2.png)
+
+![](20150422_AppCompatCacheChangesInWindows10\cache1.png)
+
+I haven't done enough research into what these may mean for us yet. 
+
+Time to update your code vendors =)

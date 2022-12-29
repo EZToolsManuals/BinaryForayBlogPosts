@@ -1,10 +1,31 @@
-# TITLE
+# RECmd 0.6.0.0 released!
 
-Posted: 3rd January 2015
+Posted: 23rd May 2015
 
-BLOG POST GOES HERE
+This version adds some new features and a bit of polish. Changes include:
 
-## 
+New: Added --Sort that will sort the output according to the type of data returned (size for MinSize, time stamps for date range searches, etc)
+New: Added --SuppressData. If present, do not show data when using --sd or --nd
 
-![description](FOLDER\FILENAME)
+Change: Make output consistent
+Change: When searching for value data, show the value's data vs just the key and value name
 
+Here is an example of the adjusted output for time stamp searches (time stamps are first now):
+
+![](20150523_RECmd0600Released\dates.png)
+
+A sorting example:
+
+![](20150523_RECmd0600Released\endwsort.png)
+
+And finally, when searching for value data, show the data itself vs. just value name.
+
+![](20150523_RECmd0600Released\valdatanew.png)
+
+You can suppress data values from being shown by using the --SuppressData switch.
+
+![](20150523_RECmd0600Released\sup.png)
+
+Additionally, when searching for key names, only keys are shown and when searching for values, the key name and value name are shown.
+
+Get the update from here.
