@@ -23,7 +23,7 @@ This is of course not an exhaustive list but these are the bits of info that are
 
 The image below is a hive opened in WinHex at offset 0x00, or the beginning of the file:
 
-![](20150103_DesigningARegistryParser\image1.jpg)
+![](20150107_RegistryHiveBasicsPart1\Reg2.jpg)
 
 ### **Signature**
 
@@ -65,7 +65,7 @@ Getting back to the root cell offset, in the screenshot above, the root offset i
 
 Recall a hive's header is 4096 (0x1000) bytes long. This means the first hbin cell will be found at absolute offset 0x1000. To calculate the absolute position of the root cell, we have to add 0x1000 to the relative position of the root cell, 0x20. This results in an offset of 0x1020 and if we look at that offset, we can see the data structure for the root cell.
 
-![](20150103_DesigningARegistryParser\image2.jpg)
+![](20150107_RegistryHiveBasicsPart1\1020.jpg)
 
 As you can see in the screenshot above, there is an hbin header at 0x1000 and our root cell lives inside that hbin cell. We will discuss hbin cells after finishing up the header.
 
@@ -85,7 +85,7 @@ Note: Joachim Metz's research has shown that not all hives have a file name embe
 
 Other registry hives do not contain the absolute path, but by looking at the rightmost portion of the filename, we can determine what kind of hive file we are looking at. As an example, consider the following screenshot:
 
-![](20150103_DesigningARegistryParser\image3.jpg)
+![](20150107_RegistryHiveBasicsPart1\filename.jpg)
 
 This is a SOFTWARE hive that lives in System32\Config.
 
@@ -103,7 +103,7 @@ This is of course not an exhaustive list but these are the bits of info that are
 
 The image below is a hive opened in WinHex at offset 0x1000, the first hbin cell:
 
-![](20150103_DesigningARegistryParser\image4.jpg)
+![](20150107_RegistryHiveBasicsPart1\hbin.jpg)
 
 ### **Signature**
 
