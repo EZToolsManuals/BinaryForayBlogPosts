@@ -10,13 +10,13 @@ The screenshots below show a name of "Registry Viewer Z" but I am renaming it to
 
 In this screenshot we see the root node and Deleted records node. Deleted records has been expanded and a key selected. The values for the selected keys are shown on the right.
 
-![](20150108_RegistryExplorerScreenshots\image1.jpg)
+![](20150108_RegistryExplorerScreenshots\SS1.jpg)
 
 ### **Sorting in the tree and grid**
 
 Here the tree viewer has been sorted 2 different ways. By being able to sort (and group and filter, etc) you can get to the data you need quickly.
 
-![](20150108_RegistryExplorerScreenshots\image2.jpg)
+![](20150108_RegistryExplorerScreenshots\SS2.jpg)
 
 {pagebreak}
 
@@ -28,7 +28,7 @@ In a future version Registry Explorer will convert the slack space to several di
 
 Notice also that the deleted key is shown where it used to exist before it was deleted. Of course the key will also be in the Deleted records section, but seeing it in context is often more useful.
 
-![](20150108_RegistryExplorerScreenshots\image3.jpg)
+![](20150108_RegistryExplorerScreenshots\SS3.jpg)
 
 Much more to come!
 
