@@ -6,7 +6,7 @@ Posted: 26th January 2015
 
 Most people are familiar with viewing the Registry in a program like regedit.exe. regedit.exe ships with all versions of Windows and allows a user to view the basic components of the Registry. The screen shot below illustrates the different concepts that make up a hive (or at least those exposed by regedit.exe)
 
-![](20150126_RegistryHiveBasicsPart2\image1.jpg)
+![](20150126_RegistryHiveBasicsPart2\regedit.png)
 
 On the left we have a tree comprised of keys and subkeys that are related to each other hierarchically. A key becomes a subkey when it is a child of a given key. In the example above, *CBT* is a subkey of the *ATI Technologies* key. There is no difference between a key and a subkey's structure. 
 
@@ -14,11 +14,11 @@ After selecting a key on the left, any values contained in that key will be disp
 
 regedit also allows for viewing permissions on different keys in the Registry. To access these permissions, right click on a key and select Permissions...
 
-![](20150126_RegistryHiveBasicsPart2\image2.jpg)
+![](20150126_RegistryHiveBasicsPart2\accessPerms.png)
 
 As you would expect. clicking on Permissions shows the current permissions for the selected registry key.
 
-![](20150126_RegistryHiveBasicsPart2\image3.jpg)
+![](20150126_RegistryHiveBasicsPart2\examplePerms.png)
 
 To summarize, regedit exposes three types of information: **keys**, **values**, and **permissions**.
 
@@ -30,7 +30,7 @@ When looking at the structure of a Registry hive as it exists in disk however, s
 
 An NK (named key) record contains the information necessary to define a key (and subkeys as well). An example of an NK record as it exists on disk is shown below:
 
-![](20150126_RegistryHiveBasicsPart2\image4.jpg)
+![](20150126_RegistryHiveBasicsPart2\nk.png)
 
 In total, there are up to 25 pieces of information in an NK record. Key pieces of information available in an NK record include:
 
@@ -156,13 +156,13 @@ If we then take these 7 bytes and add them to the 137 bytes from the NK record, 
 
 The most important pieces of information are highlighted below:
 
-![](20150126_RegistryHiveBasicsPart2\image5.jpg)
+![](20150126_RegistryHiveBasicsPart2\nkbreakdown.png)
 
 For a full breakdown of the NK record layout, review the documents posted earlier.
 
 If we look at this NK record in Registry Explorer, it looks like this:
 
-![](20150126_RegistryHiveBasicsPart2\image6.jpg)
+![](20150126_RegistryHiveBasicsPart2\nkInViewer.png)
 
 Here you can see the hive name from above, the last modified date, the number of values, and the 12 subkeys.
 
