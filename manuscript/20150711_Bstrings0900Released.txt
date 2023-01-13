@@ -1,10 +1,49 @@
-# TITLE
+# bstrings 0.9.0.0 released
 
-Posted: 3rd January 2015
+Posted: 11th July 2015
 
-BLOG POST GOES HERE
+A few minor changes based on feedback and wiring up final options.
 
-## 
+NEW: More RegEx patterns
+NEW: Show RegEx descriptions vs the pattern for -p
+NEW: Show the RegEx pattern being used in output
+NEW: Save to option now works (-o). Only the search hits will be saved to the file, not what is shown on the console.
 
-![description](FOLDER\FILENAME)
+CHANGE: When using --ls, make the search case insensitive
 
+This program is open source. The code is available [here](https://github.com/EricZimmerman/bstrings).
+
+#### Benchmarks
+
+I also did some quick benchmarks against a 6 MB Registry hive using Sysinternals strings.exe. The benchmark was recorded via PowerShell's Measure-Command function.
+
+bstrings TotalSeconds                         : 10.0237084
+Sysinternals strings TotalSeconds       : 40.2289262
+
+Based on these numbers, bstrings is ~75% faster than strings.
+
+#### Changes overview
+
+Added some more RegEx patterns
+
+![](20150711_Bstrings0900Released\re.png)
+
+Here is an example of the GUID regex option
+
+![](20150711_Bstrings0900Released\90.png)
+
+General string searches are no longer case sensitive.
+
+![](20150711_Bstrings0900Released\ls.png)
+
+The -o option now works as well.
+
+![](20150711_Bstrings0900Released\o.png)
+
+Only the hits are saved to the target file. If you want all of the console output, use redirection.
+
+![](20150711_Bstrings0900Released\oh.png)
+
+If you come up with any cool regex patterns or have any other ideas to improve bstrings, please let me know!
+
+The latest version is available here.

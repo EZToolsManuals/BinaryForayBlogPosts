@@ -1,10 +1,44 @@
-# TITLE
+# Registry Explorer/RECmd 0.7.1.0 released!
 
-Posted: 3rd January 2015
+Posted: 7th July 2015
 
-BLOG POST GOES HERE
+This is the #DFIRSummit release!
 
-## 
+Several people asked for some tweaks such as recursively searching Registry hives via RECmd and allowing Registry Explorer to be set as the default application for hives.
 
-![description](FOLDER\FILENAME)
+This release adds those things as well as an option in Registry Explorer to check for and download any new versions via the Help menu.
 
+### RECmd changes
+
+New: Added --Dir switch. This recursively searches for hives in a given directory and searches each of them
+
+As an example, if you used, say X-Ways to find all available hives in an image, then recover/copied them out to a directory using the 'Recreate original path' option, you may end up with something like this:
+
+![20150707_RegistryExplorerRECmd0710Released\RECmdDirs.png)
+
+Using the new --dir switch, you can now search across every hive found in the specified directory and all subdirectories.  In the example output below, only beginning and ending of the console output is shown
+
+![](20150707_RegistryExplorerRECmd0710Released\RECmd.png)
+
+When the search is complete, the total number of hits and so on is displayed. If there are any non-Registry hives found during the search they are skipped and this fact is also displayed in the summary (17 hives out of 18 files).
+
+### Registry Explorer changes
+
+New: Registry Explorer can now function as a "default application" in that you can associate RE with *.dat and then double click hives. This also allows for setting up RE in other apps like X-Ways as an external viewer, dragging and dropping hives onto RE shortcut/executable, etc
+New: Added 'Check for updates' to About menu
+
+As an example of setting up Registry Explorer as a viewer in another application, let's set up X-Ways to send hives to Registry Explorer.
+
+In Options | Viewer programs, add Registry Explorer to the Custom viewer programs list in the lower right by clicking on the + sign and selecting the Registry Explorer binary.
+
+![](20150707_RegistryExplorerRECmd0710Released\XWFViewer.png)
+
+After finding Registry hives, select a hive, then right click and choose Viewer Programs | RegistryExplorer.
+
+![](20150707_RegistryExplorerRECmd0710Released\xwOpenWith.png)
+
+X-Ways will then export the hive to its temporary directory and tell Registry Explorer to open it.
+
+![](20150707_RegistryExplorerRECmd0710Released\XWFOpen.png)
+
+As usual, get it here. Once you have 0.7.1.0, you can then check for updates via the Help menu in Registry Explorer.

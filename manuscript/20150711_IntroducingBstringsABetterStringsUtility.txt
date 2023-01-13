@@ -1,10 +1,45 @@
-# TITLE
+# Introducing bstrings, a Better Strings utility!
 
-Posted: 3rd January 2015
+Posted: 11th July 2015
 
-BLOG POST GOES HERE
+Do you like strings? Do you like to find strings? How about in binary data? What about via regular expressions?
 
-## 
+ME TOO!
 
-![description](FOLDER\FILENAME)
+bstrings works like other strings utilities out there, but it also has some additional features not found elsewhere such as regular expression searching, some useful built in regex patterns, and string cleanup (trimming white space from the returned string), sorting. duplicate removal, and so on.
 
+Using bstrings is simple
+
+![](20150711_IntroducingBstringsABetterStringsUtility\cmd.png)
+
+The -p switch shows a list of built in regular expression patterns.
+
+![20150711_IntroducingBstringsABetterStringsUtility\builtin.png)
+
+To use a pattern, simply type the name of the pattern you want to use along with the --lr switch.
+
+Here we are looking for ipv4 strings.
+
+![](20150711_IntroducingBstringsABetterStringsUtility\ip.png)
+
+and here we are looking for anything looking like a url and port number.
+
+![](20150711_IntroducingBstringsABetterStringsUtility\up.png)
+
+Of course, simple string searches are available too via the --ls switch.
+
+![](20150711_IntroducingBstringsABetterStringsUtility\string.png)
+
+You can sort by length or alphabetically via the --sl and --sa switches.
+
+First, by length
+
+![](20150711_IntroducingBstringsABetterStringsUtility\sl.png)
+
+And alphabetically
+
+![](20150711_IntroducingBstringsABetterStringsUtility\sa.png)
+
+That's pretty much it! If there's something else you would find useful, please let me know!
+
+You can get bstrings here.
