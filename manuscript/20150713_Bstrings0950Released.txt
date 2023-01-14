@@ -1,10 +1,48 @@
-# TITLE
+# bstrings 0.9.5.0 released
 
-Posted: 3rd January 2015
+Posted: 13th July 2015
 
-BLOG POST GOES HERE
+Changes include:
 
-## 
+NEW: Added xml regex. Also matches HTML tags
+NEW: Large file support added
+NEW: Added -q switch. When present, only strings will be shown (header and summary are suppressed)
+NEW: Add command line used to header output
+NEW: Added -b switch. This lets you choose the chunk size for large files. Default is 512 MB
+NEW: Add total time elapsed and averages to search summary
 
-![description](FOLDER\FILENAME)
+Here we see the new command line args, -q and -b
 
+![](20150713_Bstrings0950Released\new ops.png)
+
+The command line used is now included in the output below the version and author information.
+
+![](20150713_Bstrings0950Released\example.png)
+
+The -b switch lets you choose a block size between 1 and 1024 megabytes. Here a block size of 491 MB is used.
+
+![](20150713_Bstrings0950Released\491.png)
+
+The xml regex option finds xml/html tags
+
+![](20150713_Bstrings0950Released\xml.png)
+
+If we run the same search with the -q option, only the matches are returned.
+
+![](20150713_Bstrings0950Released\q.png)
+
+#### Final thoughts
+
+One thing to keep in mind is that when the string count is being reported in the initial search, it is the total number of strings found in a file and NOT the total number of strings that match the --lr or --ls option.
+
+The other thing to keep in mind is that all strings are trimmed for white space (both before and after the string). In the examples below you can see the empty string being removed in the final count (238,155 found including "", but 238,154 strings are actually displayed).
+
+I did some testing with different block sizes to see if there was any changes in processing speed or results. I used block sizes of 152, 256, and 512 MB. The summaries are below.
+
+![](20150713_Bstrings0950Released\152.png)
+
+![](20150713_Bstrings0950Released\256.png)
+
+![](20150713_Bstrings0950Released\512.png)
+
+As usual, get it here.
