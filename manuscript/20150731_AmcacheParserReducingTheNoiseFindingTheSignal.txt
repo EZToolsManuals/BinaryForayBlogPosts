@@ -1,10 +1,169 @@
-# TITLE
+# AmcacheParser: Reducing the noise, finding the signal
 
-Posted: 3rd January 2015
+Posted: 31st July 2015
 
-BLOG POST GOES HERE
+NOTE: I just pushed 0.0.5.2 out with the following changes:
 
-## 
+NEW: Added FileExtension column to FileEntry to allow for easier sorting/filtering of results by file type
 
-![description](FOLDER\FILENAME)
+FIX: Add date formatting to created, modified, and compile timestamps
 
+Original post below.
+
+I recently asked about what plugins people wanted for Registry Explorer and someone mentioned Amcache, so I started looking into it.
+
+Loading an Amcache.hve hive from a Windows 10 machine into Registry Explorer, we can see the following layout:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\re.png)
+
+In doing some background research, I found a few resources such as [this](http://www.swiftforensics.com/2013/12/amcachehve-in-windows-8-goldmine-for.html) and [this](http://www.swiftforensics.com/2013/12/amcachehve-part-2.html). Additionally, Yogesh and [Willi Ballenthin](https://github.com/williballenthin/python-registry/blob/master/samples/amcache.py) wrote parsers for amcache. In both cases, the parsers only look at things in the Files key/subkeys.
+
+While I do not have access to Encase, I did run Willi's script against several hives. This resulted in up to 16,000 entries in the output, most of which were DLLs. With so much information present in the output, it becomes hard to find the "important" stuff, at least at first glance.
+
+As the blog posts referenced above mention in both their contents and comments, the Programs subkeys contain information about installed applications.
+
+Before getting into the particulars, lets step back and look at a File entry and a Program Entry.
+
+First, a Program Entry
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\PE.png)
+
+Here we see the values for the selected key. My research into the keys essentially matched up with what Yogesh found in part 2 of his amcache posts with a few exceptions:
+
+* Values with value name b can be an Epoch date
+* Found a few additional value data entries for value name 6
+
+My list ended up looking like this (left of equals is value name, right is description):
+
+* 0 = Program name
+* 1 = Program version
+* 10 = Unknown GUID
+* 11 = GUID in Uninstall Registry key (value 7)
+* 12 = Unknown GUID (same as 10?)
+* 13 = Unknown DWORD (always 0 in testing)
+* 14 = Unknown DWORD (always 0 in testing)
+* 15 = Unknown DWORD (always 0 in testing)
+* 16 = RegBinary containing some kind of program ID. 0000da39a3ee5e6b4b0d3255bfef95601890afd80709 is always present
+* 17 = QWord, always 2814749767116800 in testing
+* 18 = DWord, always 0 or 1 in testing
+* 2 = Vendor name
+* 3 = Locale ID (Language code)
+* 5 = DWord, always 1, 16, or 257 in testing
+* 6 = InstallSource? Always Msi, AddRemoveProgram, or AddRemoveProgramPerUser in testing
+* 7 = Uninstall Registry key
+* a = Epoch date
+* b = Epoch date
+* d = List of paths (not always present)
+* f = GUID in Uninstall Registry key (value 7)
+* Files = List of Root\File entries. Space separated, then @ separates File GUID from File key name
+
+Based on Yogesh's work I will update my unknowns with what he has found.
+
+We will look at a File Entry next
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\FE.png)
+
+Here we can see a few subkeys of Volume IDs and the corresponding values for the selected key.
+
+The 15 value is important as it is the full path to the executable that was run. The 101 value is the SHA-1 (with 4 extra 0's at the front for some reason) of the executable. Finally the 100 value is the Program ID that *may* correspond to a Program Entry. We will see how this can be leveraged soon.
+
+Most File Entry keys have five or so values in them, but some have more, like this:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\FE2.png)
+
+In the above example we can get a lot more information about things. Some of the values here, while having different names than what we saw in Program Entries, are used for the same purpose (version number, etc). We also get additional info in these cases like created, modified, and access dates.
+
+### Next steps
+
+After exploring an amcache.hve file a bit, I decided to see if it would be possible to use the information available in the Programs subkeys to categorize Files Entries into two categories: those belonging to a Program Entry and Uncategorized.
+
+So the first step in my amcache parser is to look at every Program Entry and create an object for it. These objects are then stored in a list.
+
+The next step is to then go through each File Entry, create an object, and use the File Entry's 100 value to find a corresponding Program Entry. If a Program Entry is found, the File Entry is added to the Program Entry's Files list. If a Program Entry is not found, the File Entry is added to an Uncategorized list.
+
+At the end of this process we are left with two things:
+
+1. A list of all Program Entries. Each Program Entry contains a list of its related File Entries
+2. A list of all File Entries that could not be related to a Program Entry
+
+Now that we have things organized, we can start processing the data in meaningful ways.
+
+### AmcacheParser in action
+
+AmcacheParser.exe is a command line tool with the following options:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\help.png)
+
+At a minimum, the -f and -s switches are required. When using just the defaults, only the unassociated File Entries are exported.
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\example1.png)
+
+This command results in a file named '20150731144524_AmcacheWin10_Unassociated file entries.tsv' being generated. The first part is a timestamp based on when the command was run, the second is taken from the name of the hive from the -f switch, and finally, the kind of file entries it contains.
+
+Opening 20150731144524_AmcacheWin10_Unassociated file entries.tsv in Excel we can see the following (partial) output:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\unassout.png)
+
+Notice in the output from the command above there were 16,443 total File Entries, but only 243 unassociated entries.
+
+In my experience (with the exception of a few Adobe products), malware does not come with a nice installer. As such, we can, in almost every case, ignore the file entries that are related to program entries, at least initially.
+
+By approaching things in this manner, we are able to reduce the amount of data we need to look at by over 98.5%!
+
+Of course if you want to see ALL file entries you can. Just use the -i switch, as such:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\example2.png)
+
+This results in three files being generated, as seen below
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\files.png)
+
+The Associated and Unassociated files have the same layout with a single difference. The first column in the associated list will contain the program name it is associated with (Git version 1.9.5-preview20150319 or DisplayFusion 7.2 (Beta 9) for example)
+
+Finally, a file containing all the Program entries is saved (again, this is partial output).
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\ProExp.png)
+
+### But can we do better?
+
+The astute observer may have noticed a few additional command line options, namely the -w and -b switches.
+
+These switches allow for whitelisting or blacklisting file entries based on SHA-1 hash.
+
+For example, consider the screenshot below, which contains a section of the unassociated file entries we saw above.
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\partialHashList.png)
+
+Since I strip off the extra zeros at the front of the hash when exporting data, we can use the output from AmcacheParser to feed our white and black lists.  Of course you can also use any means you want to generate a text file containing SHA-1 hash values (like my hasher program) as well. 
+
+If we copy the hashes above and put them into a text file (one per line), we can then feed this into the parser.
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\white.png)
+
+Now we are down to 192 unassociated entries, from our initial 243. 
+
+The percentage is based on the total number of file entries, so the more comprehensive your white list is (take all dll's and exe's from a known good host/baselined system for example), the better. Using this technique would allow you (if you wanted to) hide all standard Windows executables and so on.
+
+In 5 minutes I was able to generate a decent whitelist file for testing that eliminated more than 80% of the unassociated entries and even more of the associated entries.
+
+The flip side of whitelisting is blacklisting. This is useful once you have identified evil and want to quickly find it elsewhere.
+
+Let's say the following items are evil:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\blackhash.png)
+
+If we add those to a text file, we can do something like this:
+
+![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\blackout.png)
+
+### Conclusion
+
+I have tested the parser against hives from Windows 8.0, Windows 8.1, and Windows 10 successfully. The program should gracefully handle errors processing individual Program and File entries and inform you of any issues on the console. 
+
+If you do run into any errors, please send me the hives or at least the output from the screen.
+
+One other idea I had (and I am interested in feedback) is to come up with a way to weigh entries in the unassociated list. For example, if the parser sees 'temp' in the full path, its score would be increased, and so on.
+
+If there are any other features you would like to see included in AmcacheParser, please let me know!
+
+AmcacheParser is now available from the usual place and the source is available on GitHub.
