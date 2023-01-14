@@ -1,10 +1,38 @@
-# TITLE
+# A few updates
 
-Posted: 3rd January 2015
+Posted: 19th August 2015
 
-BLOG POST GOES HERE
+### ShellBags Explorer/SBECmd
 
-## 
+**This is a highly recommended update as it fixes a lot of fringe cases and greatly improves XP support.**
 
-![description](FOLDER\FILENAME)
+NEW: Updated controls
+NEW: Open hives via right click | Open or as an external application from programs like X-Ways, etc.
+NEW: Detect if .net 4.6 is installed
+NEW: A bunch of new GUIDs
+NEW: Support additional type IDs in XP hives
+NEW: Added support for Beef0005 extension blocks (which contain multiple shell items and extension blocks themselves)
+NEW: Handle lots of other fringe things
+NEW: CTRL-C copies selected bytes to clipboard in Hex view
 
+CHANGE: Show version # in title bar
+CHANGE: Add fallback search for BagMRU key if standard ones arent found
+CHANGE: Save/restore width of tree
+
+FIX: Handle more types of zip file contents in XP hives
+FIX: Correct issue showing Last Access time from zip file contents.
+FIX: Handle Unicode better in CDBURN shell bags
+FIX: Handle Unicode better in directory shell bags
+
+#### bstrings
+
+NEW: Detect .net 4.6 on start up. Exit if not found.
+
+CHANGE: Display any error messsages on cmdline vs just showing help
+CHANGE: check for errors in regex pattern before opening file, catch bad regex patterns up front
+
+### What's next?
+
+The next big release will be Registry Explorer and support for plug-ins.
+
+As usual, hit up the links here to get the latest
