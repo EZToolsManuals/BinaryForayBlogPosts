@@ -1,10 +1,263 @@
-# TITLE
+# Re3. gistry hive basics part 5: Lists
 
-Posted: 3rd January 2015
+Posted: 20th August 2015
 
-BLOG POST GOES HERE
+### Recap
 
-## 
+This is most likely the last of the Registry hive basics post. If you missed any of the previous ones, here they are:
 
-![description](FOLDER\FILENAME)
+* [Overview](http://binaryforay.blogspot.com/2015/01/registry-hive-basics.html)
+* [NK records](http://binaryforay.blogspot.com/2015/01/registry-hive-basics-part-2-nk-records.html)
+* [VK records](http://binaryforay.blogspot.com/2015/01/registry-hive-basics-part-3-vk-records.html)
+* [SK records](http://binaryforay.blogspot.com/2015/02/registry-hive-basics-part-4-sk-records.html)
 
+It is recommended to read through those posts in order before reading this one.
+
+Before getting into the various list structures, lets take a step back to look at the overall structure of the Registry.
+
+A hive is made up of a header followed by multiple hbin records. Inside each hbin record are cell records, list records, and data records. 
+
+Cell records would include NK, VK, and SK records.
+
+List records would be things like li, ri, and db records (more on this later).
+
+Data records are used to store things like a value's data.
+
+This structure can be summarized as follows.
+
+![](20150820_RegistryHiveBasicsPart5Lists\overview.png)
+
+While the hbin records shown above look to be the same size, there is no requirement that they be the same. hbin records only have to be a multiple of 4096 bytes. 
+
+It helps to think of the hbins as containers for various record types. **There is NO relationship between records based on their positions inside hbin records**. The glue that holds the Registry together are the different types of list records which this post will cover in detail.
+
+The general rules for parsing a hive can be summarized as follows:
+
+1. Open file
+2. Read header
+ 1. Get RootCellOffset
+ 2. Get length
+3. Locate hbin
+ 1. Determine length of hbin
+4. Find records in hbin
+ 1. Cells
+ 2. Lists
+ 3. Data
+5. "Do stuff" with records
+6. GOTO 3 until Length (Step 2.2) is reached
+7. Close file
+
+The starting point would be the NK record at RootCellOffset (Step 2.1). See here for details on how to find the RootCellOffset. From here you can start walking the tree of keys and their related values and security records.
+
+Lets take a look at a root cell as a frame of reference we can use for the rest of the discussion.
+
+![](20150820_RegistryHiveBasicsPart5Lists\rootcell.png)
+
+At the bottom of image we can see the raw hex that makes up the root cell.
+
+#### Getting to values
+
+The first list we encounter is the Value list cell index at offset 0x2C. In the above example, the value list cell index is 0x188, or 392 in decimal. This is the RELATIVE offset for where a list lives that contains the offsets to the values for this key. Since value count is equal to 1, we would need to go to offset 0x188 and read 1 offset. This offset will again be a relative offset to a VK record.
+
+We will get into the particulars of the different kinds of lists below, but lets continue the example here. Since our value list is at relative offset 0x188, we need to add 0x1000 it to get to the absolute offset. 
+
+If we go to 0x1188, we see the following:
+
+![](20150820_RegistryHiveBasicsPart5Lists\ListSize.png)
+
+The first 4 bytes are the size. This is a signed 32 bit integer. We can see that the size of the list is -8 bytes long. As we have seen before in other places, the negative size simply means the list is in use. The bytes in the rectangle make up the list we are interested in.
+
+Once we know the size, we can move forward to the start of the offsets. In this case we are left with a single, signed 32 bit integer, 0x0170, which is equivalent to 368 in decimal.
+
+It is not always the case that the list pointing to values will contain the same number of offsets as the total number of values in an NK record. It may very well be there are more offsets or other "stuff" after our list of offsets to VK records. This extra data would be considered slack. In short, once you have the start of a list, you should read X number of 32 bit numbers where X is the number of values related to the NK cell you started from (1 in our case).
+
+Now that we have the offset to where the VK record lives, we can now get the bytes that make up the VK record.
+
+Below we can see what the value at relative offset 368 (0x170) looks like.
+
+![](20150820_RegistryHiveBasicsPart5Lists\rootval.png)
+
+In most cases, values will not use lists, but there are some cases where we will need to deal with lists when processing VK records (the big data case).
+
+#### Getting to subkeys
+
+The next list we run into is the Subkey list stable cell index found at offset 0x20. In our example above, it lives at relative offset 0x4B7020 (4943904 in decimal).
+
+If we add 0x1000 to 0x4B7020 and go to that offset, we see the following monster:
+
+![](20150820_RegistryHiveBasicsPart5Lists\nkList.png)
+
+We can see the total size of the list, -2520 bytes (highlighted in blue). This list now works the same as we saw. In the NK record screenshot above, we see there are 256 subkeys under the root key. This can be found in the Subkey count stable field at offset 0x18.
+
+This list however, is different from the one we saw before. Notice directly after the size we can see a signature 'lf' in the data. This is a specific kind of list (which we will again drill down into below), but for now trust me in that we have to skip another 4 bytes to get to the start of our offsets.
+
+Once at the start of the offsets, each offset is 8 bytes long. The first four bytes are the offset to an NK record and the last 4 bytes are the first 4 characters of the subkey name.
+
+So now that we are at the list (at offset 0x08 in the highlighted bytes above) we can now start collecting relative offsets for our subkeys. If we look at just the first few we can see the following offsets are listed:
+
+0x0190 == 400 decimal (*)
+0x04A8 == 1192 decimal (.3fr)
+0x0518 == 1304 decimal (.3g2)
+
+Now that we have a few offsets to some subkeys, we can look at them.
+
+The hive we are working with, when loaded into Registry Explorer, looks like this:
+
+![](20150820_RegistryHiveBasicsPart5Lists\Review.png)
+
+Now lets look at the NK record that is found at relative offset 0x0190 (400 decimal):
+
+![](20150820_RegistryHiveBasicsPart5Lists\firstsub.png)
+
+Next, the NK record at relative offset 0x04A8 (1192 decimal):
+
+![](20150820_RegistryHiveBasicsPart5Lists\os2.png)
+
+And finally, the NK record at relative offset 0x0518 (1304 decimal):
+
+![](20150820_RegistryHiveBasicsPart5Lists\os3.png)
+
+This of course would be repeated a total of 256 times to get access to all the subkeys.
+
+### Lists
+
+The previous section explained how lists are generally used in the Registry. As we discuss the different kinds of lists below we will not explain things again where the same pattern is used. In other words, lf and lh lists work as we saw above (go to offset, read more offsets, go to those offsets, etc), so we won't unpack that again in the lf and lh section.
+
+There are 5 types of lists in Registry hives. The signatures for these lists are:
+
+* lf
+* lh
+* li
+* ri
+* db
+
+#### lf and lh lists
+
+lf and lh lists are very similar in structure. The basic structure looks like this:
+
+* Offset 0x00: Size (4 bytes)
+* Offset 0x04: Signature: (2 bytes)
+* Offset 0x06: Number of entries (2 bytes)
+* Offset 0x08: Offset record
+ * Relative offset (4 bytes)
+ * Hash (4 bytes)
+* ...
+
+where ... is a continuation of the offset structure, typically "Number of entries" long
+
+The difference between the lf and lh lists is the format of the Hash.
+
+In lf lists, the hash is the first 4 characters of the key name. 
+In lh lists, the hash is numerical and is simply an unsigned 32 bit integer.
+
+The numerical hash basically works as follows:
+
+1. First set hash value to zero 
+2. Then, working from left to right through the letters of the SubKey name, for each one, multiply Hash by 37 and then add the ASCII value of that letter 
+
+There are a few caveats tho. For full information on how this works, see section 4.29 here.
+
+That's pretty much it for this kind of list, but here is what an lh list looks like in its raw form (not the whole thing, but you get the idea). This particular list has 506 offsets in it.
+
+![](20150820_RegistryHiveBasicsPart5Lists\ripointer.png)
+
+li and ri lists
+li and ri lists are very simple. The structure looks like this:
+
+* Offset 0x00: Size (4 bytes)
+* Offset 0x04: Signature: (2 bytes)
+* Offset 0x06: Number of entries (2 bytes)
+* Offset 0x08: Offset record
+ * Relative offset (4 bytes)
+* ...
+
+where ... is a continuation of the offset structure, typically "Number of entries" long
+
+Here is an example of an li list. 
+
+![](20150820_RegistryHiveBasicsPart5Lists\li.png)
+
+Here is an example of an ri list.
+
+![](20150820_RegistryHiveBasicsPart5Lists\ri.png)
+
+For the ri list, the size is -16 bytes. At offset 0x04 is the signature. At offset 0x06 is the number of entries, 2.
+
+Starting at offset 0x8, we see the 2 offsets:
+
+0x717020
+0x72F020
+
+ri lists are different in that their offsets do not directly point to NK records, but rather, ri lists point to other lists!
+
+Recall from earlier that Registry hives have a version. 
+
+li records are only found in version 1.3 hives. For v1.3 hives, ri lists point to li lists. In v1.5 hives, ri lists always point to lh records.
+
+If we take relative offset 0x717020 from above and look at what it points to, we see this:
+
+![](20150820_RegistryHiveBasicsPart5Lists\ripointer.png)
+
+Can you tell what version hive this particular list came from based on the kind of list 0x717020 points to?
+
+Once you resolve the offsets in the ri list to the lists each ri offset points to, you can now process each list to get to the related NK records.
+
+Are we having fun yet?
+
+#### db list
+
+The final list we will discuss is the db list, also known as the big data case. A db list is used in a VK record and is used when a VK record's value data is very large (greater than 16344 bytes). db lists are only found in hives with version greater than 1.3.
+
+The db list structure is even simpler than the other lists we have seen.
+
+* Offset 0x00: Size (4 bytes)
+* Offset 0x04: Signature: (2 bytes)
+* Offset 0x06: Number of offsets (2 bytes)
+* Offset 0x08: Offset to offsets
+
+Here is an example of a db list.
+
+![](20150820_RegistryHiveBasicsPart5Lists\db.png)
+
+In this case, starting at offset 0x08, the relative offset to offsets is 0x078F30. If we add 0x1000 to this and look at it, we see this:
+
+![](20150820_RegistryHiveBasicsPart5Lists\off2Off.png)
+
+In the example above, after skipping the bytes that make up the size (-16), we get 2 relative offsets:
+
+0x07B020
+0x07F020
+
+These offsets contain the data for a VK record.
+
+With these offsets in hand, we can now read each offset in turn and concatenate the bytes found at each offset together to reassemble our complete VK value data.
+
+Each offset will point to a data record which is simply a size (32 bit signed int) followed by the data we are interested in.
+
+The beginning of the data (length is -16352) at relative offset 0x07B020 looks like this:
+
+![](20150820_RegistryHiveBasicsPart5Lists\dboff1.png)
+
+The END of the data at relative offset 0x07B020 looks like this:
+
+![](20150820_RegistryHiveBasicsPart5Lists\dboff1end.png)
+
+(This will become relevant in a second)
+
+The beginning of the data (length is also -16352) at relative offset 0x07F020 looks like this:
+
+![](20150820_RegistryHiveBasicsPart5Lists\dboff2.png)
+
+What you should notice here is that the data at the end if our first offset (0x07B020) is continued immediately in our second offset (0x07F020) after the length of the data cell.
+
+This process is continued for each offset. Once that process is done, you have your big data value as is shown below:
+
+![](20150820_RegistryHiveBasicsPart5Lists\bigvk.png)
+
+Note that both of our data records have size 16,352. If we take away the 4 bytes for the size, that leaves us 16,348. Since we have 2 of them, that makes 32,696 total bytes. Like every other VK record, we do not necessarily need all that data. Once the data is reassembled, you have to then honor the VK record's data length property (offset 0x08). In our example, the data length is 0x7D4C, or 32,076 in decimal, bytes. That leaves a difference of 620 bytes, which is a combination of value slack and padding.
+
+Earlier we said that db records are only found in hives with version greater than 1.3. Looking at the hive properties where the above value is, we can see that the version number is 1.5.
+
+![](20150820_RegistryHiveBasicsPart5Lists\vers.png)
+
+That's about it for lists and the Registry basics series. I hope you found it interesting. If there are any other topics you would like to see discussed, please hit me up in the usual places and let me know.
