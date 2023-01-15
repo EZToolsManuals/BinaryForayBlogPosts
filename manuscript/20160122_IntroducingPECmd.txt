@@ -1,10 +1,77 @@
-# TITLE
+# Introducing PECmd!
 
 Posted: 3rd January 2015
 
-BLOG POST GOES HERE
+Here is the initial version of Prefetch Explorer Command line (PECmd), version 0.5.0.0!
 
-## 
+Like my other command line programs, running it without arguments will display the options:
 
-![description](FOLDER\FILENAME)
+![](20160122_IntroducingPECmd\opt.png)
 
+As you can see, we need to specify either -f or -d. The rest of this post will demonstrate processing a single prefetch file since the -d option essentially does the same thing for all prefetch (*.pf) files found in the given directory. Additionally, the -d option processes directories recursively.
+
+So lets process a file!
+
+![](20160122_IntroducingPECmd\win71.png)
+
+In this example we see many of the defaults, including the keywords to highlight. We will discuss keyword highlighting below.
+
+At the top we can see the basics like executable name, the hash, and the version of the prefetch file. Below that is the run count and last run timestamp. When more than one run date/time is found, they will be displayed as shown below.
+
+![](20160122_IntroducingPECmd\moreRuns.png)
+
+After the last run information is the volume information sections. In most prefetch files there is only one volume as we can see above. We get information about the name of the device, when it was created, and its serial number.
+
+In this version, timestamps are converted  to the time zone of the machine where PECmd.exe is running. The next version will have a --utc switch that will display all timestamps in UTC time.
+
+For each volume, a listing of directories is maintained. These directories follow the volume information. We will see an example of a prefetch file with two volumes below.
+
+Finally we see a file listing. The executable is highlighted in yellow and any keyword hits are highlighted in red.
+
+#### Multiple volumes
+
+Here we can see a prefetch file that references multiple volumes, two in this particular case.
+
+As you can see, information is dumped about each volume, then a listing of all the directories is displayed. In the example below, notice how the last two entries (index 14 and 15) reference hard disk volume 3.
+
+Below that is the file listing and again we can see the executable was run from volume 3 as well. We can also see some temporary files were created which are highlighted (since they contain the string 'tmp').
+
+![](20160122_IntroducingPECmd\win7 2 vol.png)
+
+#### Looking for keywords
+
+Next, lets take a look at how you can augment the built in keywords. The -k switch allows you to supply a comma separated list of values you want to highlight in file names and/or directories. Be sure to surround the list with double quotes.
+
+In the example below, you can see the -k switch was used to provide two additional strings to highlight.
+
+![](20160122_IntroducingPECmd\win72.png)
+
+#### Exporting to json
+
+While this version only supports exporting to json, the next version should include other export formats such as csv.
+
+Using the --json switch followed by a directory name will export the parsed prefetch data to a json file. If the --pretty switch is used, a more human readable layout will be created. If you plan on ingesting the json data into other programs, it is recommended to not use the --pretty switch.
+
+When the -d switch is used with --json, each processed file will be saved to a unique filename in the directory specified.
+
+In the example below we are exporting json data to c:\temp which is then reflected at the end of processing (highlighted with a red outline)
+
+![](20160122_IntroducingPECmd\json.png)
+
+Since we used the --pretty switch, the file looks like this:
+
+![](20160122_IntroducingPECmd\jsonout.png)
+
+#### Processing Windows 10 prefetch files on operating systems less than Windows 8
+
+The Windows API contains support to decompress Windows 10 prefetch files starting with Windows 8. Since I rely on the Windows API to decompress prefetch files created on Windows 10, you must run PECmd.exe on at least Windows 8 in order to process Windows 10 files.
+
+If you attempt to run PECmd.exe on anything less than Windows 8, you will see the the following warning.
+
+![](20160122_IntroducingPECmd\win10lowerOS.png)
+
+This however, should not be a concern as everyone should be running Windows 10 these days! =)
+
+I hope you enjoy the initial release of PECmd! As usual you can find it here or on my Github page for PECmd, which is found [here](https://github.com/EricZimmerman/PECmd/releases).
+
+Please hit me up with bugs, new feature requests or questions! I would love to hear from you!
