@@ -1,10 +1,29 @@
-# TITLE
+# Registry values starting with a NULL character
 
-Posted: 3rd January 2015
+Posted: 19th January 2016
 
-BLOG POST GOES HERE
+On January 19, Harlan blogged here about Registry values that start with the NULL character (00). He wrote a plugin for RegRipper to detect such keys.
 
-## 
+After reading about it I wanted to see of my Registry code handled this case as well.
 
-![description](FOLDER\FILENAME)
+The test hive has two values located at Software\Microsoft\Windows\CurrentVersion\Run that look like this:
 
+![](20160119_RegistryValuesStartingWithANullCharacter\key.png)
+
+As you can see, there are two values in the Run key, but the names appear to have some empty space on the left side.
+
+If we look at the Technical details for this key and click on the 'Value count' property, we see this:
+
+![](20160119_RegistryValuesStartingWithANullCharacter\nk.png)
+
+So the NK record (the key) says there should be two values. So far so good!
+
+Looking at the Values tab shows us:
+
+![](20160119_RegistryValuesStartingWithANullCharacter\null.png)
+
+I clicked on the 'Name' property on the right side and the bytes that make up the name are highlighted. As you can see, there is a NULL character at the beginning of the string.
+
+Based on this, Registry Explorer, RECmd, and anything else that uses my Registry parsing code handles this use case with ease.
+
+Enjoy!
