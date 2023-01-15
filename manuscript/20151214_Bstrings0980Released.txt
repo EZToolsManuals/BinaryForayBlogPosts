@@ -1,10 +1,19 @@
-# TITLE
+# bstrings 0.9.8.0 released
 
-Posted: 3rd January 2015
+Posted: 14th December 2015
 
-BLOG POST GOES HERE
+Last week, the esteemed David Cowen [@HECFBlog](https://twitter.com/HECFBlog) reported a bug when using the -d option I recently added.
 
-## 
+Specifically, he reported an error related to long file names:
 
-![description](FOLDER\FILENAME)
+![](20151214_Bstrings0980Released\err.png)
 
+So I created some long file paths, added a fix, and then did some testing.
+
+Here is the before and after:
+
+![](20151214_Bstrings0980Released\bstrings long path support.png)
+
+So now you should be able to search arbitrary data for strings regardless of how crazy the paths get!
+
+Get it here or on [GitHub](https://github.com/EricZimmerman/bstrings).
