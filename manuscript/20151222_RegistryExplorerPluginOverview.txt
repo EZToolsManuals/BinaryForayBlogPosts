@@ -1,10 +1,131 @@
-# TITLE
+# Registry Explorer plugin overview
 
-Posted: 3rd January 2015
+Posted: 22nd December 2015
 
-BLOG POST GOES HERE
+On [this](http://binaryforay.blogspot.com/2015/07/registry-explorerrecmd-0710-released.html) post, Ashraf H commented:
 
-## 
+```
+It would nice if we have "Hex viewer", next to "Type viewer" for values, where we can quickly check raw binary data for values and open "Data Interpreter". Now I can only open "Data Interpreter" for values for type binary.
+I was checking "ControlSet001\Control\TimeZoneInformation" key in SYSTEM hive, "ActiveTimeBias", "Bias" and "DaylightBias" values of type RegDword are stored as signed integer, but they are interpreted by regedit and Registry Explorer as unsigned integers. I had to open "Technical Details" for "TimeZoneInformation" key, go to Values, click on "DaylightBias" and then move to "Value data" and copy value data to external data interpreter "FFFFFFC4" (LE) to know the right value "-60".
+```
+The key in question, ControlSet001\Control\TimeZoneInformation, looks like this:
 
-![description](FOLDER\FILENAME)
+![](20151222_RegistryExplorerPluginOverview\xwRegViewer.png)
 
+Here we can see the different values as Ashraf mentioned. The DWORD values are being interpreted by every Registry viewer I tried as unsigned ints, but if we treat them as signed ints, we can get different information, like RegRipper does:
+
+![](20151222_RegistryExplorerPluginOverview\rrExample.png)
+
+Notice here how we have the Bias and ActiveTimeBias and both are negative. Additionally we can also see the time zone names have been displayed in the same way they are shown in the values above.
+
+This kind of functionality is a perfect candidate for a plugin in Registry Explorer, so I started looking into the values in the TimeZoneInformation key. Most are straightforward but two of them are a bit more strange, StandardStart and DaylightStart. Both are REG_BINARY values whose data looks similar to this:
+00 00 0A 00 05 00 03 00 00 00 00 00 00 00 00 00
+X-Ways Forensics has an extensive time zone database in it and if we look at the values for UTC-1, it looks like this:
+
+![](20151222_RegistryExplorerPluginOverview\xwfutc1.png)
+
+We can see in the binary data 0x0A, which is 10 in decimal. This seems to correspond with the month for daylight end (the corresponding value in the Registry would be StandardStart). Additionally, we can see a 3 and a 5 in the binary data from the StandardStart value.
+
+To confirm this, I looked for time zones in X-Ways that used more of the fields, specifically the 'day of week' value. I settled on two time zones, UTC-3 Greenland and UTC-4 Santiago.
+
+X-Ways defines UTC-3 as follows:
+
+![](20151222_RegistryExplorerPluginOverview\xwutc3.png)
+
+And a Registry viewer shows this:
+
+![](20151222_RegistryExplorerPluginOverview\example.png)
+
+From what I have been able to tell, this breaks down as follows:
+```
+start   00 00 03 00 05 00 16 00 00 00 00 00 00 00 06 00
+hour   22
+day of week  6
+week of month  5
+month   3
+   00 00
+   03   Month
+   00
+   05   week of month
+   00
+   16 == 22 decimal hour
+   00
+   00   minute
+   00
+   00   second
+   00
+   00 00   millisecond?
+   06 00  day of week
+```
+When the same thing is done with UTC-4, it looks like this:
+
+```
+start   00 00 0A 00 02 00 17 00 3B 00 3B 00 E7 03 06 00
+hour   24
+day of week  6
+week of month  2
+month   10
+   00 00
+   0A == 10 Month
+   00
+   02   week of month
+   00
+   17 == 23 hour
+   00
+   3B == 59 minute
+   00
+   3B == 59 second
+   00
+   E7 03 == 999 millisecond?
+   06 00  day of week
+```
+
+Notice in that last example, for whatever reason, Microsoft is using essentially as close as they can to 24 (23 hours, 59 minutes, 59 seconds, and 999 milliseconds) and this corresponds to within 1 millisecond of what X-Ways shows for UTC-4:
+
+![](20151222_RegistryExplorerPluginOverview\xwutc4.png)
+
+Here is another example showing the relationship between the value data and X-Ways:
+
+![](20151222_RegistryExplorerPluginOverview\breakdown.png)
+
+With this information in hand, a new plugin was written: TimeZoneInformation.
+
+First, we can of course see the raw values in Registry Explorer by clicking on the corresponding key:
+
+![](20151222_RegistryExplorerPluginOverview\REValues.png)
+
+Now that we have a plugin that is interested in this key however, notice we get a new tab that contains far more useful information for us.
+
+![](20151222_RegistryExplorerPluginOverview\REPlugin.png)
+
+Here we can see not only the information we saw in RegRipper, but every other value as well including our newly decoded StandardStart and DaylightStart values.
+
+While this will most likely never be the key to break a case, we now have some insight into how Microsoft is storing time zone information and how that data relates to our forensic tools.
+
+This is merely one example of the powerful capabilities of plugins for Registry Explorer. Here are some screenshots of other plugins that are currently completed.
+
+![](20151222_RegistryExplorerPluginOverview\all.png)
+
+We have already seen the TimeZoneInformation plugin, so lets look at some others.
+
+### Recent documents
+
+![](20151222_RegistryExplorerPluginOverview\recentDocs.png)
+
+### User accounts
+
+![](20151222_RegistryExplorerPluginOverview\sam.png)
+
+### UserAssist
+
+![](20151222_RegistryExplorerPluginOverview\userassist.png)
+
+### AppCompatCache
+
+![](20151222_RegistryExplorerPluginOverview\appcompat.png)
+
+As usual, the plugins are all open source and available [here](https://github.com/EricZimmerman/RegistryPlugins).
+
+The next release of Registry Explorer should be out soon and will include these and (hopefully) more plugins. The plugins will then be used to generate reports, etc, so a lot of cool new stuff is coming!
+
+If there are any keys/values you want to see plugins for, please let me know!!
