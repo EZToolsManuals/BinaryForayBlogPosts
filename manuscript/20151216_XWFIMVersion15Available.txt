@@ -1,10 +1,48 @@
-# TITLE
+# XWFIM version 1.5 available!
 
-Posted: 3rd January 2015
+Posted: 16th December 2015
 
-BLOG POST GOES HERE
+I am happy to announce the availability of XWFIM v1.5. This is a complete rewrite which was done for several reasons including moving to C# and restructuring things in such a way to make future updates much easier (interfaces, removing duplicated code, etc).
 
-## 
+NOTE: IF YOU SEE THIS
 
-![description](FOLDER\FILENAME)
+![](20151216_XWFIMVersion15Available\err.png)
 
+INSTALL .NET 4.6. There is nothing I can do to gracefully catch this error,
+
+The first time you start XWFIM you will be prompted to provide credentials.
+
+![](20151216_XWFIMVersion15Available\1.png)
+
+This version now supports dongle and BYOD versions of X-Ways Forensics as well as Investigator and Imager.
+
+![](20151216_XWFIMVersion15Available\2.png)
+
+Once at least one set of credentials is entered, installation is possible.
+
+The Install type radio button will change depending in what credentials were entered.
+
+![](20151216_XWFIMVersion15Available\3.png)
+
+As you can see, the interface has been streamlined and unnecessary options were removed such as whether or not to install the viewer component. Additionally, the validation option has been removed from the main window and moved to its own form under the Tools menu.
+
+The status messages have also been improved to show you the last time X-Ways was modified, both locally and on the remote server.
+
+Other new features:
+
+* Bookmarks menu added to main menu
+* Validation log is now Excel based vs a text file
+* Support for Imager added
+* Ability to create WinHex shortcuts
+* Shortcuts are automatically set to 'Run as administrator' when created
+* Shortcuts now include the version of X-Ways the shortcut points to. This allows for using XWFIM to install multiple versions of X-Ways (when 'Append version #' is checked)
+* Create portable installation updated to support newer versions of X-Ways (2 hash databases, change to location of external editor, etc)
+* XWFIM will now detect what has been installed in the last directory used. For example, if Forensics is installed in c:\xwf and then the install type is changed to Imager, a warning will be displayed in the status messages indicating this so you to not overwrite your current installation inadvertently
+
+![](20151216_XWFIMVersion15Available\4.png)
+
+and a lot more!
+
+Because this is a new version, older versions will NOT auto update. You can get this version manually here.
+
+Enjoy!
