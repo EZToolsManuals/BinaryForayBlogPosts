@@ -1,10 +1,17 @@
-# TITLE
+# Windows Prefetch parser in C#
 
-Posted: 3rd January 2015
+Posted: 19th January 2016
 
-BLOG POST GOES HERE
+NOTE: Here is a [link](http://binaryforay.blogspot.com/2016/01/pecmd-v0600-released.html) to a post on PECmd, my command line parser that uses the code that is discussed below.
 
-## 
+I recently completed a Windows Prefetch file parser in C# that is available [here](https://github.com/EricZimmerman/Prefetch).
 
-![description](FOLDER\FILENAME)
+This project will serve as the basis for a GUI and Cmd line tool similar to how ShellBags Explorer and SBECmd work.
 
+There is a TON of data in these things and I hope this project will enable people to do more research into things to find new ways to use Prefetch files.
+
+What do you want a Prefetch tool to do? Leave your requests in the comments or hit me up via email!
+
+Here is an example of the kind of information that is exposed:
+
+![](20160119_WindowsPrefetchParserInCSharp\2016-01-19_14-18-01.png)
