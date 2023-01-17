@@ -1,10 +1,87 @@
-# TITLE
+# PECmd v0.6.0.0 released
 
-Posted: 3rd January 2015
+Posted: 26th January 2016
 
-BLOG POST GOES HERE
+Changes in this version include:
 
-## 
+* New: Added --local switch to display dates as local time of machine PECmd is running on vs UTC (which is now the  default in the Prefetch project as well)
+* New: Added --csv switch that accepts a path to a file to save csv (tab separated) output to
+* New: Added source created, modified, and accessed timestamps to output
+* New: Added processing duration to output, both for individual files and the overall process
+* New: Added command line to output
+* New: Added -q for quiet output that suppresses volume, directory, and file output. This speeds up processing when using --json and/or --csv
+* Change: Refactor Prefetch project in reference to getting byte arrays for speed resulting in 10x or so faster processing
+* Change: Some output language tweaks
+* Fix: Fix issue getting 8th run time in Version 26 and version 30 pf files
+* Fix: Fix # of directories when processing XP/2003 pf files as this version doesn't contain a total directory count like other versions
 
-![description](FOLDER\FILENAME)
+### New stuff
 
+#### Performance tuning
+
+With version 0.5.0.0 out, I wanted to do some performance tuning to see if there were any hot spots in the code that were less than optimal. Several instances of the same type of code were found that caused things to be slower than they needed to be.
+
+Based on the performance testing I was able to change the way I was accessing the byte array containing the different structures and after changing this throughout the code base, files are processed pretty much instantaneously. 
+
+#### New command line options
+
+![](20160126_PECmdv0600Released\options.png)
+
+There are three new options in this version, q, csv, local.
+
+#### Local
+
+In this version, all timestamps will be displayed by default in UTC. The local switch will convert the timestamps to the timezone of the computer that is running PECmd. Note however that json output will always be in UTC regardless of the local switch being used.
+
+#### csv
+
+The csv switch takes a path to file where all prefetch parsing results will be saved to. The separator for fields is a tab character as some of the other fields contain a comma which would screw up parsing.
+
+Here is an example of what the file looks like in a text editor.
+
+![](20160126_PECmdv0600Released\csv.png)
+
+To open the file in Excel, open Excel, then use the 'Get data from text' option. Check the 'My data has headers' option in the wizard and click finish.
+
+The csv output has the following columns:
+
+Note: Populated when more than 2 volumes are found in a prefetch file. This is a rare occurrence.
+SourceFilename: The full path to the pf file processed
+SourceCreated: The created timestamp for the pf file
+SourceModified: The modified timestamp for the pf file
+SourceAccessed: The last accessed timestamp for the pf file
+ExecutableName: The name of the executable tracked by the pf file
+Hash: The calculated hash for the pf file. This should match the hash in the source file name.
+Size: The size in bytes of the executable
+Version: The operating system that generated the prefetch file 
+RunCount: How many times the executable was run
+LastRun: The last time the executable was run
+PreviousRun0-PreviousRun6: For Windows 8 and newer, up to the last 7 times the executable was run is displayed. For version with only a single timestamp, these columns are empty
+Volume0Name: The first volume name found
+Volume0Serial: Serial # of the first volume
+Volume0Created: Volume created timestamp
+Volume1Name: If > 1 volume, the second volume
+Volume1Serial: If > 1 volume, the second serial #
+Volume1Created: If > 1 volume, the second created timestamp
+Directories: A comma separated list of all directories accessed by the executable
+FilesLoaded: A comma separated list of all files that were loaded by the executable
+
+#### q
+
+The q switch (for quiet) will significantly reduce the output displayed as processing happens. When processing a lot of prefetch files to json or csv, use this option to get your results as fast as possible.
+
+For example, processing all of the files in the Prefetch test suite without the q option looks like this:
+
+Processed 55 files in 2.2649 seconds
+
+With the q option, it looks like this:
+
+Processed 55 files in 0.3933 seconds
+
+#### Other stuff
+
+Finally, this version includes a few cosmetic tweaks to the output such as how long it took to parse a file, adding the command line arguments to the output, the total time to process all files (when using -d), and the MAC timestamps of the pf file itself.
+
+That's it for this version. Please let me know what you think!
+
+You can get it here.
