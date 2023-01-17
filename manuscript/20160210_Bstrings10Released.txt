@@ -1,10 +1,70 @@
-# TITLE
+# bstrings 1.0 released!
 
-Posted: 3rd January 2015
+Posted: 10th February 2016
 
-BLOG POST GOES HERE
+While browsing https://www.reddit.com/r/computerforensics/ today, forensium asked for some changes to bstrings such as:
 
-## 
+* Being able to supply the Code page when searching for non-Unicode (I will refer to this as ASCII) strings
+* Being able to supply the range of characters when searching for Unicode and ASCII
+* Being able to supply a file mask such as *.dll, or *.exe 
 
-![description](FOLDER\FILENAME)
+After reading his post, I took a look at the code and made implemented his requests by adding several new switches:
 
+* ar: ASCII character range. This should be specified as a regular expression, such as **[\x20-\x7E]**
+* ur: Unicode character range. This should be specified as a regular expression, such as **[\u0020-\u007E]**
+* mask: When used with the -d switch, allows for specifying a wildcard (* and ? are supported), so you can do something like -d C:\windows\system32 --mask "*.dll"
+* cp: The identifier of the codepage to use. 1252 is the default, but if you really wanted to search for IBM EBCDIC Turkish encoded strings, you can do --cp 20905 and go crazy
+
+With that, here is what the new options looks like:
+
+![](20160210_Bstrings10Released\options.png)
+
+### Masks
+
+To demonstrate the --mask switch, lets look for dll's in one of my temp folders:
+
+![](20160210_Bstrings10Released\mask.png)
+
+Here you can see *.dll was expanded to the two dll files in the specified directories.
+
+In addition to the --mask switch, we limit our results to strings over 50 characters to keep things simple. Easy! 
+
+Note: --mask only works when using the -d switch!
+
+### Specifying ranges of characters to search for
+
+Next, let's take a look at the --ar and --ur switches (although we will only demonstrate one of them for simplicity).
+
+To demonstrate the effect, let's only look for ASCII hits (so we disable Unicode searching with -u off) that are 35 characters or longer.
+
+![](20160210_Bstrings10Released\arBefore.png)
+
+As you can see, we found 36 strings using the default range of "[\x20-\x7E]".
+
+Now let's change our range of characters to "[\x20-\x47]" by using the --ar switch:
+
+![](20160210_Bstrings10Released\arAfter.png)
+
+As you can see here, we have limited the characters we are interested to numbers, some symbols, the space character, etc.
+
+Because of this, we have a lot less hits from the initial search above.
+
+The --ur switch works exactly the same way.
+
+### Code pages
+
+Finally, let's get crazy with the --cp switch!
+
+You can get a list of all the valid code page identifiers here.
+
+Using the default code page (1252), we get back 520 strings in 0.059 seconds (full output truncated for brevity):
+
+![](20160210_Bstrings10Released\defaultCP.png)
+
+But if we change the code page, things change:
+
+![](20160210_Bstrings10Released\newCP.png)
+
+So now if you are looking for data in any of the supported .net encodings, you can find it!
+
+You can get the latest here and [here](https://github.com/EricZimmerman/bstrings).
