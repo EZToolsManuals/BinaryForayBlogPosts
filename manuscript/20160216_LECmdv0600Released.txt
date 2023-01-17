@@ -1,10 +1,58 @@
-# TITLE
+# LECmd v0.6.0.0 released!
 
-Posted: 3rd January 2015
+Posted: 16th February 2016
 
-BLOG POST GOES HERE
+Changes in this version include:
 
-## 
+NEW: Added -q switch for quiet operation. Useful to suppress output to screen when using the various export options
+NEW: Added --xml switch for XML output. This expects a directory name
+NEW: Added --html switch for Html (well, xhtml + css) output. This expects a directory name
 
-![description](FOLDER\FILENAME)
+CHANGE: Handle cases where people use strange options for some of the switches
 
+FIX: Corrected flip flopped TargetModified and TargetLastAccessed timestamp in output. The parser is right, but LECmd had the properties reversed.
+
+I did some general refactoring here and there as well.
+
+
+Let's take a look at some of the changes
+
+When exporting to csv, html, xml, and/or json, the -q switch prevents LECmd from displaying all the details about a lnk file. This greatly speeds up processing.
+
+Without using -q, processing 998 lnk files takes around 20 seconds, but if we use -q, the same processing is far quicker, as can be seen below.
+
+![](20160216_LECmdv0600Released\qq.jpg)
+
+As you can see, we now finish the job in 1.03 seconds!! Not too shabby
+
+LECmd already supported json export, but this release adds XML (which works the same as exporting json) and HTML export options.
+
+XML export is basically the same data available in CSV export, but in XML format, as seen below:
+
+![](20160216_LECmdv0600Released\xml.jpg)
+
+When LECmd exports XML, it is all on a single line. I formatted things in the image above so you can see the kinds of info available in there.
+
+LECMD can also generate a nice HTML report for your lnk files. Using the --html switch results in a new folder being created in the directory passed into the --html switch.
+
+For example, if you exported HTML to c:\Temp, your HTML results would be created in:
+
+c:\temp\20160216205056_LECmd_Output_for_c_Temp_
+
+The new folder starts with a timestamp followed by 'LECmd', followed by the path processed (with colons and slashes converted to underscores).
+
+Inside this folder will be three files:
+
+index.xhtml
+normalize.css
+style.css
+
+The css files control the look and feel of the report, so if you are into customization you can change these to suit your tastes.
+
+index.xhtml contains all the data and, when combined with the css definitions, ends up looking like this in a browser (I used Chrome, but any should work):
+
+![](20160216_LECmdv0600Released\HTML.jpg)
+
+That's it for this release. Get it here or on Github.
+
+P.S. PECmd will also be getting HTML export in its next release
