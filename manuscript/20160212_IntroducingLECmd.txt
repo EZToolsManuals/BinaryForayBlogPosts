@@ -153,6 +153,7 @@ In both examples, notice how any failed files are displayed at the end along wit
 Finally, there are two options to suppress displaying of data, --nid and --neb. When these switches are used, either the Target ID information and Extra blocks information will be suppressed. These switches can speed up processing a large volume of lnk files as all of the data in those two sections won't need to be displayed.
 
 #### That's it!
+
 That sums up everything LECmd can do for you. You can get LECmd here or [here](https://github.com/EricZimmerman/LECmd/releases).
 
 If there is anything else you want LECmd to do, or you find a lnk file it cannot handle, please reach out to me so I can get the issue resolved or add your feature request for you.
