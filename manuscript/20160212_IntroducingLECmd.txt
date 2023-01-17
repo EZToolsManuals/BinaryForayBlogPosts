@@ -1,10 +1,158 @@
-# TITLE
+# Introducing LECmd!
 
-Posted: 3rd January 2015
+Posted: 12th February 2016
 
-BLOG POST GOES HERE
+LECmd, or Lnk Explorer Command line edition, is a tool to decode all available information contained in shortcut files found on Windows operating systems.
 
-## 
+For some background on lnk files, start here and to get really in the weeds, check out Microsoft's documentation [here](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/16cb4ca1-9339-4d0c-a68d-bf1d6cc0f943?redirectedfrom=MSDN) as well as Joachim Metz documentation [here](https://github.com/libyal/liblnk/blob/main/documentation/Windows%20Shortcut%20File%20(LNK)%20format.asciidoc).
 
-![description](FOLDER\FILENAME)
+### Why create another lnk processing tool?
 
+In short, because existing tools didn't expose all available data structures and/or silently dropped data structures. 
+
+In my opinion, the worst sin a forensics tool vendor can commit is to silently drop data without any warning to an end user. To arbitrarily choose to report or withhold information available from a file format takes the decision away from the end user and can lead to an embarrassing situation for an examiner. If tools reported to end users about the presence of additional data, the end user could then look into what was missing and decide whether or not the data not being shown is forensically relevant to their case.
+
+I also have need for handling lnk files in several of my other programs. Prior to this I was using Shellify, but found it was doing some things I didn't like or it didnt understand certain data structures.
+
+The core functionality in LECmd comes via my Lnk project, which is open source and available [here](https://github.com/EricZimmerman/Lnk).
+
+LECmd is also open source and can be found [here](https://github.com/EricZimmerman/LECmd).
+
+### LECmd overview
+
+As with most of my tools, running without any arguments will display all available options:
+
+![](20160212_IntroducingLECmd\opt.png)
+
+If you are familiar with [PECmd](http://binaryforay.blogspot.com/2016/01/pecmd-v0600-released.html), my prefetch tool, the options will look very similar.
+
+#### Processing a single file
+
+In the next section we will look at the different parts of the output individually in order to keep the images a bit smaller.
+
+To process a single file, use the -f switch, as seen below:
+
+![](20160212_IntroducingLECmd\top.png)
+
+#### Header and other information
+
+Here we can see things such as the source file, its Created, Modified, and accessed timestamps, and the lnk file Header information.
+
+The header contains the lnk file's target Created, Modified, and accessed timestamps, the target's size, flags, etc. Depending on the flags present in the header, additional information is available such as working directory, relative path, etc.
+
+The flags in the header also determine what other structures are available in the lnk file. You will see some of these structures in more detail below.
+
+#### Link information
+
+The next section, if present (i.e. the HasLinkInfo flag is set), is the Link information.
+
+The Link information section also has flags that determines what structures live within the bytes that make up the Link information.
+
+As you can see below a flag is set that tells us there is a Volume information structure. This structure contains such things as the serial number and type of drive the lnk file's target lives on.
+
+![](20160212_IntroducingLECmd\link.png)
+
+In some cases, the Link information will contain a different flag, CommonNetworkRelativeLinkAndPathSuffix. When this flag is present, we get additional information such as a UNC path to a share, the type of share, and so on.
+
+#### Target ID information
+
+The next section, again only present if a flag is set, is the Target ID information. It looks like this:
+
+![](20160212_IntroducingLECmd\targetid.png)
+
+This structure contains shell items that are very similar to what is found in Shellbags including MFT information, timestamps, and so on.
+
+Looking at the top of the image above, we see an Absolute path.
+
+NOTE: Absolute path is NOT stored in the lnk file. This path is calculated by looking at all the shell item structures that are present and building the complete path from them.
+
+The absolute path is nice because it can resolve things for you that you cannot see in the relative path we saw above. If you had an image of the hard drive you could always recreate this but this saves you time.
+
+Each section in the Target ID information section starts with a dash followed by the type of shell item, followed by the value. When more information is present, such as in directory or file shell items, additional information from extension blocks is shown.
+
+As you can see above, our old friend, Beef0004, is alive and well in lnk files just as in shell bags.
+
+#### Extra blocks information
+
+Finally, we have the the extra blocks information section. This section can contain many different kinds of information ranging from console properties to serialized property store structures. here is an example of a Console data block:
+
+![](20160212_IntroducingLECmd\console.png)
+
+#### Property store data block
+
+Getting back to our original lnk file we processed, in the image below, we can see several extra blocks including a property store and tracker database block, both of which are discussed below.
+
+![](20160212_IntroducingLECmd\extra.png)
+
+The Property store data block contains a list of key/value pairs and an associated GUID. A GUID plus a key relates to a certain type of information that is consistent in property store structures.
+
+In the example above, the GUID/key pair:
+
+46588ae2-4cbc-4338-bbfc-139326986dce\4    
+
+maps to a description of:
+
+SID
+
+and the value of this GUID/key pair is:
+
+S-1-5-21-2092377875-1431633947-1539857752-1075
+
+Here is another example of the various kinds of information contained in the property store data block:
+
+![](20160212_IntroducingLECmd\ps1.png)
+
+#### Tracker database block
+
+The Tracker database block contains things such as the NETBIOS name of the computer where the lnk was generated as well as as several GUIDs pertaining to the volume and target file.
+
+The GUIDs used in lnk files are generation one GUIDs and based on this, we can extract the MAC address of the computer and a timestamp from the File Droid GUID.
+
+The File droid GUID in this case is 31a6cdbd-319f-11df-b163-001e4ff01cc7 and if you look at the last part of the GUID, 001e4ff01cc7, you can see this is corresponds to the MAC address.
+
+There is also a formula for extracting the timestamp for the GUID. This timestamp becomes the Creation timestamp in the Tracker database block.
+
+LECmd takes things one step further in that it resolves the vendor who made the network device. In the above image, we see the MAC vendor is Dell. As with the absolute path, the vendor is not stored in the lnk file itself.
+
+#### Export options
+
+LECmd can export the entire data structure of lnk files to json files and optionally pretty format the information, as seen below:
+
+![](20160212_IntroducingLECmd\jsonpretty.png)
+
+This lets you ingest lnk data into any other system that understands json data.
+
+When exporting json data, one json file will be created for each lnk file processed.
+
+You can also export to CSV (well, its tab separated, but you get the idea). When exporting to CSV, one CSV file will be created for all lnk files processed.
+
+For example, if we process a directory and export to CSV as seen below:
+
+![](20160212_IntroducingLECmd\dircsv.png)
+
+We get a file that looks like this:
+
+![](20160212_IntroducingLECmd\csv.png)
+
+Which can then be imported into Excel and ends up looking like this:
+
+![](20160212_IntroducingLECmd\ex.png)
+
+LECmd is also fast! Here we can see we processed 998 out of 999 images in about 20 seconds. Most of that time is due to displaying the data to the screen.
+
+![](20160212_IntroducingLECmd\dirp.png)
+
+If we redirect the output to a file, things speed up dramatically, like this:
+
+![](20160212_IntroducingLECmd\dirpp.png)
+
+In both examples, notice how any failed files are displayed at the end along with the reason the file could not be parsed.
+
+#### Suppressing data
+
+Finally, there are two options to suppress displaying of data, --nid and --neb. When these switches are used, either the Target ID information and Extra blocks information will be suppressed. These switches can speed up processing a large volume of lnk files as all of the data in those two sections won't need to be displayed.
+
+#### That's it!
+That sums up everything LECmd can do for you. You can get LECmd here or [here](https://github.com/EricZimmerman/LECmd/releases).
+
+If there is anything else you want LECmd to do, or you find a lnk file it cannot handle, please reach out to me so I can get the issue resolved or add your feature request for you.
