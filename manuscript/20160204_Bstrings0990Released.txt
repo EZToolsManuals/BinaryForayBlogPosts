@@ -1,10 +1,46 @@
-# TITLE
+# bstrings 0.9.9.0 released!
 
-Posted: 3rd January 2015
+Posted: 4th February 2016
 
-BLOG POST GOES HERE
+A few days ago on Twitter Jared Greenhill [asked](https://twitter.com/jared703/status/693833460771901441) if bstrings supported showing the offsets to strings. This is something I have been planning to add support for for a while now and it is now complete!
 
-## 
+The following changes have been made in this version:
 
-![description](FOLDER\FILENAME)
+- Added --off switch to show offsets of string hits. The encoding of hit will be shown in parenthesis after the offset (A=1252, U=Unicode)
+- Change from UTF8 to Windows-1252 encoding to find non-Unicode strings
 
+![](20160204_Bstrings0990Released\opt.png)
+
+As an example, without the offset switch, searching against a Registry hive results in the following:
+
+![](20160204_Bstrings0990Released\without.png)
+
+The --off switch changes things in that the offset to each hit will be added to the output, along with an indicator of how the string was encoded (A for 1252 and U for Unicode).
+
+With the -off switch present we get a different result:
+
+![](20160204_Bstrings0990Released\with.png)
+
+Notice now we have many more strings. This is because in the previous search, duplicate strings are discarded but when using --off, every instance of every string is reported.
+
+Here is a snippet of search results:
+
+![](20160204_Bstrings0990Released\hit list.png)
+
+In the results above we can see a string at offset 0x8B526.  After the offset is an indicator of the encoding for the particular hit. An A indicates a match using the [Windows-1252](http://www.wikiwand.com/en/Windows-1252) encoding and a U indicates a Unicode ([UTF-16](http://www.wikiwand.com/en/UTF-16)) hit.
+
+Jumping to this offset in a hex editor shows the following:
+
+![](20160204_Bstrings0990Released\ascii hit.png)
+
+As you can see, the string listed starts at the referenced offset.
+
+If we look at offset 0x75AA2, we can see a Unicode string:
+
+![](20160204_Bstrings0990Released\unicode hit.png)
+
+You can sort the results as well using --sl and --sa depending on your needs.
+
+That is it for this release! If there's anything else you want me to add, please let me know!
+
+You can get it here or on [Github](https://github.com/EricZimmerman/bstrings/releases).
