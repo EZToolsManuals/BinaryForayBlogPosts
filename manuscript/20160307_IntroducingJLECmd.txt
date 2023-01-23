@@ -1,10 +1,125 @@
-# TITLE
+# Introducing JLECmd!
 
-Posted: 3rd January 2015
+Posted: 7th March 2016
 
-BLOG POST GOES HERE
+JLECmd, or Jump List Explorer Command line edition, is a tool to decode information contained in custom and automatic destinations jump list files found on Windows operating systems, starting with Windows 7 and continuing through Windows 10.
 
-## 
+If you are unfamiliar with jump list files, a previous post, found [here](http://binaryforay.blogspot.com/2016/02/jump-lists-in-depth-understand-format.html), provides background on jump lists including how they are structured and what information they contain.
 
-![description](FOLDER\FILENAME)
+### Why create another jump list processing tool?
 
+Mostly for the same reasons I wrote my other tools: existing ones either didn't work (i.e. no support for Windows 10) or didn't work well enough (IMO).
+
+The core functionality in JLECmd comes via my [Jump List](https://github.com/EricZimmerman/JumpList) project which in turn uses my [Lnk project](https://github.com/EricZimmerman/Lnk), both of which are open source.
+
+JLECmd is also open source and can be found [here](https://github.com/EricZimmerman/JLECmd).
+
+### JLECmd overview
+
+As with most of my tools, running without any arguments will display all available options:
+
+![](20160307_IntroducingJLECmd\jleMain.jpg)
+
+Most of these options will be very familiar if you have used any of my other tools.
+
+To process a single file, use -f and the path to the jump list you want to process.
+
+![](20160307_IntroducingJLECmd\f switch.jpg)
+
+At the top we see information about the AppID and its description. JLECmd has many built in AppID descriptions and when a match is found, the program the jump list relates to is shown. In this case, we are looking at Windows Explorer.
+
+Since this is an automatic destination jump list, information about the DestList is displayed which includes how many expected entries there should be as well as the actual number of entries that were found. This lets you see any discrepancies between the two.
+
+Below that, each DestList entry is displayed including the entry number, the path, the created and modified dates, host name and MAC address. Below that is the target created, modified, and last access time stamps along with the absolute path the related lnk file points to.
+
+The information about lnk files is kept at a minimum, but to get a bit more detail, use the --ld switch for more lnk detail. Here is an example of this:
+
+![](20160307_IntroducingJLECmd\f switch ld.jpg)
+
+The additional information in this case is highlighted in the red box. If you need to see ALL lnk detail, the best option is to export all embedded lnk files and then use LECmd to analyze them. We will discuss extracting lnk files below.
+
+Custom destinations jump lists work more or less the same way, but custom jump lists do not have DestList information.
+
+We will have the AppID but after that, it is only embedded lnk files. Here is an example of what we can see from a custom destinations jump list.
+
+![](20160307_IntroducingJLECmd\custom.jpg)
+
+Here is the same file using the --ld switch with the additional information highlighted:
+
+![](20160307_IntroducingJLECmd\custom ld.jpg)
+
+I recently added high precision time stamp support to LECmd and this functionality is also included in JLECmd via the --mp switch. Here you can see the additional time stamp resolution when using this switch.
+
+![](20160307_IntroducingJLECmd\f switch mp.jpg)
+
+You can also specify your own time stamp format using the --dt switch and any of the standard .net DateTime format strings. Here we are using a format string of "ddd MMM dd yyyy HH:mm:ss.fff K" which results in the output seen below:
+
+![](20160307_IntroducingJLECmd\f switch dt.jpg)
+
+These options are also honored when exporting data to CSV and HTML as well.
+
+#### Exporting lnk files
+
+As we have already discussed, jump lists are full of embedded lnk files. JLECmd has an option, --dumpTo, that allows for exporting all of these lnk files to a directory. Once exported, any other tool can be used to further analyze the lnk files.
+
+Here we are using the -d switch to recursively process a directory for all automatic and custom destinations jump lists. We are dumping lnk files to c:\temp and are also using the -q switch to minimize output so things process faster.
+
+![](20160307_IntroducingJLECmd\DumpingLnk.jpg)
+
+When processing is complete, any failed files are listed at the bottom of the output along with the reason the file couldn't be processed. In the example below, the custom destinations jump lists were empty and contained no lnk files.
+
+![](20160307_IntroducingJLECmd\DumpFinished.jpg)
+
+After the export is finished, the Temp folder will contain several new folders based on the name of the processed jump list. These directories will contain the embedded lnk files.
+
+Here is a partial listing of the lnk files that were exported above.
+
+![](20160307_IntroducingJLECmd\exportedLnks.jpg)
+
+Windows Explorer shows us that c:\temp contains 4,938 lnk files.
+
+![](20160307_IntroducingJLECmd\lnkTotal.jpg)
+
+Now we can point any other tool at these lnk files. The image below shows LECmd processing all of these lnk files and as you can see, LECmd processed all 4,938 files without issue.
+
+![](20160307_IntroducingJLECmd\LECmdExported.jpg)
+
+#### Generating reports
+
+JLECmd supports exporting to CSV, json, and HTML. We have seen examples of json output before, so we will not cover that again.
+
+When generating reports, all of my tools expect a directory path vs. a file. The current versions of LECmd and PECmd expect a file, but this will be changed in the next release of both tools so all of the tools are consistent.
+
+Here we are processing the same directory we saw earlier, but are exporting to CSV and HTML:
+
+![](20160307_IntroducingJLECmd\export1.jpg)
+
+Export results will be created separately for automatic and custom destinations jump lists depending on what types of jump lists were found.
+
+![](20160307_IntroducingJLECmd\export2.jpg)
+
+Looking in our target directory, we can see several new files and folders.
+
+![](20160307_IntroducingJLECmd\export3.jpg)
+
+In both examples below, notice how our more precise time stamps are reflected in the data.
+
+The TSV files can then be imported into Excel, like this:
+
+![](20160307_IntroducingJLECmd\excel.jpg)
+
+The HTML output option exports to an XML file and uses CSS to display things in a user friendly manner.
+
+Index.xhtml looks like this:
+
+![](20160307_IntroducingJLECmd\xml.jpg)
+
+and when opened in a browser, is transformed into this:
+
+![](20160307_IntroducingJLECmd\html.jpg)
+
+Jump lists have some strangeness to them when it comes to the embedded lnk files. If you run into any jump lists that fail to process, please contact me and I will get things resolved ASAP.
+
+Feedback and feature requests are of course always welcome!
+
+You can get JLECmd at the usual place.
