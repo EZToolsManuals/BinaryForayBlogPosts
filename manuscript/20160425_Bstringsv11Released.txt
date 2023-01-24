@@ -1,10 +1,51 @@
-# TITLE
+# bstrings v1.1 released!
 
-Posted: 3rd January 2015
+Posted: 25th April 2016
 
-BLOG POST GOES HERE
+I have been nominated for a Forensic 4cast award for Digital Investigator of the year. In 2014, I won a 4cast award for the Forensic book of the year category for my X-Ways Forensics book.
 
-## 
+Please take a moment and vote at the URL below:
 
-![description](FOLDER\FILENAME)
+https://forensic4cast.com/forensic-4cast-awards/
 
+And now, on to our regularly scheduled change logs...
+
+Several weeks ago, [Mark Woan](https://twitter.com/woanware) emailed me and asked if I could add the ability to supply a file containing strings to search for (and by extension, regex patterns). He also wanted the ability to suppress output to the screen of strings that were found.
+
+To accommodate Mark's requests, the following things were added to bstrings for this release:
+
+* Add -s switch to suppress output to console. Useful when used with -o
+* Add --ro switch to show only the string that matches a regex vs. the entire string where the regex was found
+* Add --fs and --fr switches which allow for supplying a file containing search terms to look for (--fs) or a file containing regex patterns (--fr). Both files expect one search term/regex per line
+
+This version also saw a change to the regex pattern used for email and a nuget package update.
+
+Once I added the --fs and --fr switches and got things working, I started refactoring code and in doing so made an additional improvement in that you can now use any combination of switches to supply search terms and/or regex patterns. I also threw some performance tuning into this release.
+
+### Some examples
+
+In the example below, notice how I provided both a regex pattern and a string to search for:
+
+![](20160425_Bstringsv11Released\bs11.jpg)
+
+Of course I could have used either, or both, of the --fs and --fr switches to further extend my searches.
+
+This now allows you to do one search using as many different search terms/regexes as necessary and bstrings will do the work in one pass vs. having to do a bunch of different searches with bstrings to get the same results.
+
+#### --ro
+
+If we do the same search as above but add the --ro switch, this is what we get:
+
+![](20160425_Bstringsv11Released\bs112.jpg)
+
+In the first search, we can see a '&' before the second gmail hit and a phone number after each hit. In the search above, the extra data has been removed and only the string matching the regex pattern is shown. This gives you more flexibility in pulling out only the strings you are interested in finding vs seeing the regex in context with the rest of the string around it.
+
+#### --fr and --fs
+
+When using the --fr and --fs switches, create a text file and then add one string or regex pattern per line, save the file, and supply the full path to the --fr or --fs switch. bstrings will then read the file and add each entry to the list of items to search for
+
+#### -s
+
+Finally, the -s switch will suppress showing any hits to the console. This is primarily useful when using the -o switch to save results to a file. but it can also be used if you just want to see how many hits were found in a file vs having to wait for them all to be listed.
+
+Enjoy!
