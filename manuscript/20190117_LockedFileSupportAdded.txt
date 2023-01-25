@@ -1,6 +1,6 @@
-# TITLE
+# Locked file support added to AmcacheParser, AppCompatCacheParser, MFTECmd, ShellBags Explorer (and SBECmd), and Registry Explorer (and RECmd)
 
-Posted: 3rd January 2015
+Posted: 17th January 2019
 
 BLOG POST GOES HERE
 
