@@ -1,10 +1,19 @@
-# TITLE
+# A fluery of updates!
 
-Posted: 3rd January 2015
+Posted: 30th May 2018
 
-BLOG POST GOES HERE
+Pretty much all my software has been updated.
 
-## 
+The biggest changes include switching to comma separators in all of the command line tools by default. The option to export to TSV is still there via the '--cs false' switch/value.
 
-![description](FOLDER\FILENAME)
+Other changes include adding a warning to the command line tools if they are run without admin rights.
 
+Timeline Explorer was updated with new 3rd party controls and nuget packages as well as support for importing csv separator files from my software. TLE was also tweaked to better handle file types not natively supported (ie random csv files or Excel files).
+
+Registry Explorer export to Excel format was tweaked so allow the timestamps to be treated as timestamps in Excel once opened. Prior to this the timestamps were being treated as strings.
+
+Shellbags Explorer had its controls updated as well. SBECmd was tweaked to be able to walk a directory like c:\users and find all the Registry hives. Prior to this, SBE would error out if it ran into a directory it was not allowed to go in. This shouldnt happen any more.
+
+Both http://ericzimmerman.github.io/ and chocolatey have been updated
+
+Enjoy!
