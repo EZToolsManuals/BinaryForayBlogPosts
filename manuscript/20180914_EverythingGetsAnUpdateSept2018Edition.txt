@@ -1,10 +1,54 @@
-# TITLE
+# Everything gets an update, Sept 2018 edition
 
-Posted: 3rd January 2015
+Posted: 14th September 2018
 
-BLOG POST GOES HERE
+All of my software has been updated (well, almost all). Here is a list of what's changed
 
-## 
+### General
 
-![description](FOLDER\FILENAME)
+* nuget package updates
+* 3rd party control updates
+* Moving away from LibZ to Fody.Costura (this makes all my software work on FIPS enabled machines. For the 5 of you that enabled FIPS, enjoy!)
+* Better error messages (which means easier fixes)
 
+The programs listed below had additional changes beyond what is listed above.
+
+IT IS RECOMMENDED TO UPDATE EVERYTHING REGARDLESS
+
+### WxTCmd
+
+* Handle situation where one of the tables does not exist
+
+### Hasher
+
+* Add skin support
+* BIG update from a 3rd party control standpoint
+
+Timeline Explorer
+
+* Add CTRL-Up (return to top row), CTRL-Down (go to last row), CTRL-Left (go to leftmost column), and CTRL-Right (go to rightmost column) shortcut keys per this request
+* Added file support for an internal Microsoft format and kape
+
+### ShellBags Explorer
+
+* New GUIDs
+* Several new ShellItem types
+* Improved handling of zip content shellitem types
+* Added Summary tab which contains the most important information about the selected shellitem
+* Made the Details tab look better
+* The selected value in the grid will be shown in bold
+* Lots of fixes for fringe cases
+* You can now load dirty Registry hives by holding SHIFT while selecting or dragging and dropping. You will still be warned about the hive being dirty (and you should feel dirty for doing it), but SBE will load them just in case you do not have the LOG files
+
+### AppCompatCacheParser, AmcacheParser, and ReCmd
+
+* Fix when looking for transaction logs and only a filename for a hive was specified (vs a relative or absolute path)
+* Registry Explorer
+* Lots of fixes and tweaks
+* You can now bypass the wizard for replaying transaction LOGs for dirty Registry hives by holding SHIFT while selecting or dragging and dropping. You will still be warned about the hive being dirty (you are still dirty), but Registry Explorer will load them just in case you do not have the LOG files. In this situation, the file's bytes are updated in memory only and a new, updated hive is not saved to disk. To load the dirty hive as well, select it without SHIFT, then say no to replaying the logs, and yes to loading dirty hives
+
+### bstrings
+
+* Can open files in raw mode if needed (i.e. bypasses locked files). This happens automatically
+
+Both chocolatey and the download page is updated.
