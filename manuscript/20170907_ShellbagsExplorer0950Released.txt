@@ -1,0 +1,42 @@
+# ShellBags Explorer 0.9.5.0 released!
+
+Posted: 7th September 2017
+
+Changes in this version include:
+
+NEW: Additional GUIDs added
+NEW: Several new Shellbag types and extension blocks added
+NEW: SBECmd.exe can now process the live registry on the system it runs on via the -l switch
+CHANGE: SBECmd.exe now looks recursively for ntuser.dat and usrclass.dat files in the directory specified (Previously it only looked in the directory specified)
+
+Most of the changes are under the hood in the GUI, but there are several changes made to SBECmd.exe. Let's take a look at these a bit closer
+
+#### Reading ShellBags from a live system
+
+A new switch, -l (lower case L), tells SBECmd to process the live registry vs an offline hive. With this change, you must specify either -l or -d (but not both obviously).
+
+Here is an example:
+
+![](20170907_ShellbagsExplorer0950Released\live.png)
+
+The name of the export file is based off the timestamp when SBECmd was executed as well as the machine name it was run on.
+
+#### Recursive processing of directories
+
+In previous versions, SBECmd only looked at the directory specified via the -d switch for hives. This version changes that so that all directories are searched recursively for hives that contain shellbags.
+
+Let's say you used X-Ways to filter for all ntuser.dat and usrclass.dat files in a case. You then export those files out and use the option to recreate the original path and end up with something like this:
+
+![](20170907_ShellbagsExplorer0950Released\hives.png)
+
+The -d switch, when passed the value of 'c:\temp\ntfs' would then find all the hives and process them, saving out one tsv file per hive. The results would look something like this:
+
+![](20170907_ShellbagsExplorer0950Released\results.png)
+
+The full path to the hive is used for the output file so you can easily reference back to the hive where it came from.
+
+These tsv files can now be ingested into your tool of choice for further processing.
+
+Thanks to David Cowen for the live registry processing request! Someone else requested the recursive feature and I tried to find that request to give credit but I could not find it. Thank you too!
+
+You can get the update at the usual spots: https://ericzimmerman.github.io/ and Chocolatey
