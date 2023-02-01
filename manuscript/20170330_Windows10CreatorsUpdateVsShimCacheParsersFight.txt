@@ -1,10 +1,47 @@
-# TITLE
+# Windows 10 Creators update vs shimcache parsers: Fight!!
 
-Posted: 3rd January 2015
+Posted: 30th March 2017
 
-BLOG POST GOES HERE
+So it seems Microsoft has tweaked the format of AppCompatCache, aka shimcache, yet again with the latest release (or soon to be released) of Windows 10 (Creators update).
 
-## 
+Here is an example of what ControlSet001\Control\Session Manager\AppCompatCache looked like on Windows 10 prior to Creators update:
 
-![description](FOLDER\FILENAME)
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\win10.jpg)
 
+And this is what it looks like in Creators update:
+
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\win10c.jpg)
+
+As you can see, the signature/offset to the start of records has changed from 0x30 to 0x34 and the initial record (signature 10ts) has now been shifted 4 bytes from where it used to be.
+
+This pretty much breaks all AppCompatCache parsers:
+
+Registry Explorer plugin failure:
+
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\re.jpg)
+
+AppCompatCacheParser failure:
+
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\appcold.jpg)
+
+Mandiant ShimCacheParser failure:
+
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\man.jpg)
+
+An issue was filed here about this issue, so it shouldn't be long before ShimCacheParser gets updated.
+
+Updating AppCompatCacheParser
+
+After noticing this difference, I extracted out a SYSTEM hive from Creators update, added a new unit test, and wrote some new code.
+
+The result?
+
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\tests.jpg)
+
+Repeating our test from above with AppCompcatCacheParser, we now get:
+
+![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\appnew.jpg)
+
+AppCompatCacheParser has been updated to 0.9.7.0 and is now available in the usual place. An updated Chocolatey package is also under review.
+
+Enjoy!
