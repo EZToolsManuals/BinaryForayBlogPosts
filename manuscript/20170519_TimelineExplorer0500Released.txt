@@ -1,10 +1,35 @@
-# TITLE
+# Timeline Explorer 0.5.0.0 released
 
-Posted: 3rd January 2015
+Posted: 19th May 2017
 
-BLOG POST GOES HERE
+Some user requested changes in this version.
 
-## 
+Changelog:
 
-![description](FOLDER\FILENAME)
+NEW: Add Tools | Go to line # to quickly jump to a given line
+NEW: Can tag rows via clicking on Tag cell vs needing to use shortcut
+NEW: Added an incremental search box to top of main form. Use buttons to navigate results (CTRL-Left and CTRL-Right also navigate search results)
 
+FIX: Remove tab for files TLE couldn't load
+
+#### Incremental search
+
+Here we see the new incremental search box which allows you to find a string and then navigate to each hit via the arrow keys in the search box or by using CTRL-Left and CTRL-Right arrows to select the previous or next hit in the list.
+
+![](20170519_TimelineExplorer0500Released\1.png)
+
+The currently selected hit is shown with a green background.
+
+#### Other changes
+
+You can tag rows by clicking on the Tag box vs having to use a hot key.
+
+The Go to line # hotkey allows for jumping to a specific line number in the file:
+
+![](20170519_TimelineExplorer0500Released\2.png)
+
+and once you hit OK, you are magically transported to that row:
+
+![](20170519_TimelineExplorer0500Released\3.png)
+
+Get the update here or Chocolatey.
