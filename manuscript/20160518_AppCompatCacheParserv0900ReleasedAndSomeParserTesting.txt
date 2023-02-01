@@ -1,10 +1,212 @@
-# TITLE
+# AppCompatCacheParser v0.9.0.0 released and some AppCompatCache/shimcache parser testing
 
-Posted: 3rd January 2015
+Posted: 18th May 2016
 
-BLOG POST GOES HERE
+Last week a user emailed me and asked if I would include a column showing whether or not an executable found in appcompatcache was executed.
 
-## 
+Once this was done I sent a test version for verification back to the user. They reported AppCompatCacheParser (ACCP) was not displaying all of the entries that other tools were displaying for a few test hives.
 
-![description](FOLDER\FILENAME)
+After digging into the issue, it turns out the test hive being used contained two ControlSet keys and ACCP was looking at the Select\Current key to determine which ControlSet was active. The active ControlSet was then used to dump shimcache entries.
 
+Since this could lead to data being missed, I refactored things so that ACCP looks for all available ControlSet keys and, by default, processes them all for AppCompatCache values found in a hive.
+
+### Whats new in AppCompatCacheParser?
+
+Prior versions of ACCP extracted entries from the active ControlSet. The new version now extracts entries from all available ControlSet keys
+
+Here is an example where a hive has two ControlSet keys:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\appMain.jpg)
+
+As you can see, two ControlSet keys were found and will be processed.
+
+The export file format has been changed as well to reflect which ControlSet the entry came from. At the far end is another new column, Executed, that, when available (depending on which operating system the hive came from), will reflect whether or not an executable was run.
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\appOut.jpg)
+
+The above example shows the transition between things that came from ControlSet01 and ControlSet02.
+
+I also added a -c option which allows for only exporting a certain ControlSet
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\appone.jpg)
+
+When exporting a specific ControlSet from a hive, the name of the file will reflect the ControlSet.
+
+#### Why does it matter?
+
+In my testing, entries were found in one ControlSet that were not present in the other ControlSet. At the end of this post is a spreadsheet with the results of my testing. If you want to see examples of this, open the spreadsheet, go to the appcompatcacheparser tab, then sort by Path. There are several examples where you can see executables from ControlSet02 that do not appear in ControlSet01.
+
+### Some tool testing
+
+When the initial issue was reported to me, the results of other appcompat/shimcache parsing tools were provided for a particular hive. Because the hive used to generate these reports could not be shared, I decided to do some testing against a hive I had locally.
+
+After I finished working on AppCompatCacheParser I sent it to the person who requested the new feature to test it against his data. His results were similar to mine for the parsers he tested against.
+
+#### The data set
+
+The SYSTEM hive used for testing came from a Windows 7 x64 box and has two ControlSet keys as seen below.
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\reg.jpg)
+
+Note the last write times are different for each of these keys as well and that the AppCompatCache key in ControlSet01 was written 14 days after the AppCompatCache  key in ControlSet02.
+
+To see which one is current, we look at the Select key and the Current value. Here we see a value of 1, so ControlSet001 would be used for CurrentControlSet in the live Registry
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\reg2.jpg)
+
+On Windows 7 systems, AppCompatCache maintains a counter for the number of shimcache entries being tracked. This counter is found at offset 0x4.
+
+For ControlSet001, the beginning of AppCompatCache looks like this:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\cc1.jpg)
+
+and for ControlSet002, the beginning of AppCompatCache looks like this:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\cc2.jpg)
+
+and from this we know to expect 82 entries for ControlSet001 and 12 entries for ControlSet002, for a total of 94 entries.
+
+Here is another visualization of the data from the test hive. Here we can see the ControlSet number, the EntryCount from offset 0x04, and how many cache entries were extracted.
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\datapreview.jpg)
+
+##### Mandiant ShimCacheParser.py (latest from Github as of 05/17/2016)
+
+(NOTE: Within an hour or so of this post the script was updated to correct this issue)
+
+By default, Mandiant's tool chooses to [deduplicate executable names](https://github.com/mandiant/ShimCacheParser/blob/master/ShimCacheParser.py#L150) as it extracts entries from each ControlSet it finds. There is however, a verbose option to include everything.
+
+Below we see the bottom of the default output for this tool:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\mand.jpg)
+
+Accounting for the header row, we see there are 85 rows of data in the output.
+
+There is a bug with this tool in that it is dropping the last two entries in the AppCompatCache value (exact details will be shown below).
+
+This issue was reported on the GitHub page pointing to this post on the day this post was published.
+
+While we haven't looked at AppCompatCacheParser yet, here is a comparison between the output of the two tools:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\Missing.jpg)
+
+ShimCacheParser.py's two missing rows from ControlSet02 are highlighted in red. There would be two additional missing entries from ControlSet01 as well.
+
+To further verify this, a list of every executable from AppCompatCacheParser's output was saved to a text file. The same was done for every executable from ShimCacheParser.py's output. Both files were sorted alphabetically and BeyondCompare was used to diff the file.
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\MissingData.jpg)
+
+Here we can see the four entries (two from each ControlSet) that do not exist at all in ShimCacheParser.py's output.
+
+The other entries shown above are deduplicated entries.
+
+Finally, the verbose option was used which resulted in the following (the red box denotes the switch from ControlSet01 to ControlSet02):
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\manverb.jpg)
+
+Accounting for the header row, we see there are 90 rows of data in the output which is four short of what we expect (two from each ControlSet).
+
+In stepping through the binary data from ControlSet02, these are the two missed entries:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\missingBytes.jpg)
+
+These two records correspond to the last two entries in the list (Entry number 10 starts at offset 608 and each entry is 48 bytes, so 2 x 48 = 96 which is how many bytes are selected above).
+
+Entry number 10 breaks down as follows:
+
+Path offset: 1236
+Path size: 70
+Last modified: 2009-07-14 01:39:07 +00:00
+
+Jumping to offset 1236 shows us this data:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\ent11.jpg)
+
+which is the first of our two missing entries from ControlSet02, DrvInst.exe.
+
+Entry number 11 breaks down as follows:
+
+Path offset: 1166
+Path size: 68
+Last modified: 2010-11-21 03:23:56 +00:00
+
+Jumping to offset 1166 shows us this data:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\ent12.jpg)
+
+which is the second of our two missing entries from ControlSet02, sppsvc.exe.
+
+This exercise can be repeated in a similar manner for the missing data from ControlSet01
+
+So in summary, the following entries are missing:
+
+rebuildSearchIndex.exe
+RegisterIEPKEYs.exe
+DrvInst.exe
+sppsvc.exe
+
+##### Woanware shimcacheparser 1.0.2
+
+shimcacheparser is a port of Mandiant's python version and as we will see, suffers from one of the same issues the Mandiant tool does.
+
+When shimcacheparser is run against our test hive, the following data is exported:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\woan.jpg)
+
+Accounting for the header row, we see there are 10 rows of data in the output which is two entries short of what should be there.
+
+A cursory look at the code shows that while it is looking at every ControlSet key, the results from earlier caches are not saved to an existing list, but rather the existing list is overwritten with cache results. Because of this, only the last ControlSet processed will be reflected in the output.
+
+##### tzworks wacu 0.2
+
+By default, wacu will only extract the entries from the active ControlSet. wacu does include a switch, -all_controlsets, that will process all available ControlSet keys.
+
+Below we see the bottom of the output for this tool when using the -all_controlsets switch:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\tz.jpg)
+
+Accounting for headers and other preamble information, there are 82 rows of data for the first ControlSet and 12 rows of data for the second ControlSet for a total of 94 rows.
+
+##### RegRipper shimcache.pl 20160502 and appcompatcache.pl 20150611
+
+appcompatcache.pl extracted 79 rows of data and in reviewing the data it looks like it picked up the entries missed by the Mandiant script from ControlSet01 but did not include any entries from ControlSet02:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\rrmissing.jpg)
+
+I did not look at the code to see if any deduplication is happening because perl. =)
+
+Harlan initially blogged about shimcache.pl here. He describes the script as one that "accesses all available ControlSets within the System hive, and displays the entries listed"
+
+shimcache.pl extracted 86 rows of data but both sets of data were identical to each other even though the output references ControlSet01 and ControlSet02 and they each have different last write times for the keys. It appears as if the same cache value is being processed (ControlSet01 since ControlSet02 in our test case only had 12 entries in it) for every ControlSet key that is found.
+
+Below is the partial listing of shimcache.pl output:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\shimout.jpg)
+
+The script is referencing and including the last write timestamp from the Session Manager key as opposed to the Session Manager\AppCompatCache key. Recall from earlier in our test case the AppCompatCache keys from ControlSet01 and ControlSet02 were last written to approximately 14 days apart (10/10/2013 vs. 10/24/2013).
+
+##### AppCompatCacheParser 0.9.0.0
+
+AppCompatCache extracted a total of 94 entries, 82 from ControlSet01 and 12 from ControlSet02.
+
+Below we see the bottom of the output for this tool:
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\appcp.jpg)
+
+All 94 entries are accounted for. Additionally, the ControlSet is indicated and each entry's position in the cache is noted.
+
+#### Summary
+
+![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\comp2.jpg)
+
+#### How about Windows 10?
+
+All tools, with the exception of Woanware's shimcacheparser (which has not been updated since Windows 10 was released), support extracting entries from Windows 10 hives.
+
+If anyone is interested in an Excel spreadsheet with all the output from each parser in it, you can view it [here](https://docs.google.com/spreadsheets/d/1jk82GgBVvQZ3aYZt0gMyAGo-wP-YdwBM341N3EiveEM/edit?usp=sharing).
+
+If any tool authors want the hive used for testing in this post, hit me up in the usual places.
+
+I will be speaking about Registry internals at the SANS DFIR Summit in June. Click here for more info!
+
+Thanks for reading and please vote for me for the Digital Forensic Investigator of the Year!
