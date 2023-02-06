@@ -1,10 +1,228 @@
-# TITLE
+# Workflow overview
 
-Posted: 3rd January 2015
+Posted: 22nd August 2016
 
-BLOG POST GOES HERE
+https://binaryforay.blogspot.com/2016/08/workflow-overview.html
 
-## 
+(This post is part of a larger post which can be found [here](https://binaryforay.blogspot.com/2016/09/let-benchmarks-hit-floor-autopsy-vs.html). It has been separated out to keep the main post from getting too long.)
 
-![description](FOLDER\FILENAME)
+### Workflow overview
 
+There are two main sections, carving and searching, below. Each contains an overview of how each of those main operations is performed in Encase, FTK and X-Ways.
+
+#### Carving
+
+##### X-Ways
+
+Like everything that affects the volume snapshot, the File header signature search is found under the Refine Volume Snapshot option.
+
+![](20160822_WorkflowOverview\rvs.png)
+
+Here the File header signature search option is checked.
+
+![](20160822_WorkflowOverview\fhs.png)
+
+After clicking OK, groups of file signatures (or types within them) are selected. Additional options to categorize or place carved files with their "parent" files are also available. X-Ways displays the most commonly used groups of things first and inside each group, the most common types are at the top. You can also type an extension to quickly jump to the first match.
+
+![](20160822_WorkflowOverview\sigsa.png)
+
+After clicking OK in the File header search options, X-Ways starts carving and provides feedback on how many fiiles its recovered so far (+11 files) and the throughput. When carving is finished, X-Ways tells you how many files have been added to the volume snapshot as a result of last operation.
+
+![](20160822_WorkflowOverview\car.png)
+
+X-Ways places all of the carved files under a virtual folder named "Path unknown\Carved files." Clicking on this directory displays all of the carved items.
+
+![](20160822_WorkflowOverview\xcr.png)
+
+When X-Ways refines the volume snapshot, it keeps track of  how many new items have been added to the snapshot. To quickly see only the files that were added as a result of the last refinement, the Int. ID (internal ID) filter can be used. Notice that it defaults to the same number as we saw above and the highest option is selected. This means the newest 408 items will be shown as a result of the filter.
+
+![](20160822_WorkflowOverview\filt.png)
+
+After filtering, the results look like this:
+
+![](20160822_WorkflowOverview\filtres.png)
+
+While this kind of filtering is not necessary, it is often very helpful to filter out everything but carved items for review.
+
+##### Encase 8
+
+From the Evidence tab, select Process evidence | Process:
+
+![](20160822_WorkflowOverview\encase8carves.png)
+
+Under the Modules section is the File Carver option. Double clicking on this brings up a list of categories and file types.
+
+![](20160822_WorkflowOverview\ec2.png)
+
+After selecting signatures and clicking OK, the job is queued. To review carved files, use View | Artifacts 
+
+![](20160822_WorkflowOverview\eva.png)
+
+From there, look at the File Carver - Entries section
+
+![](20160822_WorkflowOverview\ecv.png)
+
+From here, review the carved files as needed.
+
+![](20160822_WorkflowOverview\erc.png)
+
+The progress of each job can be seen under View | Processor Manager as well as the lower right 
+corner (job name only). A progress percentage is shown under the Status column. When processing a case, it often went to 100%, then jumped back to a lower percentage, then rose again.
+
+![](20160822_WorkflowOverview\epm.png)
+
+##### FTK
+
+Select Evidence | Additional Analysis
+
+![](20160822_WorkflowOverview\aa.png)
+
+Click the Miscellaneous tab, check Data carve, and review Carving options
+
+![](20160822_WorkflowOverview\ao.png)
+
+The job is queued. When finished, the results can be seen on the Overview under File Status | Data carved files.
+
+![](20160822_WorkflowOverview\ar.png)
+
+#### Searching
+
+##### X-Ways Simultaneous search
+
+Searching starts via an icon on the main interface or via the Search menu.
+
+![](20160822_WorkflowOverview\xwss.png)
+
+From here, keywords are entered one on a line. Options to the left allow for grep searches or even 'normal' and grep searches at the same time.
+
+Code pages are also selected here as well as the type of search to do (Logical or index based) and the number of threads to use (from 1 per core to a max of 6).
+
+![](20160822_WorkflowOverview\ssw.png)
+
+After clicking OK, X-Ways shows files being processed, time remaining, and the number of hits so far. When finished, a summary is displayed.
+
+![](20160822_WorkflowOverview\ssr.png)
+
+The search results are then displayed and can be sorted or filtered in a variety of ways, including context around the search hit (i.e. does 'hardware' appear within 20 bytes of the search hit, etc). These results, along with context and highlighting, can be exported as needed.
+
+![](20160822_WorkflowOverview\ssrev.png)
+
+X-Ways also allows for only looking at one or more search hits using boolean logic, 'near' searches (i.e. show only files where stefan is within 100 bytes of winhex), showing files with a certain number of terms in it (min 1, all 3, etc), and so on.
+
+![](20160822_WorkflowOverview\ssr1.png)
+
+X-Ways will only show you the hits in files that are listed in the directory browser (as opposed to all hits everywhere). This is handy because if you want to only see hits for a given user's profile for example, you can recursively list only that user's home directory. Once this is done, the search hit numbers will be updated to reflect what is available in the user's folders.
+
+Here only the 'Rotunda' hits are selected
+
+![](20160822_WorkflowOverview\ssrrrr.png)
+
+and the resulting hits are then displayed.
+
+![](20160822_WorkflowOverview\sshits.png)
+
+Selecting a search hit shows the hit in file file with highlighting
+
+![](20160822_WorkflowOverview\ssh.png)
+
+Clicking on the Preview tab would show the file, if applicable, in its decoded state with the first instance of the search term highlighted. 
+
+##### X-Ways Index search
+
+To create the index, use the Refine Volume Snapshot option
+
+![](20160822_WorkflowOverview\rvs.png)
+
+Then select Indexing
+
+![](20160822_WorkflowOverview\xi.png)
+
+Set preferences (the defaults are almost always right, but things like character substitution are very nice for foreign language related cases)
+
+![](20160822_WorkflowOverview\io.png)
+
+The index is then built and can be canceled at any time. When canceled, the index is completed up to the point where it was canceled as opposed to dropped entirely.
+
+![](20160822_WorkflowOverview\indep.png)
+
+Searching against the index is done via the same interface as a Simultaneous search, but the dropdown at the bottom is changed from Logical to Index. Grep is still an option when using index search as well.
+
+![](20160822_WorkflowOverview\indexsss.png)
+
+Reviewing the results is exactly the same as with the Simultaneous search
+
+##### Encase Keyword searching
+
+Select Evidence | Process Evidence | Process
+
+![](20160822_WorkflowOverview\encase8carves.png)
+
+Check the 'Search for keywords' module, then double click 'Search for keywords' title for options.
+
+Click Add keyword list, enter one keyword on a line, and check the encoding options.
+
+![](20160822_WorkflowOverview\enk.png)
+
+Select View | Search, then click the Keywords tab. From there clicking on a keyword shows the files with hits to the right. To see the hit in context, right click in the hex view and choose the appropriate option.
+
+![](20160822_WorkflowOverview\ensr.png)
+
+When switching to different files, Encase kept the same offset it previously had vs. selecting the first hit in the newly selected file. Compressed view helps alleviate this, but it still made review difficult.
+
+##### Encase Index searching
+
+Bring up the Process option as before
+
+![](20160822_WorkflowOverview\encase8carves.png)
+
+Check the Index text and metadata option, then double click it for options.
+
+![](20160822_WorkflowOverview\encri.png)
+
+Once the job is finished, use View | Search | Index to interact with the index. As words are entered, matching strings from the index are listed. Clicking one of these words allows files with said word in it to be reviewed.
+
+![](20160822_WorkflowOverview\eir.png)
+
+Index hits did not seem to allow showing the context of the hit like a keyword search did.
+
+##### FTK Live search
+
+Select the Live search tab, then check the encodings to use. You MUST check these before adding keywords as you cannot change them after they have been added. Click Search when done entering terms to queue the job
+
+![](20160822_WorkflowOverview\fl1.png)
+
+The job is queued. When it is finished, results will be shown to the right of the main FTK interface
+
+![](20160822_WorkflowOverview\fq.png)
+
+Expanding the keyword search job allows for reviewing hits. Selecting a hit will show it in the File Content section. 
+
+![](20160822_WorkflowOverview\fr.png)
+
+Unless there is a different interface to review hits, it seemed necessary to check in as many places as there were selected code pages. Unless there is a better way to review hits, it was difficult to review several hits at once.
+
+![](20160822_WorkflowOverview\fir.png)
+
+##### FTK Index search
+
+Select Evidence | Additional processing
+
+![](20160822_WorkflowOverview\fic.png)
+
+Select the Indexing tab and check the appropriate boxes. I did not see options to adjust indexing parameters in the GUI.
+
+![](20160822_WorkflowOverview\fio.png)
+
+The indexing job is queued.
+
+![](20160822_WorkflowOverview\finj.png)
+
+Canceling an indexing job results in NO index being created at all.
+
+To use the index, select the Index search tab, then enter terms to search for. To review search hits, double click an added term and the results are shown to the right.
+
+As with live search, reviewing things was difficult due to the grouping.
+
+Additionally, could not get FTK to show the hit in hex view by simply clicking on the hex tab. Had to search for it in the hex view after switching to that tab. Cannot lock view on hex tab either, so seeing native hits requires several additional steps.
+
+![](20160822_WorkflowOverview\firev.png)
