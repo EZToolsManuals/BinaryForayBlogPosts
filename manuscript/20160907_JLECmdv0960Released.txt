@@ -1,10 +1,37 @@
-# TITLE
+# JLECmd v0.9.6.0 released
 
-Posted: 3rd January 2015
+Posted: 7th September 2016
 
-BLOG POST GOES HERE
+NOTE: This blog post's images were not available at the time of publication.
 
-## 
+A few days ago, Guillermo Fritz contacted me stating he found an automatic jump list that had more directory entries than what was showing up in the DestList section.
 
-![description](FOLDER\FILENAME)
+When the jump list in question is loaded in Nirsoft's JumpListsView, 589 directory entries are shown, but JLECmd was only showing 12 entries as reported by what was tracked in the DestList.
 
+Here we see the Nirsoft tool's output
+
+and here is what JLECmd v0.9.5.0 shows:
+
+Looking at the jump list in my IDE shows us there are 591 directory entries in this particular jump list:
+
+The reason the Directory count above is 591 is because of the Root Entry and DestList items, so if we take away those two, we end up at 589 remaining items in the Directory, 12 of which are accounted for in the DestListEntries collection.
+
+I then added functionality to JLLECmd to detect and report this condition, as seen here:
+
+This warning also appears at the bottom of the output.
+
+When the --withDirs switch is used, the additional directory entries are listed in the output:
+
+You can of course use the other switches to dump full lnk details, export these to CSV, and so on.
+
+Here we see the default export of the 12 entries in the DestList:
+
+And here we see the export when using --withDir:
+
+Notice how there is a note about where the line came from as well.
+
+Dumping all the lnk files out of the jump list via --dumpTo gives us a total of 589 lnk files as well:
+
+While this seems to be a rare occurrence (I did not see this happen in any of my dozens of test jump lists), when you do run into it, it can be very valuable to get all the details contained in the jump list.
+
+If you have a decent collection of jump lists, please run the new JLECmd against them via the -d and -q switch to quickly see if you have any that look the same as what was discussed above. If you do, test your other jump list tools as well.
