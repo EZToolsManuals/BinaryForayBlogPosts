@@ -1,10 +1,31 @@
-# TITLE
+# Benchmark followup: Big(ger) data and Raw vs E01
 
-Posted: 3rd January 2015
+Posted: 12th September 2016
 
-BLOG POST GOES HERE
+NOTE: This blog post's images were not available at the time of publication.
 
-## 
+As requested on the Forensic Lunch and elsewhere, I have done some additional testing to see how a few of the tools handle larger data sets (122 GB E01) and raw images vs E01.
 
-![description](FOLDER\FILENAME)
+Since I added another data set and another image format, I slightly adjusted the spreadsheet Data Size column. It now has the format of "Compressed size/Uncompressed size/Free space"
 
+The spreadsheet is also updated with these numbers.
+
+### Large data set
+
+This test consisted of using data from a recent case which was a 122 GB E01 image. The idea was to see if FTK and X-Ways (the two tools I was tasked to test in this regard with my employer) to see how the tools scaled to larger data sets.
+
+These tests were conducted on the CFA21 box.
+
+When it came to search hits, things look like this:
+
+Where Delta is the difference between X-Ways hits and FTK hits.
+
+### Raw vs E01
+
+I used the same data set as the original testing for this and just converted the E01 image to a raw image using X-Ways.
+
+Blank spaces indicate this test was not run
+
+Green background indicates the faster image format
+
+The X-Ways Raw test on ERZ was done using version 19b1.
