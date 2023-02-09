@@ -1,4 +1,4 @@
-# TITLE
+# Introducing Timeline Explorer v0.4.0.0
 
 Posted: 3rd January 2015
 
