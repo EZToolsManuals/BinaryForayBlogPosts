@@ -1,10 +1,734 @@
-# TITLE
+# Let the benchmarks hit the floor: Autopsy vs Encase vs FTK vs X-Ways (in depth testing)
 
-Posted: 3rd January 2015
+Posted: 1st September 2016
 
-BLOG POST GOES HERE
+*Update 09-12-2016*
 
-## 
+I did some additional testing using bigger data and raw vs E01 for a few things. These results are on the spreadsheet and are summarized in a blog post which is found [here](http://binaryforay.blogspot.com/2016/09/benchmark-followup-bigger-data-and-raw.html).
 
-![description](FOLDER\FILENAME)
+### Foreword
 
+I know that there is no single tool that solves every problem. There are just too many use cases out there for this to be true. I hope people consider what it is they do on a day to day basis and keep an open mind as the numbers begin to flow. Hopefully the numbers and metrics below help push people past familiarity with a tool they use now to something that can work better for them.
+
+I certainly have not tested every possible use case here. What I tried to do is test the "core" forensic requirements of dealing with images, processing said images, searching (both via index and "keyword" searching), and finally carving.
+
+I realize everyone's processing and workflow is different, but IMO there exists certain core competencies in digital forensics that can be tested and compared: hashing images, processing a case, creating an index, searching, and carving.
+
+As background, I started my foray into forensics with Encase 6 and got my EnCE. I also used FTK here and there when I was with the FBI. Prior to Encase 7 coming out, I started looking into and using X-Ways Forensics more, having been using WinHex for many years. I say this so that the work we are about to discuss cannot be summarily discounted due to my inexperience with a given tool or any other kind of deficiency when it comes to using a particular tool. The testing protocol I came up with isn't affected by one's efficiency with a tool. I wanted to measure what happens when the software is told to do something. Once this is initiated, it is pure timing of how long that something took from start to finish.
+
+I have nothing to gain by any of the tools that have been tested coming out as number one. Other than being an (avid and vocal) X-Ways user, I am not compensated in any way by X-Ways. 
+
+I feel this kind of testing is something the community has needed for a long time. I know why it hasn't been done in the past tho: it has been a significant amount of work to do! I did find some other benchmarks that have been done in the past, including this site which has a comparison between some of the same products I tested.
+
+Another very important aspect of this testing is having a conversation about different tools, pros and cons of each, techniques, etc. In my experience, those who are most critical or dismissive of any given tool have often never used it for any amount of time (and usually, not at all).
+
+Hanging on to a tool or technique because it is what someone started/familiar with makes little sense when there are hard metrics to consider, other tools that can enable more efficiency, etc.
+
+Question your tools, look at the testing, contribute, and have an open mind. =)
+
+### Let's begin
+
+NOTE: All of the raw numbers are available [here](https://docs.google.com/spreadsheets/d/1QgMA7A6bVotLyT49wNhRgJRjeJfULkyo6LCfywugbMQ/edit?usp=sharing) in a Google Spreadsheet. This allows for quick sorting, filtering, etc based on just about all of the configuration options. All of the raw data for this is available [here](https://docs.google.com/document/d/1OmXFeAY6ijdAJXPIdis_BmibHZsNqXyQSulGKoWfLzQ/edit?usp=sharing).
+
+This kind of testing has been one I have wanted to do for years now.
+
+The idea is basically to take Autopsy (to some degree), Encase, FTK, and X-Ways and test them in two ways:
+
+* Against themselves on different hardware using the same settings (Do they scale as you give them more resources? Do they perform the same when resources are taken away?)
+* Against each other in terms of speed of hashing, processing, searching, etc.
+
+The first test is pretty easy. Does more hardware equal more performance? Does less hardware slow things down?
+
+The second test will never be 100% possible as each tool is different, primarily in how it processes a case, searches, etc. For the second test, I have tried, as best as I could figure out, to have each program do roughly the same "stuff" when processing a case. The other things we will discuss are more apples to apples. Case processing is the one area where tools diverge in what they do.
+
+When looking at the case processing times, consider what each tool is doing as it processes a case. I included screen shots for what each of the options does for each of the programs to make it easier to compare. The case processing testing is the hardest to definitively measure as each tool is doing things differently under the hood (some more, some less). I do not want this to get into an expose on all the extra stuff one tool has over another, but if you spend any time digging into the differences in these programs, spending time in how each tool processes a case will be the most beneficial (in my opinion anyways).
+
+For example, in X-Ways, I did a "refine volume snapshot" and told it to calculate a hash, verify files by signature, extract metadata, process archives and email, and so on. In each of the other programs, I selected options that mirrored the items listed above as closely as possible in terms of what was selected. All of the settings in each program were documented and will be presented below as we get into things..
+
+#### The contenders
+
+* Autopsy 4.1.0 x64
+* Encase 6.19.7 x64
+* Encase 7.12.1 x64
+* Encase 8 8.01.01 x64
+* FTK 6.0.3.5 x64
+* X-Ways Forensics 18.9SR5 x64
+
+#### The hardware
+
+I tested all of the software on a wide variety of machines, including VMs from Microsoft Azure, Amazon AWS, and several bare metal machines including several workstations, mini computers, and a laptop. The general specifications for each is below. More detail on each machine will also be available at the end of this post.
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\screenshotfromblogpost.jpg)
+
+Information on the GS series VMs is available [here](https://weblogs.asp.net/scottgu/announcing-the-biggest-vm-sizes-available-in-the-cloud-new-azure-gs-vm-series) and FS series [here](https://azure.microsoft.com/en-us/blog/f-series-vm-size/). DS series is available [here](http://cloudspectator.com/microsoft-azure-dv2-vs-ds-comparison/). Amazon VM info is [here](https://aws.amazon.com/ec2/instance-types/).
+
+My goal was to choose a cross section of VMs that ranged from entry level to uber level in order to take the hardware out of the equation. All the tools benefit (or suffer) from the same VM related properties/features as well as the bare metal configurations. Nothing was changed on the VMs or hardware for each piece of software tested.
+
+The ERZ line is my workstation. It has an Intel NVME SSD drive for the C volume and a Samsung 850 SSD (with Rapid mode enabled) for the D drive. The CPU is an i7-6700K @ 4 Ghz.
+
+The Sager line is my laptop. It has a Samsung M.2 drive for the C volume and a Samsung 850 SSD (with Rapid mode enabled) for the D drive. The CPU is an i7-6700K @ 4 Ghz.
+
+The CFA21 machine is another workstation I have access to. It has several SSD based RAID volumes and some stand alone SSDs. The CPU is an E5-2698Bv3 @ 2 Ghz.
+
+The NUC is a [Skull Canyon based mini computer](https://www-ssl.intel.com/content/www/us/en/nuc/nuc-kit-nuc6i7kyk-features-configurations.html). It has two Samsung 950 M.2 drives in it. The CPU is an i7-6770HQ @ 2.6 Ghz,
+
+All of the other configurations were as similar as I could make them (and will be documented in full detail below), but in general each had the OS provided hard drive, one or more temporary drives, and a 4 TB spanned volume that was made by combining 4 SSD based 1 TB drives together. In reality spamming a bunch of drives did not make a difference speed wise. The disk benchmarks show this as well, but I kept things consistent and used a spanned volume throughout.
+
+The only exception to this rule was the addition of another 2 TB spanned volume that was again made up of 2 1TB SSD drives. This was dedicated to the FTK database. The database software as well as the data itself were directed to this dedicated drive.
+
+The 4 TB volume was only used to store the image file used for all of the testing.
+
+When a tool was being tested, nothing else was being done on the machine. In other words, each tool had full access to the resources on each box as opposed to running two tools at the same time, streaming video, CounterStrike, etc.
+
+More details on the test configurations are available in a Google Doc and can be found here. This document also contains all of the raw benchmarks, notes, etc. from all the testing.
+
+### Testing image
+
+I used the xp-tdungan-c-drive E01 from SANS 508. The E01s are approximately 6.5 GB in size and are roughly 18 GB uncompressed.
+
+Anyone who has taken SANS 508 or played NetWars has the same image, so it is available for comparison by anyone who wants to test and provide results back to me.
+
+I chose this data set intentionally as it is in wide circulation as opposed to some proprietary data set that I could not share. I hope that many others who have the test image will test their own hardware (or let me ideally) so the results can be added to the testing data.
+
+### Program configuration
+
+Aside from changing where the programs look for different things, I tried to leave each program as close to their defaults as possible.
+
+In other words, I didn't tweak X-Ways and/or Encase to run really well with optimized settings but gimped FTK with settings I knew would not work, etc.
+
+The reason I tested the defaults is this is how the vendor shipped the product and I am going under the assumption the defaults should be correct for most people (if they are not, then why are they the defaults?). I have not done any tuning or tweaking of any external processes or programs, etc. I installed the app, set some paths, and started using the software. I did not add anything to any of the installs (Enscripts, etc), nor did I take anything away (with one exception: I added additional carving signatures to FTK seeing as how it only ships with 13 signatures).
+
+With that said, if anyone out there that feels they have a more optimally set up instance of X-Ways, FTK, Autopsy, and/or Encase they can make remotely available via TeamViewer, I am more than happy to work with you to do similar tests on your hardware. I would provide the image and run through my testing on the provided machine and would run X-Ways on it as well for comparison on another piece of hardware known to work well with Encase/FTK. I sincerely hope someone takes me up on this so we can have yet more data to compare. Testing should take no more than a few hours.
+
+When possible, the same options were used in each program. For example, several tools allowed for configuring the maximum word length when creating an index. When this was possible, the same value was used in each program for consistency. In some cases I tested the default index length and documented how long it took as well.
+
+#### Autopsy 4.1.0 x64
+
+Program installation directory: C:\Program Files\Autopsy-4.1.0
+Cases directory location: C:\autopsy
+Temporary directory: D:\
+Images directory: E:\
+
+#### Encase (all versions)
+
+*X* denotes version number
+
+Program installation directory: C:\Program Files\EnCaseX
+Cases directory location: C:\Users\eric\Documents\EnCase
+Temporary directory: D:\
+Images directory: E:\
+
+#### FTK 6.0.3.5 x64
+
+Program installation directory: C:\Program Files\AccessData
+Cases directory location: C:\ftk
+Temporary directory: D:\
+Images directory: E:\
+Database directory: F:\
+
+#### X-Ways Forensics 18.9SR5 x64
+
+Program installation directory: C:\xwf
+Cases directory location: C:\xwcases
+Temporary directory: D:\
+Images directory: E:\
+
+### Workflow overview
+
+This post covers general workflow steps for carving and searching for Encase, FTK, and X-Ways.  It is a separate post to keep this one more reasonable in size.
+
+#### Overall benchmarks by program
+
+The initial round of benchmarks included testing each VM's hard drives using AttoBench. From there, X-Ways was tested on every VM as a byproduct of these tests. When testing first began, I did not have what I needed for Encase, FTK, etc. Once the initial metrics were gathered as far as disk speed, memory and CPU cores, I took at look at all the VM types and selected several that gave a good spread across the scale, from low end to high end. This is why you will see so many more machines listed for X-Ways testing than for the others.
+
+The primary thing I learned from this initial round of testing is that read speed from the disks did not affect most of the tool's performance in any meaningful way.
+
+During this initial testing, it was interesting to see how far DOWN the hardware scale I could go and not drastically affect X-Ways' performance. I stopped looking at VMs when I got to a 2 core machine with 28 GB of memory.
+
+One thing to note is that in most of my initial testing, Encase 7 and 8 were pretty close in terms of performance. Because of this, I only tested Encase 8 on most machines. As a result, Encase 7 was tested on a small subset of configurations.
+
+For each of the tools below, screen shots of the case processing options are shown in order to compare what it is each tool is doing (or at least from what is controlled by the end user).
+
+#### X-Ways 18.9
+
+##### Case processing options
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image51.png)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image52.png)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image53.png)
+
+One thing to note here is how much "stuff" is done for metadata extraction and archive processing. One thing X-Ways also does by default is generate a timeline as it looks at all the items in a case. This timeline includes events from a wide variety of sources including the file system, event logs, email, browsing history, etc.
+
+##### Index settings
+
+Default settings were used with the exception of the max number of threads. Testing was done using a variety of thread counts and the results will be shown below. 5 to 7 seemed to be the sweet spot.
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image54.png)
+
+##### Search
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0.png)
+
+##### Benchmarks
+
+Resources on all machines were around 228 MB of memory
+All times are denoted in minutes:seconds format
+
+Grey blocks below can be inferred by looking at similar times from other VM configs
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (1).png)
+
+GS5 had rw disk cache, GS4 just read
+
+1- Did tests using throughput optimized (st1) and general SSD storage (gp2). Scores are gp1 then st1
+2- Used non-SSD drives and striped two 1 TB drives
+3- Tested with four non-SSD drives striped
+
+#### Encase 6
+
+Initially, the Encase 6 installer complained about an unsupported operating system. I needed to install Encase 8 to get Hasp drivers for Windows Server 2012R2, then Encase 6 worked. 
+
+##### Case processing options
+
+Mount all compound files by extension (all selected)
+
+Modules
+
+Logfile
+
+* Exif
+* Lnk file
+* Windows event log
+* Windows case initializer
+
+During case processing, CPU sitting around 12.8% and 110 MB of memory
+
+##### Index settings
+
+Memory usage was around 1,600 MB
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image56.png)
+
+##### Search
+
+Memory usage was around 81 MB
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image57.png)
+
+##### Benchmarks
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (2).png)
+
+F1 – did not have Enscript to search index.
+
+#### Encase 7
+
+Encase was using upwards of 5,000 MB of memory with case open
+
+##### Case processing options
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image58.png)
+
+##### Index settings
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image55.png)
+
+##### Benchmarks
+
+See Encase 8 testing for times where blocks are grayed out below
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (3).png)
+
+F1- Did not see a way to search for all terms at once in index. Had to do them one at a time (and add all the hits up manually)
+
+#### Encase 8
+
+Encase was using around 5,800 MB of memory when the case was open
+
+##### Case processing options
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image59.png)
+
+##### Index settings
+
+Memory usage was up to 15,900 MB during indexing on some VMs.
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image55.png)
+
+##### Search
+
+Memory usage was up to 4,500 MB on some VMs
+
+##### Benchmarks
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (4).png)
+
+F1- Did not see a way to search for all terms at once in index. Had to do them one at a time (and add all the hits up manually)
+
+*  Searching for all 34 keywords took 4 minutes and 55 seconds
+** Did a second index creation test with default max length of 64 characters. Time was 16 minutes, 15 seconds.
+
+#### FTK
+
+In addition to the standard hardware on all other VMs, a spanned volume of two, 1TB hard drives was added and dedicated to the database.
+
+##### Case processing options
+
+Memory usage was around 850 MB.
+
+Expand compound files additions: skype sqlite, ie webcache, firefox sqlite, firefox cache, evt, evtx, chrome cache, chrome sqlite
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image61.png)
+
+##### Index settings
+
+Memory usage was around 3,000 MB (depending on machine) and CPU was 95-100% regardless of VM. 
+
+##### Search
+
+CPU near 100% memory around 500 MB
+
+##### Benchmarks
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (5).png)
+
+* ANSI only keyword search took 5 minutes and 31 seconds. Time above is for ANSI and Unicode (same as all other tests)
+ ** Had to push temp file to database directory since temp drive was only 8 GB and FTK wanted 50GB
+
+With the exception of the really low end VMs, having many CPU cores and memory did not speed things up in a manner consistent with the increase in hardware resources. 
+
+#### Autopsy
+
+Memory usage was around 813MB with case open
+
+##### Case processing options
+
+Using around 1,000 MB of memory during case processing
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image60.png)
+
+##### Index settings
+
+Not applicable
+
+##### Search
+
+I found using keyword searching difficult in that I could not really tell what was going on to include when a search started, when it ended, and so on. There are also no indicators for timing in the "Ingest messages" window that shows activity other than hits.
+
+##### Benchmarks
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (6).png)
+
+??? I missed manually watching the GS5 results. Based on other results, I would estimate it was close to the 24 minute mark.
+#### IEF
+
+Left all options at their defaults.
+
+##### Benchmarks
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (7).png)
+
+IEF was sitting around 80% CPU and using 2,000 MB of memory while processing. 
+
+### Hashing comparison
+
+This table summarizes each of the program's abilities to verify the test image on a few configurations.
+
+All times in minute:second format
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (8).png)
+
+All of the hashing times are available in the spread sheet linked above. Just sort by the Hashing column and filter as needed by machine type.
+
+### Detailed searching comparison
+
+Since searching is so important I did some dedicated testing of a few scenarios.
+
+It is important to understand how a tool searches data as well as what an examiner needs to do in order to be sure the data is being searched thoroughly.
+
+#### Search options by program
+
+##### X-Ways
+
+There are two ways to search in X-Ways, the Simultaneous search (SS) and an index search. It is not required to do both when searching and more often than not, an SS is all that is needed.
+
+##### FTK
+
+From what I understand, both an index and a live search are required to ensure all data is covered. If this is not accurate. please let me know. 
+
+I base this statement on a question I asked Tim Leehealey, Chief Evangelist of Accessdata, on the Forensic Lunch. This can be viewed [here](https://youtu.be/M-WGX8MgXB4?t=660) and most importantly [here](https://youtu.be/M-WGX8MgXB4?t=1108). I am the "Mike Stammer" David mentions. It is worth a listen for many reasons.
+
+I also had some discussions on Twitter about indexing and searching in FTK, including doing a poll. The results of that poll look like this:
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image50.png)
+    
+
+There were also some interesting findings related to how FTK indexes. The general concensus (which is backed up by my testing and will be explained below) is that FTK only indexes Unicode strings. Because of this, it is even more important to do a live search in order to find all non-Unicode encoded strings. As we will see, this means many hours will be added to processing a case.
+
+##### Encase
+
+From what I understand, both an index and a keyword search is required to ensure all data is covered. If this is not accurate. please let me know. There was some chatter about having to process a case, mount compound files, etc. as well so that searching worked properly.
+
+##### Autopsy
+
+Autopsy was interesting as it didn't seem to have two distinct modes. It build the index as it searched for keywords. 
+
+#### Test one
+
+In the first test, I searched for the following words:
+* x-ways
+* winhex
+* stefan
+* peter
+* mouse
+* hack
+* wizzo
+* eric
+* zimmerman
+* Michele
+
+That search ended up looking like this (Top line is total hits with breakout of each term below):
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\screenshotfromblogpost2.jpg)
+
+* Limited FTK to 200 max hits per file, which is the default setting.
+
+Some notes related to this first test:
+* Encase processed xpi, ja, pak, xap etc. files whereas these are ignored by default in X-Ways. X-Ways can include these files as needed. Including several of these extensions brought up the numbers closer to a match, but without verifying everything manually it is assumed the same type of thing is the reason for the discrepancy
+* Index only for words up to 7 characters in length when program allowed that option
+
+#### Test two
+
+In test two, I added these words to the above list, for a total of 18 terms:
+
+* Framework
+* Child
+* Salad
+* Balsa
+* Bomb
+* Technical
+* Dislike
+* Rotunda
+
+#### Test three
+
+Finally, for test three, I added these words, for a total of 34 search terms:
+
+* Missile
+* Blueprint
+* Grapefruit
+* Stingray
+* Beam
+* Zebra
+* Salacious
+* otter
+* blinky
+* treadstone
+* washboard
+* technical
+* schematic
+* vibranium
+* shield
+* star
+
+These tests were done using more search terms to see how search time scaled when adding more terms. All tests performed on the same VM (GS5). Searches were using either one thread (for X-Ways) or the default for the program (unknown thread count. If anyone knows, please let me know).
+
+In each case, any previous search results were discarded before searching again.
+
+#### Search test results
+
+Time listed is minutes:seconds or hours:minutes:seconds.
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (9).png)
+
+In each of the tests, X-Ways was the fastest and used the lowest amount of resources.
+
+When looking at Encase 6,7/8 results, X-Ways was 1.8-4.5.2 times faster for 8 terms, 1.7-4.7 times faster for 18 terms, and 4.1-4.7 times faster for 34 terms.
+
+When looking at FTK results, X-Ways was 45.7 times faster for 8 terms, 77.1 times faster for 18 terms, and 126.5 times faster for 34 terms.
+
+X-Ways has the ability to use more than one thread for a simultaneous search (one per core, up to six threads total). If we compare things based on how long it took X-Ways to search when using six threads for 8 keywords (0:33 seconds), 18 terms (0:35 seconds), and 34 terms (0:49 seconds), we end up with the following:
+
+When looking at Encase 6,7/8 results, X-Ways was 12.6-14 times faster for 8 terms, 12.5-14.5 times faster for 18 terms, and 10.2 times faster for 34 terms.
+
+When looking at FTK results, X-Ways was 138 times faster for 8 terms, 250.1  times faster for 18 terms, and 364.1 times faster for 34 terms.
+
+To summarize in handy chart form:
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (10).png)
+
+##### ANSI vs. Unicode comparison
+
+As mentioned above, FTK seems to only index Unicode encoded strings. It may also add ANSI encoded strings to the index if a file is entirely ANSI, but anything mixed will be Unicode only. I tested this by looking at hits in X-Ways (which indexes up to 6 code pages at once) and filtered for ANSI and Unicode encoded hits. Some of the comparisons are as follows:
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (11).png)
+
+### Carving test
+
+The purpose for searching for one signature up to the maximum is to gauge a program's ability to scale with the amount of data signatures being used. While it rarely, if ever, makes sense to just "carve for everything," it does provide a means of comparison as the number of signatures increases.
+
+Carving tools should strive to find usable data as quickly as possible. It does an examiner very little good to “find” 300,000 files when 299,932 of them are not usable. When this happens, it only serves to create more work for an examiner to work through the noise of false positives. As such, in the testing done below, it is more informative to look at how long carving took as signatures were added vs comparing the number of files recovered.
+
+This test measured how long each tool took to carve common formats. Little to no comparison of the results from each tool was done (i.e. did the tools recover valid files, etc.). NIST has done testing as to the quality of data returned by some of the programs tested. Several others have tested many different tools as well and calculated many additional statistics on file recovery as well.
+
+Other carving research is available at http://www.cftt.nist.gov/filecarving.htm and http://digital-assembly.com/products/adroit-photo-forensics/comparison/NIST-comparison.html. 
+
+This set of tests was on a much more limited set of hardware. Specifically, I only tested it on DS13_v2 and GS5 VMs in order to see if more resources resulted in faster carving times and how each tool scaled when adding more signatures to look for.
+
+FTK includes the following carving options: Zip, Tiff, Png, Pdf, Ole files (MS Office), Lnk, Jpeg, HTML, Gif, Eml, Emf, Bmp, and Aol bag files. 
+
+X-Ways Forensics includes over 330 different file types, all of which are defined in a plain text file. Each of the types above were included in the X-Ways carving signatures.
+
+Encase 8 includes 329 different file types which are configurable in the GUI.
+
+All of these tests were conducted on the GS5 and DS13_v2 VMs.
+
+The following tests were conducted:
+
+Time is in hours:minutes:second format, followed by files recovered count
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (12).png)
+
+#### Carving notes
+
+FTK ships with a minimal set of signatures. A list of additional carving signatures is available at https://support.accessdata.com/hc/en-us/articles/203423159-Custom-Carvers.  For the "All supported signatures" test, the ‘Windows Carvers’ (70 signatures) and ‘Other carvers’ (140 signatures) were imported and any duplicates/existing signatures were ignored. The MFT record carver was also imported. 
+
+Carving with these 223 signatures (and all the included ones as well) took 45 minutes and 16 seconds. FTK carved 138,313 files. CPU usage during carving was 98-99% across all CPU cores.
+
+In reviewing jpegs recovered by FTK vs. X-ways, many of the additional items recovered by FTK were 1 pixel wide and/or very low byte count. X-Ways includes several options to reduce “irrelevant” information and it is possible the properties of the jpgs is one of criteria used to determine this.
+
+Carving in Encase is difficult. I found it very convoluted to set up and then view results. In the five signature test, Encase produced a lot of unreadable files. It also said zip files are viewed internally when I double clicked one, but didn’t offer to let me view it internally. In fact, most files recovered had a logical size of 4096 (the size of a cluster in the image) and wouldn’t open at all.
+
+It is also worth noting that no version of Encase actually finished carving for all signatures. The program had to be forcefully killed to recover.
+
+NA- Encase 6 did not seem to include an Enscript included that allowed for carving
+
+* Had to task kill Encase to recover. CPU was idle at 0% while using 5100 MB of memory for hours
+** X-Ways has a “Special Interest” category of things that are more expensive to carve for. The time above includes searching for these item types:
+
+* Google Analytics URL+ei TS
+* Zip record
+* Firefox(2)
+* Firefox cache
+* Base64
+* Information Summary
+* TCP Packet
+* UDP Packet
+* VISA/Mastercard
+* Gigatribe 2.x state file
+* Gigatribe 3.x state file
+* Gigatribe 2.x chat
+* Gigatribe 3.x chat
+* Unix kern.log
+* misc log files
+* Gatherer fragm
+* CD Volume Descriptor
+* Gateway php
+* Palmpilot
+* Photoshop thmb
+* Spotify Playlist
+* SQL
+* XML fragment
+* Comma separated
+* Windows.edb fragment
+* Bitlocker rec key
+
+These options require another level of confirmation in X-Ways but both are included here to be as thorough as possible.
+
+### Total processing time summary
+
+The following list of times represents the time it would take to hash, process the case, create an index, and search (using 1 thread or the default). All times taken from the DS13_v2 VM.
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (13).png)
+
+### GS5 default case processing test
+
+This round of testing took each tool and processed the image using all of the program default options to process said case. It was done on the GS5 box since it was by far the biggest in terms of resources.
+
+#### X-Ways
+
+By default, X-Ways does not have any processing options selected. However, the small box on the left, when checked, selects the items shown below. Notice the indexing option is unchecked. Since FTK and Encase index by default, two runs were done, one without indexing (the default), and one with indexing enabled.
+
+Defaults: 4 minutes and 7 seconds
+
+Defaults + indexing: 8 minutes and 34 seconds
+
+In comparing the defaults for FTK and X-Ways, X-Ways default settings as shown below include Entropy testing, metadata extraction, and browser history whereas FTK does not select those initially. 
+Running these items in FTK took 1 minute, 25 seconds.
+
+X-Ways also automatically built an event timeline with 1,084,841 items in it in the times indicated above.
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image62.png)
+
+##### Index with 18 terms
+
+The default for indexing in X-Ways is 4-7 characters. This can be extended to include more or less from the indexing creation interface, with the downside being longer creation times and index size. 
+
+With these minimums, any word containing fragments of words up to the maximum length are still found. For example, ‘Technical’ is 9 letters long, but X-Ways, by default, will only index ‘technica.’ However, X-Ways will hit on ‘Technical’, ‘technicality’, or ‘technicalness’ and as such, hits are still found. For exact hits on an exact string longer than the maximum, one can quickly filter when reviewing search hits.
+
+Time: NA
+
+Hits: 432,901
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (14).png)
+
+##### Simultaneous search for 18 terms
+
+* Unique file name count only 
+
+Time: 41 seconds
+
+Hits (ANSI count/Unicode count): 553,966
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (15).png)
+
+** X-Ways searches through all items in the volume snapshot, even derivative items such as browser history reports that are added to the volume snapshot. These can be filtered out if needed. In this cases, the term "x-ways" was found in the HTML reports for browser history.
+
+#### ANSI Only
+
+ANSI only forced the “Decode in text” option to be disabled as Unicode is required for this feature. With this option disabled, some of the counts are off from the ANSI and Unicode results as some of the ANSI search hits came from “Decoded text” hits from the “Decode in text” options. For this same reason, ANSI hits + Unicode hits != ANSI and Unicode hits above.
+
+Time: 33 seconds
+
+Hits: 426,628
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (16).png)
+
+Unicode only
+Time: 30 seconds
+
+Hits: 126,870
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (17).png)
+
+#### FTK
+
+Processing time: 9 minutes and 1 second
+
+* FTK found hits in unallocated space and considers each one a ‘file.’ This is present throughout the ‘Number of files’ counts
+
+Reviewing live search and index searches is very difficult to do as there is no sorting or filtering of results that I saw.
+
+#### Index with 18 terms
+
+** This is a false positive as there are no instances of ‘x-ways’ in the image. Recall X-Ways only found instances of the term from files it added to the volume snapshot as it processed other artifacts and generated metadata about them.
+
+Time: NA
+
+Hits: 113,522 (without false positive)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (18).png)
+
+There are far more results from the live search than an index search.  This seems to make it necessary to do both an index and live search to make sure nothing is missed.
+
+#### Live search for 18 terms
+
+ANSI and Unicode
+
+First attempt to search had to be canceled after 3.5 hours. After cancelling, at least some results were available.
+
+Time: ??
+
+Hits (ANSI/Unicode): 370,034/120,103 (490,137)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (19).png)
+
+ANSI only
+
+Time: 14 minutes and 41 seconds
+
+Hits: 385,607
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (20).png)
+
+Unicode only
+
+Unicode search took much longer than ANSI. The first attempt to search had to be canceled after 1 hour, 15 minutes. After cancelling, at least some results were available.
+
+A second attempt was made, but was canceled after 45 minutes.  The results returned are less than the 1 hour, 15 minute search.
+
+A third attempt was made and was let to run to completion. It took 3 hours, 3 minutes, and 18 seconds. In order to determine of the “Max hits per file” was responsible for the lengthy search, this value was reduced to 200.
+
+(A new case was also created and an ANSI + Unicode search was done to make sure it wasn’t something with the case. This search took 3 hours, 29 minutes, and 47 seconds).
+
+Time: 3 hours, 3 minutes, and 18 seconds.
+
+Hits: 120,103 (canceled at 1 hour 15 minutes) 
+
+         66,174 3 hours, 3 minutes, 18 seconds (allowed to complete)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (21).png)
+
+The hit count for the first canceled run (1 hour and 15 minutes), on several occasions, is higher than when the search was allowed to complete (3 hours 3 minutes 18 seconds). To verify the findings, the same search was run again (using ‘max hits’ value of 200 again).
+
+This search took 3 hours, 2 minutes, and 48 seconds. The hit counts matched that of the other 3 hour, 3 minute search noted above.
+
+Finally, another search with ‘max hits’ set to 5000 was done to see if this was the source of the initial discrepancy. This search took 3 hours, 6 minutes and 42 seconds. Comparing the number of hits to shows a discrepancy for the following terms:
+
+Mouse = 16,390
+Hack=887
+Eric=39,623
+Framework=51,343
+Child=14,517
+
+Based on this result, the first canceled search (canceled at 1 hour and 15 minutes) also used a ‘max hits’ of 5000 and this is why some of the hit counts for the second canceled search, which used a ‘max hits’ of 200, are higher.
+
+All FTK standard options were used
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image66.png)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image65.png)
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image64.png)
+
+#### Encase 8
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (22).png)
+
+Defaults took 11 minutes and 34 seconds.
+
+Due to not being able to aggregate data in Encase when reviewing index and keyword hits, I did not total up what was found based on the default settings. To compare numbers with other tools. see the dedicated Searching section above.
+
+Encase returns each search hit and the number of items for each term but provides to way to select more than one, copy the numbers out, export the numbers out, etc. As such it was far too much work to do this again (which was done manually for the Searching section).
+
+#### Keyword search
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (23).png)
+
+ANSI and Unicode
+
+Search took 5 minutes and 42 seconds.
+
+Hits: 621,508
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (24).png)
+
+ANSI only
+
+Same settings as above except Unicode unchecked
+
+Search took 5 minutes and 32 seconds
+
+Hits: 492,998
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (25).png)
+
+Unicode only
+
+Same settings as above except ANSI unchecked
+
+Search took 4 minutes and 59 seconds
+
+Hits: 128,510
+
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (26).png)
+
+### Wrapping up
+
+Well, that's it! I hope you found it useful and I hope it serves as the beginning to something bigger that the community can contribute to.
+
+Please hit me up in the usual places with comments, concerns, etc.
+
+Thanks for reading!!
