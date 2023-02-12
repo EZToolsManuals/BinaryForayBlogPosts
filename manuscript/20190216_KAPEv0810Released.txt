@@ -1,10 +1,91 @@
-# TITLE
+# KAPE v0.8.1.0 released!
 
-Posted: 3rd January 2015
+Posted: 16th February 2019
 
-BLOG POST GOES HERE
+### TL;DR:
 
-## 
+Use the same URL you were emailed to download the update!
 
-![description](FOLDER\FILENAME)
+### Changes in 0.8.1.0:
 
+* Add support for UNC paths for --tsource and --tdest
+* Better detection when out of storage space on destination
+* Add check when --mdest and --tdest are the same and disallow it
+* Warn when --msource != --tdest
+* Clarify EULA section 1.3 as it relates to usage
+
+Let's explore some of these changes, shall we?
+
+### UNC path support
+
+First, let's write to a UNC path:
+
+![](20190216_KAPEv0810Released\2019-02-16_12-30-58.jpg)
+
+Then, read back from it:
+
+![](20190216_KAPEv0810Released\2019-02-16_12-30-21.jpg)
+
+### New checks added
+
+For some reason, several people were doing some interesting things with the various source and destination paths.
+
+You almost always want --msource to be the same as --tdest, so that KAPE can process all the files it just found.
+
+Note that --msource is NOT expected to be the path to KAPE's modules directory. KAPE already knows where those are. --msource is where you want KAPE to look for files to process. =)
+
+When KAPE detects --msource not being equal to --tdest it will warn you, as shown below:
+
+![](20190216_KAPEv0810Released\2019-02-16_12-33-42.jpg)
+
+Because this is such a common scenario, you do not even NEED to specify --msource at all when using target and module options at once, so this command would work just fine:
+
+`.\kape.exe --tsource C --target evidenceofexecution --tdest C:\Temp\tout --tflush --module LECmd  --mdest C:\Temp\tout\`
+
+which looks like this (note the message about setting --msource):
+
+![](20190216_KAPEv0810Released\2019-02-16_12-38-29.jpg)
+
+Another interesting observation was people wanting to set --tdest to be the same as --mdest while using the flush options.
+
+This essentially was telling KAPE to collect to a directory, then delete that directory prior to processing the collected files. Of course, this would not work since all the files were just deleted!
+
+Now KAPE detects this and warns you before exiting.
+
+![](20190216_KAPEv0810Released\2019-02-16_12-42-58.jpg)
+
+### GUI tweaks
+
+gkape was also updated to make things a little nicer, including updated path selection dialog boxes and some of the safety checks described above.
+
+The dialog boxes allow you to type a path vs. selecting them via the mouse:
+
+![](20190216_KAPEv0810Released\2019-02-16_12-46-16.jpg)
+
+Here we see the warning about setting the destination directories the same. KAPE clears Module destination after the OK button is clicked.
+
+![](20190216_KAPEv0810Released\2019-02-16_12-47-22.jpg)
+
+Here we see KAPE warning about setting Module source incorrectly:
+
+![](20190216_KAPEv0810Released\2019-02-16_12-48-49.jpg)
+
+Here KAPE is warning about when Module source is not the same as Target destination in response to clicking OK above:
+
+![](20190216_KAPEv0810Released\2019-02-16_12-49-54.jpg)
+
+The other change in the GUI is that the command line will only have double quotes around strings when they contain spaces. This makes things a bit tidier.
+
+### EULA clarifications
+
+The initial version of the EULA was too restrictive in who can use KAPE. Section 1.3 has been updated, including removing the language about people using KAPE as it relates to professional services. 
+
+If you have any questions on this, please email kape@kroll.com and we can get them answered ASAP.
+
+### PLEASE UPDATE ASAP
+
+Again, you can get the update right now by clicking the same link you used to initially download KAPE.
+
+If this is your first time seeing this, you can download KAPE [here](https://learn.duffandphelps.com/kape).
+
+Thanks!
