@@ -1,10 +1,101 @@
-# TITLE
+# KAPE v0.8.2.0 released!
 
-Posted: 3rd January 2015
+Posted: 5th March 2019
 
-BLOG POST GOES HERE
+Changes in this release include:
 
-## 
+* Change ConsoleLog from being file based to memory based. ConsoleLog is saved to --tdest and/or --mdest as necessary
+* Remove --dcl option since ConsoleLog is in memory now
+* Added --sync switch to automatically update Targets and Modules from the KapeFiles GitHub repository
+* Add --overwrite along with --sync to overwrite any local targets and modules
+* In the ConsoleLog, remove extra line feeds and only show first letter of log level
+* gkape updated to allow for editing and creating new targets and modules, including validation
+* Added ability to specify multiple targets and modules on the command line (--target filesystem,eventlogs for example)
+* Add Progress information to Title bar of Console or PowerShell window
+* gkape interface overhauled
+* Added PowerShell script for automatic updates of the main KAPE package
+* Add --mvars switch which allows passing in key:value pairs to modules
+* Polish and tweaks
 
-![description](FOLDER\FILENAME)
+### A deeper look at some of the bigger changes
+
+#### Multiple targets and modules can be passed into KAPE at once
+
+KAPE's `--target` and `--module` switches now both accept a comma-delimited list of targets and modules to run. When using more than one target or module, they should be passed in without any spaces between the names, like this:
+
+`--target Amcache,EventLogs,FileSystem`
+
+`--module AmcacheParser,AppCompatCacheParser,MFTECmd`
+
+These options allow for quickly running more than one thing at a time without the need to make a compound target or module. Of course, making a compound file is the recommended practice, especially for targets and modules you plan to run on a regular basis as it is easier to choose a single, compound target or module to run vs. specifying them all on the command line.
+
+#### Automatic updates of the core package
+
+New in this version is the inclusion of a PowerShell script, **Get-KAPEUpdate.ps1**, that compares the local version of KAPE with what is available online. If an updated version exists, it is downloaded and the local installation of KAPE is updated with the new version. 
+
+![](20190305_KAPEv0820Released\2019-03-01_13-42-29.jpg)
+
+When a new version is posted online, it will contain all available targets and modules from the public KAPE GitHub repository, found [here](https://github.com/EricZimmerman/KapeFiles), that contains all available Target and Module configurations.
+
+The next option we will look at was written to assist in keeping KAPE up to date with changes to targets and modules between releases.
+
+#### Automatic syncing with GitHub repo
+
+To help keep targets and modules up to date, a new option, `--sync`, has been added to KAPE. By default, using --sync will update all targets and module configurations with what is available on the GitHub repository. The default is to overwrite all existing files with whatever is on the server, but there is another option you can use to disable this, `--sow`. Since `--sow` is true by default (sow stands for 'sync overwrite'), if you want to disable overwriting, you would use `--sync --sow false`.
+
+Here is an example of what this might look like. Notice that KAPE reports both updates and changes to existing configurations. When KAPE compares existing configurations, the SHA-1 is used to determine if the local files are the same as the remote files.
+
+![](20190305_KAPEv0820Released\2019-03-01_13-13-49.jpg)
+
+If overwriting is disabled via `--sow false`, any updated configurations would be reported as having an update available but skipped since overwriting is disabled.
+
+Using this option allows you to stay current with the most up to date target and module configurations. For modules, it is of course still necessary for you to place the proper binaries where they belong before using the modules.
+
+#### Other KAPE changes
+
+Another new switch, `--mvars`, was added in this release. This switch allows for passing key:value parameters into KAPE which can then be used as variables in **module** files. For example, this command:
+
+--mvars foo:bar,name:Eric,Level:Over9000
+
+would result in the following variables being available in module files: 
+
+%foo%
+%name%
+%Level%
+
+Each of these would then be replaced with the value portion of the key:value pair, so if a module's command line referenced something like:
+
+`-f %sourceFile% -r %foo% -n %name% -L %Level%`
+
+KAPE would replace the variables at run time before executing the command, like this:
+
+`-f C:\some\path\toFile.txt -r bar -n Eric -L Over9000`
+
+This allows you to pass things in like computer names, IP addresses, or anything else you need without me having to add explicit support for every variable.
+
+Keys and values should not contain spaces.
+
+#### gkape interface updated
+
+gkape has been completely overhauled to make using KAPE much more streamlined. Here is what the new interface looks like:
+
+![](20190305_KAPEv0820Released\2019-03-01_13-53-23.jpg)
+
+Usage is generally the same, but all of the new KAPE command line options are also available in gkape. as the gkape window is resized, the grids for Targets and Modules expand, allowing you more space to see the details related to configurations.
+
+All of the source and destination boxes now allow free-form typing. Each of these also remembers the previously entered items which allow selecting from a list on subsequent gkape runs. To remove an item, click the X to the left of the value you want to remove in the drop down.
+
+For Targets and Modules, a grid is now displayed that shows the Name and Description (and Category, for modules) of each configuration. The checkbox to the left lets you select more than one target or module to run. The grids also allow for filtering and grouping, so finding all ProgramExecution modules becomes very easy for example.
+
+On the modules side, adding key:value pairs is supported via the Variables section at the bottom of the Module options section. To remove an item, click it, then press the DELETE key.
+
+A button to **Sync with GitHub** was added to the bottom of the interface.
+
+#### Visual tweaks
+
+When running via the command line or via gkape, KAPE now shows overall progress related to it copying files in the Title bar of the command window:
+
+![](20190305_KAPEv0820Released\2019-03-01_14-09-17.jpg)     
+
+KAPE can be updated from the original link you received when you signed up. To get KAPE for the first time, go [here](https://learn.duffandphelps.com/kape)! Enjoy!
 
