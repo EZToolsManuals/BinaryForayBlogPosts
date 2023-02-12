@@ -60,4 +60,3 @@ Note that for ALL transfer options, at least WRITE permission is required or KAP
 Thanks to Matt and Troy for the idea and test buckets/storage to build this functionality!
 
 Use the Get-KAPEUpdate.ps1 PowerShell script to update
-
