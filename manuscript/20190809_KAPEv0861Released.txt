@@ -41,7 +41,7 @@ In the example below, we see the same phenomenon, but in this version, KAPE now 
 
 Another change in this version is redirecting STANDARD_ERROR to the Console vs. the output file. This prevents contention when writing to the same output file. In the example above, the STANDARD_ERROR text is shown in yellow and has a giant red arrow pointing to it.
 
-In another tweak related to this kind of thing, a new property, Append, was added to modules. This allows you to control whether or not output ends up in an incrementing file (NTUSER.TXT, NTUSER_1.TXT, NTUSER_2.TXT and so on), or if all output is appended to the first NTUSER.TXT.
+In another tweak related to this kind of thing, a new property, **Append**, was added to modules. This allows you to control whether or not output ends up in an incrementing file (NTUSER.TXT, NTUSER_1.TXT, NTUSER_2.TXT and so on), or if all output is appended to the first NTUSER.TXT.
 
 #### AWS S3 and Azure Storage transfer options added
 
