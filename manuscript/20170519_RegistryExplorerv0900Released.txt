@@ -1,10 +1,245 @@
-# TITLE
+# Registry Explorer v0.9.0.0 released!
 
-Posted: 3rd January 2015
+Posted: 19th May 2017
 
-BLOG POST GOES HERE
+This is a big release with a lot of cool new stuff including both features and new plugins.
 
-## 
+Overall, the changes look like this:
 
-![description](FOLDER\FILENAME)
+NEW: Added Raw Value property to non-RegBinary values that contains the bytes that make up the value. This is useful for copying out into other programs like DCode, etc.
+NEW: Plugins added for Known networks (SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList), WordWheelQuery, TypedURLs (including TypedURLsTime), Services, Terminal services client (RDP history), DHCPNetworkHint,
+NEW: Added Options | Convert selected | To ROT-13 in Find window. This allows for searching for things ROT-13 encoded like UserAssist, etc without having to rely on a plugin
+NEW: Added '# subkeys' column to Registry Hives and Available bookmarks trees
+NEW: Added 'Selected hive' to left side of the status bar that tracks the name of the hive currently selected. Double clicking copies full path of hive to clipboard
+NEW: More bookmarks
+NEW: Add indicator for 'Deleted' in search results
+NEW: Added 'Data interpreter' option to Values context menu. This allows you to view and decode the raw value data in a wide variety of formats (integer to EPOCH date, etc.)
+NEW: Much better filtering options in trees and grid including Excel-like filtering
+NEW: Updated controls
+NEW: Holding CTRL while right-clicking a node in Registry hives tree will automatically expand all child nodes (saves time over using context menu)
+NEW: Project support added. You can now create projects based on currently loaded hives and reload projects as needed
+NEW: Add File | Unload all hives option
+NEW: More data interpreter conversions
+
+CHANGE: Allow for cell selection vs entire rows in Values grid
+CHANGE: Allow for scrollbar on tree so all columns can be seen
+CHANGE: User-created bookmarks now show up in the Available bookmarks tab in Blue (bold) font to differentiate them from Common bookmarks
+CHANGE: Absolute path to active Registry hive is now prepended to Key path on Copy via context menu in trees and to Value summary in Values grid
+CHANGE: Add group membership and password hints to SAM plugin
+
+FIX: Plugins updated based on test data
+FIX: Save Datetime format and load it on subsequent starts
+FIX: Bug fixes
+
+### Plugins (both new and updated)
+
+Registry Explorer is now shipping with 22 plugins.
+
+Updated plugins in this release include the SAM plugin (added group membership and password hints).
+
+New plugins include DHCPNetworkHint, KnownNetworks, Services, TerminalServerClient, TypedURLs, and WordWheelQuery.
+
+Let's take a look at what these can do for us.
+
+#### DHCPNetworkHint
+
+This plugin deals with keys and values underneath ControlSet00X\Services\Tcpip\Parameters\Interfaces\ and the idea is to pull relevant information into one place.
+
+This is what a typical key and its values look like:
+
+![](20170519_RegistryExplorerv0900Released\1.png)
+
+and the plugin turns all the keys and values into this:
+
+![](20170519_RegistryExplorerv0900Released\2.png)
+
+Here we see all the network hints deobfuscated, IP addresses, domain information, and lease timestamps.
+
+#### KnownNetworks
+
+This one is somewhat related to the last one, but the data, of course, lives in a different hive and key. Here is an example of what a key and its values might look like:
+
+![](20170519_RegistryExplorerv0900Released\3.png)
+
+The plugin, however, turns all that, into this:
+
+![](20170519_RegistryExplorerv0900Released\4.png)
+
+It should be noted that the First and Last connect timestamps are in LOCAL time.
+
+#### Services
+
+This plugin iterates all the keys and subkeys underneath ControlSet00X\Services and pulls information the from the service key itself as well as the Parameters subkey.
+
+![](20170519_RegistryExplorerv0900Released\5.png)
+
+#### TerminalServerClient
+
+This key is found at 
+Software\Microsoft\Terminal Server Client\ and contains several subkeys that contain hostnames, usernames, and MRU lists. Results look like this:
+
+![](20170519_RegistryExplorerv0900Released\6.png)
+
+In cases where the host does not have an MRU value, its position is indicated as -1.
+
+#### TypedURLs
+
+This plugin pulls together information from two keys, shown below:
+
+![](20170519_RegistryExplorerv0900Released\7.png)
+
+The TypedURLsTime key contains values which are all 64-bit FILETIME timestamps.
+
+The information is blended together to produce this:
+
+![](20170519_RegistryExplorerv0900Released\8.png)
+
+Notice that the URL itself along with anything in slack space is also presented. As these values get reused, slack space can contain previous entries (or parts of them).
+
+#### WordWheelQuery
+
+This key and subkeys hold search terms. Here is an example of what the key may look like:
+
+![](20170519_RegistryExplorerv0900Released\9.png)
+
+And here is what we get from the plugin. Notice both the main key and the subkey have been processed:
+
+![](20170519_RegistryExplorerv0900Released\10.png)
+
+Hopefully, you find the plugins helpful! If you have any ideas for new plugins, please let me know!!
+
+### Other changes
+
+#### Raw value added to Type viewer
+
+This allows for copying out the bytes into other tools, reports, etc. The initial need for this feature was to be able to copy bytes out into tools like DCode and whatnot for timestamp conversions, but with the next change we talk about, this will become less necessary.
+
+![](20170519_RegistryExplorerv0900Released\11.png)
+
+#### Data interpreter available for any value
+
+Here we see an example of a 128-bit timestamp found in the NetworkList in a SOFTWARE hive:
+
+![](20170519_RegistryExplorerv0900Released\12.png)
+
+Now, in this case, we have a plugin that will do all the heavy lifting for us, but what if that wasn't the case? 
+
+There is now a new option to the Values context menu:
+
+![](20170519_RegistryExplorerv0900Released\13.png)
+
+When this option is selected, the Data interpreter is shown for the selected value's raw data:
+
+![](20170519_RegistryExplorerv0900Released\14.png)
+
+From here you can see how the raw value converts to a wide variety of formats. This release sees a few new options in the Data interpreter as well (From Base64 and the 128-bit timestamp).
+
+#### Excel-like filtering throughout
+
+This is one of the neatest features from a usability perspective.
+
+While the default in previous versions was for column filters to be in "Contains" mode, this release makes it much more obvious and allows you to change the filter to a wide variety of options as shown below.
+
+![](20170519_RegistryExplorerv0900Released\15.png)
+
+This works for string and number columns.
+
+Timestamp columns also get vastly improved filtering. For example, consider you had a case where some activity occurred in August of 2013 and you wanted to see every key that was changed in that span of time.
+
+You have already loaded several hives of interesting into Registry Explorer.
+
+![](20170519_RegistryExplorerv0900Released\16.png)
+
+Bringing up the filter for the Last write timestamp column shows us several options. The first looks like this:
+
+![](20170519_RegistryExplorerv0900Released\17.png)
+
+But if we click the Values tab in the filter, we get this:
+
+![](20170519_RegistryExplorerv0900Released\18.png)
+
+Since our interesting time frame was August of 2013, if we check that box, like this:
+
+![](20170519_RegistryExplorerv0900Released\19.png)
+
+All hives loaded into Registry Explorer are recursively expanded and any keys not matching the selected criteria disappear! We are then left with this view:
+
+![](20170519_RegistryExplorerv0900Released\20.png)
+
+Notice that we DO see some keys with a last write time that is outside the window we specified, but these keys are necessary to display in order to maintain the hierarchical relationship between keys and subkeys.
+
+Recall though, there exists an option in the Tools menu, Show parent keys when filtering, that we can toggle to remove the placeholder keys.
+
+![](20170519_RegistryExplorerv0900Released\21.png)
+
+With that option toggled off, we are left with this:
+
+![](20170519_RegistryExplorerv0900Released\22.png)
+
+So no matter which way you prefer to review your data, the choice is yours!
+
+#### Project support
+
+The File menu now has a Project menu that allows for saving all of the currently loaded hives in Registry Explorer to a file (*.re_proj) that can then later be used to load the same hives much quicker the next time you need to look at them.
+
+![](20170519_RegistryExplorerv0900Released\23.png)
+
+There is also another new option in the File menu to unload all hives. This makes restarting Registry Explorer or closing each loaded hive manually unnecessary anymore.
+
+#### Available bookmarks changes
+
+This release also makes it easier to differentiate between Common (included) bookmarks and user-created bookmarks.
+
+Here we see some Usrclass.dat hives loaded into Registry Explorer. Notice we have 1/0 for bookmarks in the menu.
+
+![](20170519_RegistryExplorerv0900Released\24.png)
+
+If I add a few bookmarks for various keys against Usrclass.dat hives and then go back to the Available bookmarks tab, things look slightly different:
+
+![](20170519_RegistryExplorerv0900Released\25.png)
+
+Any bookmarks in the User folder will be highlighted in blue to make it easier to see both kinds of bookmarks.
+
+This allows you to move bookmarks in and out of both the Common and User directories under the Bookmarks folder so that you can hone in on things easier. For example, rather than wade through 25 bookmarks that are usually in the Common folder, move the ones most relevant to you to the User folder and they will show up in blue.
+
+#### Find changes
+
+A column indicating whether or not the search hit was found in a deleted (and recovered/reassociated) key/value was added:
+
+![](20170519_RegistryExplorerv0900Released\26.png)
+
+The Options menu also got a new addition, Convert selected | To ROT-13, which is useful for finding encoded data (in UserAssist for example).
+
+While Registry Explorer has a plugin to decode UserAssist keys, if you had the name of an executable you wanted to search for and aren't sure if it exists, you can convert it to ROT-13 and search that way.
+
+For example, consider a case where you suspect the use of the sc.exe tool. You are looking at user's NTUSER.DAT hives and do a search for sc.exe, but it comes up empty:
+
+![](20170519_RegistryExplorerv0900Released\27.png)
+
+First, select the search term to encode, then use the To ROT-13 option:
+
+![](20170519_RegistryExplorerv0900Released\28.png)
+
+When we do a search now, we get this:
+
+![](20170519_RegistryExplorerv0900Released\29.png)
+
+which is a hit in one of the UserAssist keys. If we double click the hit, we jump to that value:
+
+![](20170519_RegistryExplorerv0900Released\30.png)
+
+We can then verify these hits by either manually reversing ROT-13 or just looking at the UserAssist plugin output:
+
+![](20170519_RegistryExplorerv0900Released\31.png)
+
+Either way, you have your hit!
+
+You can find the update in the [usual places](https://ericzimmerman.github.io/) and the [Chocolatey](https://community.chocolatey.org/packages/registryexplorer/) package should be updated soon too.
+
+**Please do not forget that I am up for the Forensic 4cast awards in the Digital Forensic Investigator of the Year category. 
+
+If you would not mind, please vote for me!**
+
+https://forensic4cast.com/forensic-4cast-awards/
+
 
