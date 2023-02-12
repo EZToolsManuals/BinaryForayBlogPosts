@@ -1,10 +1,67 @@
-# TITLE
+# Introducing WxTCmd!
 
-Posted: 3rd January 2015
+Posted: 7th May 2018
 
-BLOG POST GOES HERE
+WxTCmd is a parser for the new Windows 10 Timeline feature database.
 
-## 
+We have been hearing about it for several weeks now, but with 1803 finally final, I had a chance to update my system and let the feature do its thing.
 
-![description](FOLDER\FILENAME)
+See [here](https://salt4n6.wordpress.com/2018/05/03/windows-10-timeline-forensic-artefacts/amp/) and [here](https://cclgroupltd.com/windows-10-timeline-forensic-artefacts/) for more details on the database. I initially perused that site and then dug into the database format manually to see what else I could find in there.
 
+This database lives under a user's profile:
+
+C:\Users\<profile>\AppData\Local\ConnectedDevicesPlatform\L.<profile>\ActivitiesCache.db
+
+This utility can be run on a live system or after extracting the ActivitiesCache.db file from a forensic image, etc.
+
+Usage is very simple:
+
+![](20180507_IntroducingWxTCmd\2018-05-07_13-54-59.png)
+
+Right now, two tables are being processed as these are the only two tables the contain data on my systems.
+
+Once the data is extracted, we end up with tsv files that can be dropped into Timeline Explorer v0.8.1.1 or later (which was released to support these new file types).
+
+From a data perspective, the Activities table contains fields that contain json strings, timestamps (in epoch format) such as start time, end time, last modified time, etc, and other various identifiers including executable names and file names that applications opened.
+
+The Activity_PackageId table contains much less information but it too can contain executable names.
+
+In both tables, the executables are often recorded with a GUID vs an absolute path. With the work previously done in ShellBags Explorer, I just happen to have a list of 100s of GUIDs to human names, so I resolve these when processing things as well.
+
+For executable names, it seems to be tracking Windows Universal apps using a certain identifier, win32 apps using another, etc. All of this detail is processed and the relevant strings extracted and normalized, including URLDecoding contentURIs and whatnot.
+
+The end result looks like this when dropped into TLE.
+
+Activity_PackageId is first.
+
+![](20180507_IntroducingWxTCmd\2018-05-07_14-21-44.png)
+
+Here we can see the GUID resolution in action.
+
+Finally, the Activity information contains the most detail:
+
+![](20180507_IntroducingWxTCmd\2018-05-07_14-24-04.png)
+
+This one has a lot going on, so let's talk about it.
+
+In most cases, the Display Text and Content Info fields are not populated. When they are however, you can see we get a lot of nice detail including the name of the file and its full path. This information isn't sitting as is in the database, but I process the json and extract things out as needed.
+
+I had TLE sorted by Display Text in the screen shot above, but you can see how sorting on Start Time would be beneficial.
+
+Scrolling right, we can see these columns:
+
+![](20180507_IntroducingWxTCmd\2018-05-07_14-27-25.png)
+
+Notice all those nice timestamps! Again, these are stored in the database as an integer, but WxTCmd changes them all to DateTime objects.
+
+It should be noted that I have not seen the End Time timestamp being populated for application usage (i.e. Excel was running for 22 minutes and 8 seconds, etc.) where file names are also retained, but other entries DO show a nice start and end time. In these cases, I calculate the duration, like this:
+
+![](20180507_IntroducingWxTCmd\2018-05-07_14-35-09.png)
+
+Notice in this example calculator has been tracked as running for over 2 days (what can I say, I like to add things up).
+
+This is a very new artifact and this tool will certainly be getting updates as we figure out more and more about what it is tracking.
+
+Try it out and let me know what you think!!
+
+The [main download site](http://ericzimmerman.github.io/) and Chocolatey have been updated with the new releases, but Chocolatey may take a while for the package to show up since its new.
