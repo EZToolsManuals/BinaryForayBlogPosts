@@ -1,10 +1,98 @@
-# TITLE
+# Introducing SDB Explorer
 
-Posted: 3rd January 2015
+Posted: 9th February 2018
 
-BLOG POST GOES HERE
+This is the initial release of SDB Explorer.
 
-## 
+SDB Explorer is a GUI program that allows for interacting with Microsoft Shim databases. For more details on what kind of data is contained in these types of files, go [here](https://geoffchappell.com/studies/windows/win32/apphelp/sdb/index.htm?tx=54) and [here](https://msdn.microsoft.com/en-us/library/bb432182%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396) and [here](https://blogs.technet.microsoft.com/askperf/2011/06/17/demystifying-shims-or-using-the-app-compat-toolkit-to-make-your-old-stuff-work-with-your-new-stuff/).
 
-![description](FOLDER\FILENAME)
+If you have used any of my other programs, usage of SDB Explorer will be familiar.
 
+Getting started
+Let's start by taking a look at the main interface. On the left, a tree view will be populated with data from the SDB file. As a node in the tree is selected, the text area in the upper right will be populated with details about the selected node as well as all child nodes. This will be shown in more detail below. When looking at binary keys, the contents are displayed in the hex viewer in the lower right. There is also a data interpreter available in the hex viewer.
+
+![](20180209_IntroducingSDBExplorer\main.png)
+
+To load a file, use the File menu, or press ALT-1.
+
+![](20180209_IntroducingSDBExplorer\loaded.png)
+
+Once a file is loaded, the tree us updated and the status bar reflects the full path as well as the version of the database.
+
+There will be three collections in the tree: INDEXES, DATABASE, and STRINGTABLE. Most people will spend their time in the DATABASE section as this is where the majority of the data is located.
+
+Each node also contains the offset where the data displayed in a node can be found in the original file.
+
+Selecting a node in the tree will update the textbox, as shown below. The textbox contains all the data from the selected node down.
+
+In the example below, the Database node is selected. Notice how every child node's details are pulled into the text box and indented according the level they are found in the database heirarchy.
+
+![](20180209_IntroducingSDBExplorer\sel.png)
+
+Selecting a different node updates the text box. Notice here we see everything from the PATCH tag down.
+
+![](20180209_IntroducingSDBExplorer\sel2.png)
+
+You may have noticed that one of the keys, PATCH_BITS, shows a value of (Binary data). If we click on this tag, notice what happens to the interface.
+
+![](20180209_IntroducingSDBExplorer\bin.png)
+
+PATCH_BITS tags contain one or more sub items, which SDB Explorer automatically pulls out and decodes. In the example above, we have just a single item. Selecting it displays relevant information as shown below:
+
+![](20180209_IntroducingSDBExplorer\b2.png)
+
+In some cases, there are multiple items. When this happens, more sub items are listed:
+
+![](20180209_IntroducingSDBExplorer\p.png)
+
+Should you need one, the hex viewer contains a data interpreter as well.
+
+![](20180209_IntroducingSDBExplorer\di.png)
+
+You can also select bytes and copy them out in several formats:
+
+![](20180209_IntroducingSDBExplorer\h2.png)
+
+#### Finding and filtering nodes
+
+The tree can filter nodes via the column headers. For example, entering '.exe' into the Name column results in this being displayed:
+
+![](20180209_IntroducingSDBExplorer\exe.png)
+
+When filtering, if you select a node, the text is updated TO ONLY INCLUDE VISIBLE NODES. This allows you to filter for what is important for you and then copy the details out.
+
+![](20180209_IntroducingSDBExplorer\f1.png)
+
+Compare that to what we see if we do NOT have a filter in place and select the DATABASE item.
+
+![](20180209_IntroducingSDBExplorer\f2.png)
+
+The Info menu allows you to see the distribution of tags in a given database. For larger databases, you may need to make the Metrics window bigger (or just maximize it) to see all the data.
+
+![](20180209_IntroducingSDBExplorer\mmm.png)
+
+Finally, you can dump all the strings to a text file via the File menu . This is similar to clicking on the STRINGTABLE item and selecting the text, but when dumping strings, only the strings are extracted (i.e. they are not prefixed with 'STRINGTABLE_ITEM')
+
+#### Navigating around tags
+
+Lets take a look at a more specific and useful example, a FIN7 SDB file, as discussed [here](https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html).
+
+In SDB Explorer, a database related to FIN7 looks like this:
+
+![](20180209_IntroducingSDBExplorer\ff.png)
+
+Notice there is a tag named PATCH_REF right above STRINGTABLE. One of the child items of that tag is another tag named PATCH_TAGID which has a value of 0x60. TAGIDs point to another tag in the DATABASE and the value is the offset to where the actual data lives.
+
+Since we have a value of 0x60, we have to look for a PATCH tag with an offset of 0x60, which we see below.
+
+![](20180209_IntroducingSDBExplorer\pppp.png)
+
+Now that we are at the correct offset, we can interact with the PATCH tag and dig into it using the same methods we already discussed above (viewing PATCH_BITS and its sub items, etc).
+
+If you have any ideas, suggestions, etc. please let me know and I will be happy to add them!
+
+You can get SDB Explorer at the [usual place](http://ericzimmerman.github.io/).
+
+
+
+Enjoy!!!
