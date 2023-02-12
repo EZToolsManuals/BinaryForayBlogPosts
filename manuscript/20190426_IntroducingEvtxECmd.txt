@@ -1,10 +1,163 @@
-# TITLE
+# Introducing EvtxECmd!!
 
-Posted: 3rd January 2015
+Posted: 26th April 2019
 
-BLOG POST GOES HERE
+I am happy to announce the first beta version of my Windows Event Log (evtx) parser. We will be talking about the command line version today, but I have plans for a GUI as well.
 
-## 
+Let's start with a look at the options:
 
-![description](FOLDER\FILENAME)
+![](20190426_IntroducingEvtxECmd\2019-04-26_12-45-34.jpg)
 
+Most of the options are like all my other programs in that you can process a single file or a directory (recursively) using -f or -d.
+
+With either -f or -d, the event log(s) will be parsed, and information about the file(s) is/are displayed, like this:
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_12-48-58.jpg)
+
+The metrics about event IDs and how many of each ID was seen is shown by default, but can be suppressed using the `--met false` option.
+
+The next set of options, --csv, --json, and --xml can be used one at a time or in conjunction with one another. Overriding the default filename is also possible using the associated option (--csvf for example).
+
+Also note in the screen shot above that the file was in use and EvtxECmd dealt with this cleanly. This means you can use EvtxECmd on both dead box, KAPE collections, or on a running system and get the same results.
+
+Before looking at the export options a bit closer, let's talk about two options that let you include or exclude event IDs from the output:
+
+* **inc**: Given a list of event IDs, exclude all other event IDs **not** in the list
+* **exc**: Given a list of event IDs, exclude all event IDs in the list
+
+Both options expect a list of integers, separated by a comma, with no spaces, like this:
+
+**--inc 4624,4625,5140**
+
+#### Export formats
+
+CSV, XML, and json export are all available and can be generated at the same time by including the option. In other words, you do not have to do CSV, then repeat for XML, and so on.
+
+The XML option will format the event data in exactly the same way as Windows does with one exception, the namespace is removed. This saves disk space and makes querying the data easier. Here is an example of what the XML data may look like:
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-00-11.jpg)
+
+The XML export format will be different from others in that every attempt to adhere to the standard defined by Microsoft has been followed. This means you will not see attributes when they are of the NULL type, and so on. For most people, this is an irrelevant detail, but it is important to be as technically correct as possible.
+
+#### A word about CSV (and json)
+
+The CSV export format in EvtxECmd normalizes the event record into standard fields from the common area of the XML payload, such as Computer, Channel, EventID, Level, TimeCreated, and so on. The fields inside the <System> element are generally always the same and these properties are extracted from the XML into data for the CSV.
+
+The custom data for any given event lives in the EventData (usually) and this is what makes event logs a difficult thing to deal with, because every single event ID may have an entirely different payload. Historically, tools have gotten around this by generating different CSV files for different event IDs, which again leads to analytical issues in that you may need to load dozens of files to see what is happening. When this kind of thing is hard coded into tool. you are also limited from looking at certain events until a vendor has gotten around to including that event in their program (if they deem it worth doing in the first place).
+
+This however, is NOT the case with EvtxECmd. All event records are normalized across all event types and across all event log file types! 
+
+Heresy you say! How is this possible? Well, the solution is by using a map to convert the customized data into several standardized fields in the CSV (and json) data. 
+
+The standardized fields that are available include:
+
+* **UserName**: user and/or domain info as found in various event IDs
+* **RemoteHost**: IP address and/or host name (or both!) information found in event IDs
+* **ExecutableInfo**: used for things like process command line, scheduled task, info from service install, etc. 
+* **PayloadData1-6**: Six fields to put whatever you see fit into
+
+These fields can certainly be expanded upon as people find common ones that can be used across different event IDs. What I want to avoid however is having 100 columns that are usually not populated in most cases. If you come up with a good one, please let me know!
+
+With these fields in mind, let's look at a map in detail.
+
+#### A map from here to there
+
+Map files are used to convert the EventData (the unique part of an event) to a more standardized format. Map files are specific to a certain type of event log, such as Security, Application, etc.
+
+Because different event logs may reuse event IDs, maps need to be specific to a certain kind of log. This specificity is done by using a unique identifier for a given event log, the Channel element. We will see more about this in a moment.
+
+Once you know what event log and event ID you want to make a map for, the first thing to do is dump the log's records to XML, using EvtxECmd.exe as follows:
+
+`EvtxECmd.exe -f <your eventlog> --xml c:\temp\xml`
+
+When the command finishes, open the generated xml file in c:\temp\ and find your event ID of interest. Let's say its from the **Security** log and its event ID **4624**, It might look like this:
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-44-45.jpg)
+
+Just about everything in the <System> element is normalized by default, but if you want to include anything from there you can do so using the techniques we will see below.
+
+In most cases, the data in the <EventData> block is what you want to process. This is where xpath queries come into play.
+
+So let's take a look at a map to make things a bit more clear.
+
+In the example map below, there are four header properties that describe the map: who wrote it, what its for, the Channel, and the event ID the map corresponds to. 
+
+The Channel and EventId property are what make a map unique, **not the name of the file**. As long as the map ends with '.map' it will be processed.
+
+The Channel is a useful identifier for a given log type. It can be seen in the <Channel> element ("Security" in the example above).
+
+The Maps collection contains configurations for how to look for data in an events EventData and extract out particular properties into variables. These variables are then combined and mapped to the event record's first class properties.
+
+For example, consider the first map, for Username, below.
+
+The PropertyValue defines the pattern that will be used to build the final value that will be assigned to the Username field in the CSV. Variables in patterns are surrounded by % on both sides, so we see two variables defined: %domain% and %user%
+
+In the map entries Values collection, we actually populate these variables by giving the value a name (domain in the first case) and an xpath query that will be used to set the value for the variable ("/Event/EventData/Data[@Name=\"SubjectDomainName\"]" in the first case).
+
+When a map is processed, each map entry has its Values items processed so the variables are populated with data. Then the PropertyValue is updated and the variables are replaced with the actual values. This final PropertyValue is then updated in the event record which then ends up in the CSV/json, etc.
+
+It is that simple! Be sure to surround things in double quotes and/or escape quotes as in the examples. When in doubt, test your map against real data!
+
+To see what this looks like in practice, consider the Security_4624.map, shown below:
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-47-20.jpg)
+
+Notice that for each item in the Maps collection, the **Property** points to the field to update in the CSV with the custom data (Username or RemoteHost for example).
+
+Map files are processed in alphabetical order. This means you can create your own alternative maps to the default by doing the following:
+
+1. make a copy of the map you want to modify
+2. name it the same as the map you are interested in, but prepend 1_ to the front of the filename.
+3. edit the new map to meet your needs
+
+Example:
+
+Security_4624.map is copied and renamed to:
+
+1_Security_4624.map
+
+Edit 1_Security_4624.map and make your changes
+
+When the maps are loaded, since **1_Security_4624.map** comes before **4624.map**, only the one with your changes will be loaded.
+
+This also allows you to update default maps without having your customizations blown away every time there is an update.
+
+#### json is special
+
+When exporting to json via --json, the data will be exactly what is found in the CSV output, except presented in json format. One record is displayed per line. This allows you to use maps to populate data and then ingest the data in CSV or json format.
+
+But what if you want ALL the details in json? This is where the **--fj** (for full json) switch comes into play. When this switch is used with --json, the full XML payload is converted to json and this is what is saved. The catch here is that YOU are now responsible for mapping all of the data from EventData into other properties, etc.
+
+Here is the normal json output (pretty printed):
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-21-05.jpg)
+
+And here is the same record using --fj (also pretty printed):
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-22-37.jpg)
+
+#### The payoff
+
+The maps are the key to making this process work. When loading the CSV data into Timeline Explorer (direct support coming in the next version), we get this:
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-25-36.jpg)
+
+Notice how we can see all of the 4624 and 4672 entries along with data pulled from their <EventData> element?
+
+This allows you to see ALL events in line with ALL other events, regardless of WHERE the logs came from and what the payload is (assuming you have mapped the data). Of course filtering and all that still works, but you are no longer bound to someone else's notion of what the best way to do things is.
+
+As we saw earlier, you get to make or update maps to suit your needs, your cases, your work flow, your idea of what is best. I have and will continue to make map files and include them [here](https://github.com/EricZimmerman/evtx/tree/master/evtx/Maps), and I would love to have your contributions to make this an even easier process for the community.
+
+To make your own maps, fork my [evtx](https://github.com/EricZimmerman/evtx) repo, look at the README and example maps in the evtx\Maps directory, then simply copy an existing map, rename it, update it to match the event ID/Channel you are interested in, TEST IT, then do a PR into the main repository.
+
+#### Wrapping up
+
+In one of the next releases of EvtxECmd, I will include a --sync option that will download all of the maps from the evtx repository to make it even easier to use and stay up to date.
+
+Of course, EvtxECmd can be used with a module in KAPE as well, making the collection and processing of event logs to CSV a process that takes just a few seconds!!
+
+![](20190426_IntroducingEvtxECmd\2019-04-26_13-34-13.jpg)
+
+That's it for now! This has been a fun project and I think the uses here are limitless.
+
+You can get EvtxECmd from the [usual place](https://ericzimmerman.github.io/#!index.md), or just run Get-ZimmermanTools and it will be discovered and downloaded for you.
