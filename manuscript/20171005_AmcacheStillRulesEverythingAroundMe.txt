@@ -1,10 +1,185 @@
-# TITLE
+# (Am)cache still rules everything around me (part 2 of 1)
 
-Posted: 3rd January 2015
+Posted: 5th October 2017
 
-BLOG POST GOES HERE
+Salutations!
 
-## 
+It seems in recent versions of Windows 10 (i.e. those in the fast ring as of the last few weeks) has introduced some changes to artifacts, similar to what was done with appcompatcache [back in March](https://binaryforay.blogspot.com/2017/03/windows-10-creators-update-vs-shimcache.html) of this year. These changes will become finalized in the Windows 10 Fall Creators update, which is due to be released on October 17, 2017. It is unknown at this time if any of the changes I am soon to discuss will be backported into any previous versions of Windows (10 or otherwise).
 
-![description](FOLDER\FILENAME)
+Before we begin, it would be helpful to understand the current workings of amcache. For those not familiar with it, see my original blog post [here](https://binaryforay.blogspot.com/2015/07/amcacheparser-reducing-noise-finding.html) as well as the webinar I did [here](https://www.youtube.com/watch?v=iTchBtRr6TA).
+
+The changes in the latest builds of Windows takes away some things and adds some things. As we will see, we are getting far more than we are losing (always a good thing).
+
+Many thanks go to the DFIR Oracle, Troy Larson, who pointed out the change. Without him, we would be lost.
+
+AmcacheParser has been updated to support this new format. It automatically detects the format and parses things accordingly, as seen below:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\amrun.png)
+
+Let's take a closer look at how things have changed in this new version.
+
+Note" Any tool that has been parsing amcache.hve will break when used on these new formats as the old keys and value names no longer exist.
+
+### What stayed the same?
+
+In general, we still have a listing of files and a listing of applications. The key names and paths have changed, along with the value names.
+
+Programs, now known as Applications, live at "Root\InventoryApplication".
+
+Files live at "Root\InventoryApplicationFile".
+
+### What do we lose?
+
+The old format had a key for each program that tracked a (generally accurate) list of all the files associated with said program. This list is gone in in the new format.
+
+The volume information for each file entry is gone, but this was mostly useless as each file entry stored the full path to the executable.
+
+Unfortunately, MFT information has been removed from the File entries =(
+
+### What do we gain?
+
+On average, there are more values associated with a file entry. The new format consistently has 17 values whereas the old version had 4-5 values on average.
+
+Program entries, now known as Applications, gain a value and are consistently showing 21 values in a given key (vs the 17-20 on average for the old format)
+
+The other nice thing across the board is that the value names are much more meaningful. In the old format, value names were more or less numerical. but in the new version, they are descriptive.
+
+For example, in the old format, the SHA-1 was kept in a value named "101" but now that same value is kept in a value named "FileId".
+
+Other very interesting fields include such things as:
+
+* IsOSComponent
+* LinkDate
+* IsPeFile
+* BinaryType (32 or 64 bit)
+* Install Date
+* DriverIsKernelMode
+
+#### Is there anything new?
+
+I am glad you asked! There is a ton of new and awesome detail in the new format. There are now keys and subkeys that track:
+
+* Application shortcuts
+* Device containers
+* Device interfaces
+* Device PnP information
+* Device driver binary information
+* Device driver package information
+
+We will cover many of these in dedicated sections below.
+
+#### Shortcuts
+
+Shortcuts live under the "Root\InventoryApplicationShortcut" key. The subkeys contain information about the target of the lnk file (it is often truncated) along with an unknown identifier. Here is an example:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\shortcuts.png)
+
+Each subkey contains a single value to a shortcut.
+
+What is interesting is some of these shortcuts were not created by an MSI or installer. The X-Ways shortcuts were placed there by XWFIM, which is programmatically creating lnk files. 
+
+This data, when exported by AmcacheParser, looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\screport.png)
+
+#### Device containers
+
+Device containers track things like bluetooth, printers, audio, storage, and so on. These are found under the key "Root\InventoryDeviceContainer". 
+
+An example of what one looks like is shown below. Notice in this example, the "Categories" value references bluetooth.
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\container2p2p0.png)
+
+These subkey names are also referenced in the DevicePnP section (discussed more below) via the "ContainerId" value and can be used to group Devices back to a container. For example, in the image below, I searched for the subkey shown in orange above and it was found in several subkeys under the DevicePnP section. Notice each of the PnP entries relates to "bluetooth"
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\container2p2p1.png)
+
+If we take a look at the last entry in the search results, it looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\container2p2p2.png)
+
+This data, when exported by AmcacheParser, looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\containerre.png)
+
+#### PnP information
+
+As we touched on above, there is also a dedicated bucket for PnP devices, found under "Root\InventoryDevicePnp" that looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\pnop0.png)
+
+The unique device classes seen in my sample data include:
+
+* system
+* processor
+* bluetooth
+* net
+* monitor
+* media
+* hidclass
+* battery
+* keyboard
+* mouse
+* display
+* hdc
+* usb
+* scsiadapter
+* computer
+* image
+* cdrom
+* diskdrive
+* volume
+* softwaredevice
+* wsdprintdevice
+* audioendpoint
+* printqueue
+* printer
+* firmware
+* ComputerHardwareId
+
+There is a lot of other interesting data here including driver dates, provider, version numbers, and more.
+
+This data, when exported by AmcacheParser, looks like this (partial list):
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\pnpre.png)
+
+#### Driver binary information
+
+Binary driver information lives in a key named "Root\InventoryDriverBinary".  There are subkeys that refer to the full path of a driver. Each key has 18 values in it that looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\driverb1.png)
+
+Some very interesting value names can be seen here, including DriverInBox, DriverIsKernelMode, and the two timestamps. You can also see information on whether the driver is signed, what service it is associated with, and so on. There are lots of uses for this kind of information on a wide variety of cases!
+
+This data, when exported by AmcacheParser, looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\driversr.png)
+
+#### Driver package information
+
+Finally, we have driver package information that lives under "Root\InventoryDriverPackage". There are subkeys containing information related to inf files and some other identifier. 
+
+The subkey name ties into several other buckets of data such as:
+
+* DevicePnP via the DriverPackageStrongName value
+* DriverBinary via the DriverPackageStrongName value
+* ApplicationFile via the LowerCaseLongPath value
+
+Here is an example:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\driverpackage.png)
+
+This data, when exported by AmcacheParser, looks like this:
+
+![](20171005_AmcacheStillRulesEverythingAroundMe\drivepr.png)
+
+### Wrapup
+
+Whew! There is a lot of awesome new information in amcache.hve and this release is just the beginning of making it usable. A future version will do more to tie the information in the different high-level keys together (driver packages to PnP, etc.)
+
+Needless to say, there is a lot of new research to be done! I hope people find this update useful and find all sorts of interesting new ways to use the data in DFIR work! If you figure out something cool, please let me know so I can add it to AmcacheParser.
+
+As was mentioned at the beginning of the post, AmcacheParser is updated and can handle these new hives (and almost a full 2 weeks before it hits the wild too!)
+
+Get it [here](https://ericzimmerman.github.io/) or [here](https://github.com/EricZimmerman/AmcacheParser/releases).
 
