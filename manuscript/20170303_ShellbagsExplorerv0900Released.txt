@@ -1,10 +1,136 @@
-# TITLE
+# ShellBags Explorer 0.9.0.0 released!
 
-Posted: 3rd January 2015
+Posted: 3rd March 2017
 
-BLOG POST GOES HERE
+This is the biggest and most comprehensive update for ShellBags Explorer to date. While the change log may not be lengthy, there are significant and important changes and optimizations in many of the changes.
 
-## 
+NEW: Added support for Windows backup related shellbags. These are populated as backup sets are navigated
+NEW: Completely redone support for MTP devices, storage, and folders
+NEW: Extraction of subshell items and other data from property stores of type STREAM, VECTOR, and BLOB. This results in MUCH more detail being available when these types of items exist in property stores (often related to Search results, etc)
+NEW: Add support for many new shellbag types and extension blocks
+NEW: Added Option to show/hide the hex value of shellbag in Details pane
 
-![description](FOLDER\FILENAME)
+CHANGE: Renamed First Explored to First Interacted and Last Explored to Last Interacted
+CHANGE: Lots of unit tests and refactoring
 
+### Newly discovered items
+
+Many new shellbag types and extension blocks were found as a result of the last build being released. Moreover, many new GUIDs were reported. These GUIDs were researched and when they could be related to a folder or Windows functionality, added into the list of GUID mappings. The current list is at 425 unique GUIDs!
+
+This release also sees separate classes for each shellbag type. In previous versions, similar types were handled by the same class, but this new approach allows for fixing issues related to individual shellbag types easier.
+
+### Unit tests and refactoring
+
+The biggest and most important change in this release is in the unit tests and the corpus of data used to ensure things are working properly.
+
+Over the last several years, I have collected a wide range of Registry hives. To take advantage of all of the data inside these hives, I wrote a program that extracts all the shellbag data from each key under BagMRU, identifies the type, then hashes the results to make sure duplicates are removed. All unique files are stored under a directory named for the shellbag type (offset 0x02). Some types of shellbags, like MTP, zip, and those related to optical media, can be found in several different shellbag types. Because of this, the program checks for these special signatures and categorizes them accordingly.
+
+The result of this program is shown below.
+
+![](20170303_ShellbagsExplorerv0900Released\corpus.png)
+
+All told, over 65,200 unique shellbags exist in my test data.
+
+![](20170303_ShellbagsExplorerv0900Released\props.png)
+
+As you can imagine, when I first pointed the existing code from the ShellBags Explorer project against this new data set, there were plenty of tests that didn't pass.
+
+Once the tests were set up however, refactoring can begin to ensure proper parsing of all the newly available test data from our extraction above. This work resulted in some general tweaks for certain types, but for others, far more extensive work was done, up to and including completely rewriting code for shell items such as the various MTP bags (more on this later), entirely new extension blocks, and newly discovered shellbag types.
+
+After a whole lot of work, the end result is this:
+
+![](20170303_ShellbagsExplorerv0900Released\tests.png)
+
+Now that a robust set of tests exist, any new data that gets reported can be easily incorporated and the code updated to handle the new data, all without worrying about breaking any existing functionality.
+
+Another area where refactoring happened was in property stores. Property stores are very common in shellbags and are used to contain key/value pairs. There are several key types that can contain binary data, particularly STREAM, VECTOR, and BLOB data. These types of data in property stores often contain other shell items, data related to searches, and much more. This release adds support for native parsing of some of these types of data (more will be available in the next release as well).
+
+Prior to this release, additional data was harvested from these data types by using regular expressions to search for extension block signatures. As such, some of the data was already available in previous versions. The main difference in this version is the association of these extension blocks with their parent shellbag data (think of it like a Russian nested doll, or a shellbags [Inception](http://www.imdb.com/title/tt1375666/) movie plot). The initial shellbag can contain property stores which also contain multiple shellbags which also contain property stores which also contain shellbags, and so on.
+
+By drilling down into all available data (and parsing all of the data available), a more accurate picture can be painted and new research can be conducted to find new and valuable uses of shellbag data.
+
+As far as I know, none of these structures is/was documented prior to this version of ShellBags Explorer.
+
+### MTP devices
+
+This work started off based on the excellent work of Nicole Ibrahim which can be found [here](http://nicoleibrahim.com/part-5-usb-device-research-directory-traversal-artifacts-shell-bagmru-entries/). Nicole did a lot of work mapping out the properties of MTP related devices, storage, and folders. This work was the basis of my initial rewrite.
+
+Because of the large amount of test data I had, I quickly ran into cases where the initial work was not parsing things correctly. At this point, I stepped back and extended things to get all my unit test passing.
+
+Once the code was parsing all of the data correctly, additional research was done in order to make sense of all of the different kinds of data contained in these shellbag types. In many cases, the data is stored in a key/value relationship and the value is of a certain type, like Unicode string, boolean, timestamp, etc. After looking over documentation compiled by Joachim Metz and other Microsoft data (some of which was provided by Nicole again), I was able to validate the findings from Nicole's earlier work and extend the data types to a more usable format as will be shown below.
+
+Prior to this version, only the low hanging fruit was being extracted from MTP related shellbags.
+
+Here are some examples from version 0.8.1.0:
+
+First, an MTP device:
+
+![](20170303_ShellbagsExplorerv0900Released\oldmtp.png)
+
+Next, MTP storage:
+
+![](20170303_ShellbagsExplorerv0900Released\oldstorage.png)
+
+Finally, an MTP folder:
+
+![](20170303_ShellbagsExplorerv0900Released\oldfolder.png)
+
+Now let's look at the same usrclass.dat hive in version 0.9.0.0:
+
+Here we see the MTP device. Notice we have a much more complete picture of the data available inside the shellbag.
+
+![](20170303_ShellbagsExplorerv0900Released\oldmtp (1).png)
+
+Next, MTP storage:
+
+![](20170303_ShellbagsExplorerv0900Released\newstor.png)
+
+Notice how every key/value pair is now extracted and represented. This results in a significant increase in information about a particular device and its capabilities.
+
+Finally, the MTP folder:
+
+![](20170303_ShellbagsExplorerv0900Released\newfolder.png)
+
+Here we see the same concept as the previous example in that all the key/value pairs are extracted and displayed. In the cases where a more human readable description is not available (because it isn't known yet), the type of data (Int32Unsigned for example) and the value is still displayed.
+
+Looking at things side by side makes the differences much more apparent.
+
+#### Phone MTP differences
+
+![](20170303_ShellbagsExplorerv0900Released\phoneComp2.png)
+
+#### Storage MTP differences
+
+![](20170303_ShellbagsExplorerv0900Released\phonecomp.png)
+
+#### Folder MTP differences
+
+![](20170303_ShellbagsExplorerv0900Released\folderComp.png)
+
+#### Windows backup
+
+Another interesting and new thing added to this release is the ability to see Windows Backup and Restore activity in shellbags.
+
+Below is the interface for interacting with Windows backups
+
+![](20170303_ShellbagsExplorerv0900Released\backup1.png)
+
+After clicking the Restore my files button, a new dialog is shown that allows for picking which backup set to restore from, as shown below.
+
+![](20170303_ShellbagsExplorerv0900Released\backup2.png)
+
+After selecting a backup date, the user can browse the directory structure. In the image below, I have navigated to my profile directory and selected the Videos folder to add to the restore job.
+
+![](20170303_ShellbagsExplorerv0900Released\backup3.png)
+
+After the Add folder button is selected, the restore would proceed.
+
+The interesting thing with this activity is that the actions of navigating the backup get persisted in shellbags!
+
+The screen shot below shows what ShellBags Explorer reveals about this activity. As you can see, several timestamps are visible at the different levels. These folders were not necessarily restored, but rather, navigated inside the backup set.
+
+![](20170303_ShellbagsExplorerv0900Released\backupFinal.png)
+
+Version 0.9.0.0 is available at the [usual location](https://ericzimmerman.github.io/) and the Chocolatey package is submitted for approval.
+
+Enjoy!
