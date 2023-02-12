@@ -82,5 +82,5 @@ introduction.txt
 20190315_KAPEv0830Released.txt
 20190426_IntroducingEvtxECmd.txt
 20190809_KAPEv0861Released.txt
-20190826_KAPEv0870Released.txt.txt
+20190826_KAPEv0870Released.txt
 20200528_KAPEv0920Released.txt
