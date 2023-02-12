@@ -1,10 +1,58 @@
-# TITLE
+# Timeline Explorer 0.6.0 released!
 
-Posted: 3rd January 2015
+Posted: 27th October 2017
 
-BLOG POST GOES HERE
+The changelog for this version includes:
 
-## 
+NEW: More file formats (pescan, sigcheck, density scout, all new AmacacheParser formats)
+NEW: When editing filters, you can customize via text (vs clicking thru options, adding OR, etc)
+NEW: Ability to change the date time format
+NEW: Ability to save and load sessions
+NEW: Ability to pin columns to left side of window so they do not scroll out of view
+NEW: Added "Reset column widths" option in case columns get crazy wide. this will resize any columns > 250 wide down to 250
 
-![description](FOLDER\FILENAME)
+CHANGE: Made the filter buttons bigger
+CHANGE: Remove CTRL-F to bring up find window (use search box instead)
+CHANGE: Updated controls
 
+FIX: Some general fixes
+
+#### Updated controls and parsers
+
+This version includes newer versions of the grid as well as the back end CSV parser. One of the changes in the CSV parser includes "Massive speed improvements" which is always a nice thing.
+
+#### New options
+
+The new menu items look like this:
+
+![](20171027_TimelineExplorer060Released\File.png)
+
+You can now save and reload session data for all files loaded in TLE.
+
+![](20171027_TimelineExplorer060Released\Tools.png)
+
+The tools menu adds two new options, one to control the timestamp format and the other to reset column widths when they get out of hand. This generally happens in super timelines when expanding the Long Description column too far.
+
+When changing the timestamp format, be sure to adjust it BEFORE loading a file.
+
+#### Improved filter editing
+
+When editing filters, you can now optionally use text mode which can be faster than adding new conditions with the mouse.
+
+It has IntelliSense support and will autocomplete available columns and filter conditions, etc.
+
+![](20171027_TimelineExplorer060Released\text filter.png)
+
+#### Column pinning
+
+When loading "wide" files with a lot of columns, it is often helpful to always keep certain columns in view. This version of TLE adds the ability to pin columns to the left of the window so the columns always remain in view. You can, of course, clear this via the little button to the right of the option.
+
+![](20171027_TimelineExplorer060Released\colpin.png)
+
+Here is a video showing what this looks like on a super timeline. Notice that without column pinning, as soon as the Long Description column filter is selected, all the columns to the left of the Description column go out of view. Once some columns are pinned, they remain in view. The video also shows the new filter editing too.
+
+https://youtu.be/0FewHC76AKk
+
+If there is a file format you want added to TLE, just send me a sample!
+
+Get the update in the [usual](https://ericzimmerman.github.io/) places!
