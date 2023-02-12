@@ -2,9 +2,54 @@
 
 Posted: 17th January 2019
 
-BLOG POST GOES HERE
+So what does this mean for you?
 
-## 
+More access to more data, more faster!
 
-![description](FOLDER\FILENAME)
+What does it allow you to do? Automate more and leverage these tools for more proactive threat hunting because they now all run on live systems exactly the same as they do in the post-artifact collection world.
 
+Up until today, the expectation was for my programs to not have to deal with files being "in use" or open in other applications. This was generally OK, but it becomes more and more painful when doing research and for live response tasks.
+
+Let's see some examples of what things look like with the new versions.
+
+Here we see what things look like in the past when running tools as a non-administrator:
+
+![](20190117_LockedFileSupportAdded\mfteNoAdmin.jpg)
+
+But now, when executed as an admin, we see something much different (ignore the version # here as I had not updated it yet):
+
+![](20190117_LockedFileSupportAdded\mfte.jpg)
+
+Want to dump Amcache.hve every 30 minutes on all your running computers and push the CSVs to a central location for processing and stacking? OK!
+
+![](20190117_LockedFileSupportAdded\amcache.jpg)
+
+The GUI side of things was not left out either.
+
+ShellBags Explorer has always allowed you to load the live Registry (based on the currently logged in user), but the downside of this, until now, was that the last write timestamps were not available (because the .Net Registry class does not expose them).
+
+When loading an offline hive tho, you did get the timestamps, because it is using my parser under the hood.
+
+So with this version of SBE, if you load the active Registry without Admin rights, you will see what you always saw in that the first and last interacted timestamps are not available. You will also get a warning as seen below.
+
+![](20190117_LockedFileSupportAdded\sbenonadmin.jpg)
+
+However, if you run SBE as an administrator and then load the live Registry (like your own, or even better, on a bad guy's machine), you now get the first and last interacted with timestamps!
+
+![](20190117_LockedFileSupportAdded\sbeadmin.jpg)
+
+This is fully automatic and SBE takes into account and processes any transaction logs as well.
+
+Finally, we have Registry Explorer. If you load a hive that is in use here, Registry Explorer will handle it by opening the hive and replaying any transaction logs that are needed and then displaying it in the interface. There is no wizard displayed to select logs or save the updated hive, etc.
+
+Here is an example of an in-use Amcache and NTUSER.DAT hive loaded and ready to go!
+
+![](20190117_LockedFileSupportAdded\re.jpg)
+
+Notice also (shown in the lower right) that the Status messages will reflect the operations Registry Explorer took as well.
+
+Not to be left out, RECmd has also been improved in that when searching an entire disk or mounted image for Registry hives, there are a lot less false positives. RECmd also handles locked files without issue, as seen below.
+
+![](20190117_LockedFileSupportAdded\recmd.jpg)
+
+Enjoy the improvements and please let me know if you run into any issues or if there are any programs I missed updating to support locked files.
