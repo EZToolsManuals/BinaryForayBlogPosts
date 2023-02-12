@@ -1,10 +1,126 @@
-# TITLE
+# Updates to the left of me, updates to the right of me, version 1 releases are here (for the most part)
 
-Posted: 3rd January 2015
+Posted: 24th March 2018
 
-BLOG POST GOES HERE
+Yay for version 1 releases! With Registry Explorer's v1.0 release and its underlying support of replaying transaction LOG files, it was only appropriate for my other Registry based tools to also be updated to support LOG files as well.
 
-## 
+The following is a summary of what has been released:
 
-![description](FOLDER\FILENAME)
+* Registry Explorer v1.01
+* RECmd v1.0
+* ShellBags Explorer v1.0
+* AppCompatCacheParser v1.0
+* AmcacheParser v1.0
+* Timeline Explorer v0.8.0.0
 
+### So what has changed?
+
+This is a minor update for Registry Explorer that adds the ability to see the Access Flags in newer hives on the Technical details view:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\55.png)
+
+For everything else (except Timeline Explorer), the biggest change is detecting when a hive being processed is dirty and, if the LOG files are found in the same directory as the hive, replaying the LOG files before proceeding. If the LOG files are missing, the tool will complain and not process the hive.
+
+Here is an example of what the updated tools might look like:
+
+In this case, the Amcache.hve file is in D:\temp, but no LOG files are present. Because the hive is dirty and no LOGs were found, the parser bails:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\dirty.png)
+
+In this case, the LOG files are in the same directory, so the parser replays them over the hive, then proceeds:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\clean.png)
+
+It should be noted that ALL the tools (except for Registry Explorer) expect the LOG files to be named the same as the hive, but end in either .LOG1 or .LOG2. So, for example, if you had a hive named:
+
+EricNtuser.dat
+
+The tools would expect the logs to be named:
+
+EricNtuser.dat.LOG1 and EricNtuser.dat.LOG2
+
+Keep this in mind when exporting multiple hives to the same folder.
+
+The exception mentioned above is Registry Explorer, which will detect and walk you through applying the transaction logs, like this:
+
+https://youtu.be/O-1ImmWR1hE
+
+In addition to Registry transaction log support, all the tools have also had any 3rd party components and controls updated to the latest versions as well.
+
+### Timeline Explorer changes
+
+The changes for Timeline Explorer (TLE) are rather significant and deserve some detail.
+
+The changes in v8.0.0.0 include:
+
+* NEW: For text columns, introduce a 750ms delay when typing a filter before actually trying to filter the data. This makes filtering MUCH smoother for large data sets.
+* NEW: Added Power filter, which allows for complicated filters across all columns including negation, logical AND, etc.
+* FIX: Correct issue when a filter is in place and then the search dialog is used (the first hit would always be reselected after navigating to previous or next hits prior to this fix) 
+
+The first new feature is pretty straightforward. In previous versions, column filters would be updated immediately as new information was typed in the filter row. This often led to laggy performance when a file with hundreds of thousands of rows is loaded. By adding the delay, the interface is updated much less often and remains responsive.
+
+The second new filter is very exciting and opens up a TON of new functionality to really drill down into the specifics of your data.
+
+In the example below, two files are loaded into TLE. Notice that Search has been relabled Find in this version and a new feature, the Power filter, sits below it.
+
+The Find option will, for the term entered in the box, highlight the term anywhere it is found in the data. No filtering is done on the data when using Find.
+
+The Power filter on the other hand, DOES filter out data and allows for very powerful filters to be created. In the screen shot below, notice the button indicated by the arrow. Clicking this will bring up the Power filter's help dialog.
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\1.png)
+
+Here we can see the different functionality we can use with the Power filter. Notice that you can do logical ANDs, negation, searching in specific columns, and so on.
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\2.png)
+
+Another very nice use of the Power filter is searching for an exact timestamp. To do this, put the entire timestamp in double quotes, like this:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\3.png)
+
+Of course, you do not have to do an entire timestamp:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\4.png)
+
+Recall however, that the Power filter allows for combining terms in a lot of different ways, so how does that work? Let's take a look at an example:
+
+Here we can see we have a supertimeline loaded:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\5.png)
+
+Let's say were interested in, oh, I don't know, a user successfully logging onto this computer. We use the Power filter and enter '4624' into the box
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\6.png)
+
+Notice that all rows that do not contain the search term have been filtered out. Additionally, notice that Line 542 is selected (the little black arrow on the left is the selected row indicator). The details for this row look like this:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\7.png)
+
+While there is a wealth of information on the screen, let's say you had zero interest in when tdungan logged in. As such, it would be nice to get rid of anything that contains 'tdungan'. To accomplish this, we would do something like this:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\85.png)
+
+And we can see that we have less rows visible as a result (418 rows, down from 426).
+
+If you then had a need to find only 4624 events that didnt contain tdungan but do contain IP address 10.3.58.7, we could do something like this:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\2018-03-24_20-35-34.png)
+
+And we have really dropped our row count down (to 78 in this case).
+
+Of course the data does not have to all be in the same column. Perhaps you are only interested in these kinds of things on a certain date:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\10.png)
+
+Of course, this is just the tip of the iceberg for what is possible to build.
+
+The Power filter remembers all the filters on a per tab basis (but only for the current session). Clicking the drop down arrow to the right of the Power filter shows you previously used filters:
+
+![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\11.png)
+
+Of course do not forget about column pinning as this can make your life a lot easier for wide data sets:
+
+https://youtu.be/0FewHC76AKk
+
+You can get the updated software at the [usual place](http://ericzimmerman.github.io/) and the Chocolatey packages have also been updated.
+
+Enjoy!!
