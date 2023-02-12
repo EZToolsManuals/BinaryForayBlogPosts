@@ -1,10 +1,58 @@
-# TITLE
+# KAPE 0.8.7.0 released!
 
-Posted: 3rd January 2015
+Posted: 26th August 2019
 
-BLOG POST GOES HERE
+### KAPE 0.8.7.0 released!
 
-## 
+#### Changelog
+- Refactored --sync command to allow for and respect subdirectories in Targets and Modules. --sync will reorganize things based on the KapeFile repo. Configs not in KapeFiles repo end up under !Local directory
+- Overhauled Targets and modules organization. Compound targets and modules DO NOT need to be updated to new locations. KAPE will locate the base configs as needed on the fly
+- With the new config organization, KAPE can now pull all configs under a directory specified in --target or --module. In this way, directories act like a compound config
+- tlist and mlist now expect a path to look for configs. Use . to start. All configs in the provided path are displayed as well as subdirectories
+- Added Folder column in gkape in Targets and Modules grids. Grouping by this column makes it easy to see what is in various folders
+- Tweaks to transfer setting validation to ensure destination is writable
+- Removed --sow switch
+- When in SFTP server mode, display the KAPE switches needed to connect to the SFTP server for each defined user. This makes it as easy as copy/paste to tell KAPE to push to SFTP server
+- Add --sftpu switch, which defaults to TRUE, that determines whether to display SFTP server user passwords when in SFTP server mode
+- Added FollowReparsePoint and FollowSymbolicLinks to Target definition. These are optional and should be used on an as needed basis. The default for both is false if they are not present. This is the behavior KAPE has always had up to this point. Setting to true will follow the reparse or sym link which some programs use (Box, OneDrive, etc)
+- Other minor tweaks and nuget updates
 
-![description](FOLDER\FILENAME)
+### The highlights
 
+#### New layout for Targets and Modules
+
+Both the Targets and Modules directories have been reorganized. This will make it easier going forward to find and add new things in the correct place. The new organization looks like this (partial output):
+
+![](20190826_KAPEv0870Released\fileOrg.jpg)
+
+There are several things to be aware of due to this change.
+
+You can now use the names of the directories in --target and --module switches. This makes directories serve as a type of auto-generated compound configuration. This means something like this:
+
+          **--target WebBrowsers**
+
+          is functionally the same as:
+
+          **--target Browsers**
+
+          assuming WebBrowsers.tkape contains references to each of the tkape files underneath the Browsers folder.
+
+* You DO NOT need to specify the directory name before the config you want, both on the command line AND in compound targets and modules. KAPE will find and resolve everything automagically, so using KAPE has not changed at all in this respect.
+* Read the previous point again.
+* Any Targets and Modules NOT from the KapeFiles repository will be moved to the !Local folder when --sync'ing
+* Target names and modules names must be unique. In other words, do not have a Target named 'MyTarget.tkape' in more than one folder or KAPE will inform you of this.
+* The --tlist and --mlist switches now expect a path after them, like '--tlist .' for example. This will display all the configurations in the specified location, followed by a list of any directories found, like this:
+
+![](20190826_KAPEv0870Released\tlist.jpg)
+
+#### Other changes
+
+For SFTP server mode, the default is to show all the configured users' connection switches (except IP since you have to pick one), like this:
+
+![](20190826_KAPEv0870Released\sftp.jpg)
+
+This makes it easy to get up and running quickly with almost no typing at all! Disable this option via '--sftpu false'
+
+Finally, this version also includes updated EZ Tools and new configurations for cloud based storage (Thanks Chad Tilbury!). Along with the new cloud storage stuff are new properties to handle reparse points and symbolic links on a case by case basis. Be sure you test and validate things when using these properties!!
+
+Enjoy and please let me know if you have any issues!!!
