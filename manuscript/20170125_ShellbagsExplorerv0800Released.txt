@@ -1,10 +1,117 @@
-# TITLE
+# ShellBags Explorer v0.8.0.0 released!
 
-Posted: 3rd January 2015
+Posted: 25th January 2017
 
-BLOG POST GOES HERE
+Hello! This release is long overdue!
 
-## 
+NOTE: All of my software is now digitally signed starting with this release going forward. Most of my other programs have also been signed (but not necessarily changed beyond that). Redownload as needed if you want the signed versions.
 
-![description](FOLDER\FILENAME)
+Last Friday Dave and I [spoke about the new version on the Forensic Lunch](https://www.youtube.com/watch?v=kohGAMtO4Zg). Be sure to check it out for more details and to see it in action!
 
+First, let's look at the changelog:
+
+NEW: This is a complete rewrite using all new controls including newer and more capable tree and grid. Allows for better filtering, grouping, etc. With this change, SBE has the same look and feel of Registry Explorer
+NEW: Updated hex viewer and data interpreter
+NEW: Updated icons throughout
+NEW: Added Legend to Help menu
+NEW: Added Options dialog
+NEW: Added skinning
+NEW: Completely updated manual to reflect new version
+NEW: Added new GUIDs and new extension block types
+NEW: Added ability to automatically report unknown GUIDs, shell IDs and extension blocks for reversing and inclusion in future releases
+NEW: Added Details form which allows for viewing all available details regardless of the columns shown in grid view
+
+CHANGE: Time zone moved to Options dialog
+CHANGE: SBECmd internals reworked to simplify logging and make command line options consistent with other software
+
+FIX: Added CD file system indicator vs showing FAT for optical media
+
+### Diving in
+
+For the most part, things will look and feel the same as far as program layout and how it is used. Let's hit the highlights.
+
+#### Icons updated and Legend added
+
+To make things more consistent, most of the icons have been tweaked. A list of all the icons and their meaning is available via the Help menu.
+
+![](20170125_ShellbagsExplorerv0800Released\legend.png)
+
+Deleted/recovered shellbags are also now shown in red as opposed to having an X after them as in previous versions.
+
+Here is an example of the new icons in action.
+
+![](20170125_ShellbagsExplorerv0800Released\icons.png)
+
+#### Filters and searching improvements
+
+ShellBags Explorer now uses the same 3rd party controls as Registry Explorer and, as such, adds a lot of functionality that didn't exist in the previous version. Changes include being able to filter on the tree, search via CTRL-F, Excel-like filters on the grid, conditional coloring, and so on.
+
+Here we see an example of the new Excel-like filters. This allows for selecting items based on their name and also allows for searching through unique options.
+
+![](20170125_ShellbagsExplorerv0800Released\excel.png)
+
+Here is another example of the new filter for a numeric value.
+
+![](20170125_ShellbagsExplorerv0800Released\f2.png)
+
+Right clicking on a column header in the tree or grid brings up a context menu allowing for a lot of different options.
+
+![](20170125_ShellbagsExplorerv0800Released\context.png)
+
+Both the tree and grid support searching across all fields. Find is invoked either via the context menu of a column header or via CTRL-F. In the example below, a search for 'or' was done. All instances of matching values are highlighted.
+
+![](20170125_ShellbagsExplorerv0800Released\find.png)
+
+Finally, conditional coloring is available both for the tree and the grid. In the example below, any values that contain 'code' are shown in bold, red font with a red background.
+
+![](20170125_ShellbagsExplorerv0800Released\ccf.png)
+
+The tree works the same way.
+
+![](20170125_ShellbagsExplorerv0800Released\cc2.png)
+
+The rules manager allows for a wide variety of formatting options.
+
+![](20170125_ShellbagsExplorerv0800Released\fm.png)
+
+#### Details window
+
+In many cases, there are too many columns for all of them to be shown in the grid at the same time. As the interface is customized to your liking, there may be times when you need access to other columns. 
+
+The Details window allows you to see all available columns regardless of the status of the grid. In the example below, several columns have been hidden but all of the details are available as needed in the Details form.
+
+![](20170125_ShellbagsExplorerv0800Released\details.png)
+
+The Details form is updated as shellbags are selected in the interface.
+
+#### Options
+
+Options have been consolidated in this version and several new options have been added.
+
+![](20170125_ShellbagsExplorerv0800Released\options.png)
+
+The first option, **Show parent tree nodes when filtering**, controls whether parent nodes are included when filtering in the tree. By default, only nodes matching a filter are shown, like this:
+
+![](20170125_ShellbagsExplorerv0800Released\filter1.png)
+
+When this option is turned on, the same filter would look like this:
+
+![](20170125_ShellbagsExplorerv0800Released\filter2.png)
+
+There are pros and cons to each approach. Generally, the default is what you want because once you filter down to what you are interested in you can quickly select the matching nodes to see what child bags exist, look at details, etc.
+
+In the previous release, all of the columns would be auto-sized in an attempt to show as much detail as possible. This, however, often lead to columns being too small to display the information contained therein. The **Show horizontal scrollbar on grid option**, when checked, will resize each visible column to show the widest content available. When necessary, a horizontal scrollbar is shown. 
+
+The DateTime format and time zone options are self-explanatory and of course, persist between program restarts. The active time zone is also now displayed in the status bar as a reminder.
+
+Finally, unknown GUIDs, shell IDs, and extension blocks can be automatically submitted for reversing and inclusion in future releases. See the manual for more details, but in general, the only information submitted are the bytes necessary to add support for the unknown items.
+
+### SBECmd
+
+The only changes here are some command line switches being renamed in order for SBECmd to be more consistent with my other command line tools. New options look like this:
+
+![](20170125_ShellbagsExplorerv0800Released\cmd.png)
+
+You can get version 0.8.0.0 at the [usual place](https://ericzimmerman.github.io/) as well as Chocolatey (pending package approval)
+
+That about does it for this release. I hope you enjoy it!
