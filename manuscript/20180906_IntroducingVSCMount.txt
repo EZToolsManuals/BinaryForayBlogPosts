@@ -1,10 +1,49 @@
-# TITLE
+# Introducing VSCMount
 
-Posted: 3rd January 2015
+Posted: 6th September 2018
 
-BLOG POST GOES HERE
+Nothing crazy here, just a simple way to mount Volume Shadow Copies from the command line without having to do much of anything except provide the drive letter to where the VSCs are and where you want the VSCs to be mounted to.
 
-## 
+The first requirement is having a source drive that has VSCs on it. This can be something like a fixed disk in your own system, a write blocked hard drive, or an image file mounted with Arsenal Image mounter (as it emulates a physical disk which we need to get to VSCs).
 
-![description](FOLDER\FILENAME)
+When using AIM, be sure to use the "Write temporary" option as seen below.
 
+![](20180906_IntroducingVSCMount\2018-09-06_11-27-16.png)
+
+With a disk mounted, we can now use VSCMount. Usage is very simple:
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-43-33.png)
+
+Let's run thru two scenarios. First, lets mount all the VSCs on the C drive.
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-29-43.png)
+
+Notice that the actual folder used when mounting the VSCs reflects the base directory provided along with the source for the VSCs. This is to allow you to mount multiple VSCs from multiple drives at the same time and know where they came from, etc.
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-31-30.png)
+
+The individual VSCs can be accessed by drilling down into any of the directories.
+
+If I were to mount VSCs from the J drive (an E01 mounted via AIM), it would look like this:
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-33-08.png)
+
+which results in this:
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-33-48.png)
+
+Notice however, that I still have access to the ones we did initially:
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-34-03.png)
+
+The --ud option will add the VSC creation timestamp to the directory names inside the mount point, like this:
+
+![](20180906_IntroducingVSCMount\2018-09-06_11-44-55.png)
+
+Which makes it a lot easier to drill down into things based on a pivot point from a timeline, etc.
+
+To clean up, simply delete any of the directories inside the mount points or delete the directory containing all the symbolic links.
+
+Enjoy and please let me know if there is anything else you want VSCMount to do for you.
+
+You can get it in the [usual place](https://ericzimmerman.github.io/#!index.md).
