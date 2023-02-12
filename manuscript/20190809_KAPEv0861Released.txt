@@ -1,10 +1,63 @@
-# TITLE
+# KAPE 0.8.6.1 released
 
-Posted: 3rd January 2015
+Posted: 9th August 2019
 
-BLOG POST GOES HERE
+### KAPE 0.8.6.1 released
 
-## 
+Changes in this release include:
 
-![description](FOLDER\FILENAME)
+- When using transfer options, transfer module output to destination when --zm true is used. This pushes the output from modules as a zip file to the destination server. You can still optionally transfer target collection too
+- For batch mode, add --ul switch. This stands for "Use linear" and when set on an entry (it should be the first one ideally), KAPE will run each instance from _kape.cli one at a time, vs spawning all at once. Useful for fine grained control over batch mode
+- In gkape, remember selected targets and modules in gkape when viewing config via double click. This makes it possible to examine configurations and not have to reselect everything previously selected
+- Change --mvars separator to ^ since comma was often used in variable definitions. Also tweaked how variables containing : are treated (they just work now vs. being truncated)
+- When KAPE updates a module's output file to avoid overwriting an existing file, report the name of the new output file to the Console so its possible to know which input file corresponds to which output file
+- Fix rare issue with module processing when standard out and standard error get written to concurrently
+- Change redirecting StandardError to output file in modules to writing it to the Console. This prevents programs that mix normal output on StdErr from messing up output files
+- Added 'Append' property (optional) to Module's processor section. If true, data is appended to the value for ExportFile. If append is false, a new, unique filename is generated to prevent files from being overwritten
+- Standardize all timestamps used in log files, file names, etc. to correspond to same timestamp (when KAPE was executed) vs when files get created. this makes it easier to group related things together
+- Added AWS S3 transfer support via --s3* switches
+- Added Azure Storage transfer (SAS Uri) via --asu switch
+- Updated gkape for newest features
+
+### Highlights
+
+The documentation has been updated to include all of these features.
+
+#### --zm output transfer
+
+In previous versions, when using the --zm option to zip module output, the resulting zip file was not transferred using SFTP. This version sends the resulting zip file using any of the transfer options (SFTP, S3, or Azure Storage). Depending on how KAPE is called, you do not even have to have the files collected via targets tranferred if you do not need them. Just omit the --vhdx | --vhd | --zip switch and include the --zm switch and KAPE will act accordingly. Should you want target and module output, include both.
+
+#### Batch mode improvements
+
+By default, batch mode spins up one instance of kape.exe per line in the batch file. The --ul switch prevents this, and when it is found, tells the master instance of kape.exe to only execute one instance of kape.exe at a time. This allows for much finer grained control. This switch should be part of the first command line in the batch file so it takes affect early on.
+
+#### Module output tweaks
+
+Some command line programs to not keep track of their input file. Take RegRipper for example. Each ntuser.dat hive found would be processed by a module and result in a file named NTUSER.TXT being generated. On the second ntuser hive processed, a file named NTUSER.TXT already exists, so KAPE changes the output filename to NTUSER_1.TXT and so on.
+
+In the example below, we see the same phenomenon, but in this version, KAPE now reports to the console the name of the output file so it can be matched up with the corresponding input file.
+
+![](20190809_KAPEv0861Released\2019-08-06_14-47-22.jpg)
+
+Another change in this version is redirecting STANDARD_ERROR to the Console vs. the output file. This prevents contention when writing to the same output file. In the example above, the STANDARD_ERROR text is shown in yellow and has a giant red arrow pointing to it.
+
+In another tweak related to this kind of thing, a new property, Append, was added to modules. This allows you to control whether or not output ends up in an incrementing file (NTUSER.TXT, NTUSER_1.TXT, NTUSER_2.TXT and so on), or if all output is appended to the first NTUSER.TXT.
+
+#### AWS S3 and Azure Storage transfer options added
+
+Switches have been added to allow for S3 and Azure Storage transfers. You can use these switches together or independently, so if you wanted to, you could transfer things to SFTP, S3, and Azure, all at the same time.
+
+Here is an example for S3:
+
+![](20190809_KAPEv0861Released\aws.jpg)
+
+And Azure Storage:
+
+![](20190809_KAPEv0861Released\EBYXnsYXUAouuTR.png)
+
+Note that for ALL transfer options, at least WRITE permission is required or KAPE will complain and stop before doing anything. KAPE attempts to create a text file on the destination. Once this is created, KAPE tries to delete the text file. If write only permissions exist, the delete fails, and KAPE logs it (seen above in the Azure example).
+
+Thanks to Matt and Troy for the idea and test buckets/storage to build this functionality!
+
+Use the Get-KAPEUpdate.ps1 PowerShell script to update
 
