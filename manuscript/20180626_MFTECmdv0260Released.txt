@@ -1,10 +1,32 @@
-# TITLE
+# MFTECmd v0.2.6.0 released
 
-Posted: 3rd January 2015
+Posted: 26th June 2018
 
-BLOG POST GOES HERE
+This version adds a lot of polish to the --de output and adds several new options as well.
 
-## 
+Changelog:
 
-![description](FOLDER\FILENAME)
+* body file output (NOTE: INDEX_ROOT entries are not included (yet? maybe never))
+* Remove msg about -d switch in -f switch
+* Added --dd and --do switches
+* Added auto decoding of resident data to ASCII (1252) and Unicode when using --de
+* Cleaned up output of --de so its easier to read
+* Added --cs option to allow for tab delimited results
 
+This version includes body file export support via the --body and --bdl switches. --body expects a path to save body file data to, and --bdl is the single character drive letter that should be used in body file output for the file path. You can use --csv and --body at the same time as well.
+
+The --dd and --do switches allow for exporting a FILE record from an MFT file based on the offset to the FILE record. --dd is the path to save the results to, and --do is the offset (in decimal or hex) to the record to save. This option is useful if MFTECmd has an issue parsing something and you want to share the record causing the problem, etc. In the case of an error, use the --vl option to show the offset to the record leading up to the crash, then feed that into --de to recover the record.
+
+In several places, I added automatic decoding of resident data to both Unicode and ASCII (1252 code page) strings.  Here is an example
+
+![](20180626_MFTECmdv0260Released\2018-06-26_11-46-30.png)
+
+This same decoding happens for extended attributes that are resident as well.
+
+In general, the --de command output has been cleaned up significantly, including aligning of timestamps,  formatting of entry and sequence #s to allow for copy pasting (useful for following parent MFT references, etc)
+
+![](20180626_MFTECmdv0260Released\2018-06-26_11-54-02.png)
+
+Finally, the --cs option allows for using tab delimiters.
+
+Get it in the usual places (chocolatey is delayed for some reason)!
