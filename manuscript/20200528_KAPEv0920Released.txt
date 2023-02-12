@@ -1,10 +1,81 @@
-# TITLE
+# KAPE 0.9.2.0 released!
 
-Posted: 3rd January 2015
+Posted: 28th May 2020
 
-BLOG POST GOES HERE
+#### ANNOUNCEMENT!
 
-## 
+KAPE has been nominated for a 4Cast award for non-commercial software of the year! Please take 18.5 seconds to vote for KAPE! =)
 
-![description](FOLDER\FILENAME)
+https://forensic4cast.com/forensic-4cast-awards/2020-forensic-4cast-awards/
 
+#### END ANNOUNCEMENT!
+
+NOTE: If you get an strange errors when updating or using --sync, use the --debug option to see which file is causing the issue. For most, simply deleting the offending file will fix things. Worst case, just delete your local KAPE install and redownload.
+
+### Changelog
+
+* REMOVE IsDirectory from Target definitions. Any existing targets not part of the official repo will need to be adjusted
+* In Target definitions, Path is now ALWAYS assumed to be a directory. This means it should NOT contain wildcards like *.pf. These should be moved to the FileMask property. All official targets have been updated to reflect this. FileMask is still optional. If it is not specified, * is assumed, which will match all files in Path
+* In Target definitions, Recursive is optional. If missing, it is assumed to be false. Existing targets with Recursive: false set cleaned up (property deleted)
+* Swept existing targets for empty comments and deleted them
+* Cleaned up Path properties in Targets (Paths should end with \ by convention. This is not required, but makes it more obvious as to what the path contains)
+* Added ability to reference subdirectories under Targets in Target definitions. Example: To pull in all targets under Targets\Antivirus, use Path: Antivirus\*
+* Allow regex in Target FileMask spec. Example: FileMask: regex:(2019|DSC|Log).+\.(jpg|txt) tells KAPE to use the regex to match against *complete* filenames. KAPE will add \A to the beginning of the regex and \z to the end, to ensure the entire filename is matched.
+* Because of the change above, it is also now possible to do things in non-regex based FileMasks. Example: FileMask: 'Foo*.VHD'. Prior to this change, only *.VHD was possible. 
+* Added WaitTimeout to module definition as an optional property. When present, and greater than 0, signifies the number of minutes KAPE should wait for a module to finish. If this is excedded, KAPE will stop waiting and move on.
+* Updated nuget packages
+* Updated targets
+
+#### Target definition changes
+
+This version cleans up a lot of things related to target files. Specifically, the IsDirectory property has been removed. This means that Path is always expected to be a directory now.
+
+Here is an example of the old format:
+
+![](20200528_KAPEv0920Released\Image (4).jpg)
+
+Vs the same Target in the new format:
+
+![](20200528_KAPEv0920Released\Image (1).jpg)
+
+If FileMask is omitted, it is assumed to be *, which will match everything under Path.
+
+For 0.9.2.0, I reviewed every existing target and did the following:
+
+1. Remove IsDirectory
+2. Update Path to be only a directory if it contained a file mask
+3. Moved the file mask to the FileMask property
+4. Removed **Recursive: false** from all targets (since its default)
+5. Deleted empty comments
+
+By convention, the Path property should end with a \ to keep things consistent, but this is not mandatory (I do feel it makes it easier to understand what is going on however).
+
+Also new in this version is much improved FileMask capabilities. In fact, you can now use full blown Regular Expressions as well as more traditional file masks, like *.jpg or Foo*bar.txt.
+
+This means that, for all existing targets, nothing needs to be changed as the old way still works. If you want to do regex matching against the ENTIRE filename, prefix the Filemask with regex:, like this:
+
+**FileMask: regex:(2019|DSC|Log).+\.(jpg|txt)**
+
+This allows for pretty much unlimited flexibility when looking for files, especially when wanting to walk an entire file system looking for certain extensions. By adding a single entry in regex format, a single pass of the file system will happen, vs one pass per file mask. How much time you gain here is of course a matter of several other factors, but its nice to have the option!
+
+Finally, for compound targets, you can now reference a directory under the Targets folder, should you wish to dynamically include all target files under that directory. Example:
+
+![](20200528_KAPEv0920Released\Image (2).jpg)
+
+This tells KAPE to look for any tkape files under the Targets\Antivirus folder and include them in the compound target. This has been possible for a long time via the command line, using the name of the directory in the --targets option, but this makes it possible to specify them in target files.
+
+Module definition changes
+
+Troy Larson asked for the ability to have KAPE wait a predetermined amount of time for a module, vs. letting a run away module go on indefinitely.
+
+To meet this requirement, an optional WaitTimeout value was added to the module header, like this:
+
+![](20200528_KAPEv0920Released\Image (3).jpg)
+
+This value is specified as the number of minutes to wait. In the above example, AppWithTimeout will sleep for 5 minutes, but KAPE will only wait around for 1 minute for it to finish. When KAPE is run with this module, the following happens:
+
+![](20200528_KAPEv0920Released\Image.jpg)
+
+If no timeout is specified, KAPE will wait forever for a module to finish
+
+![](20200528_KAPEv0920Released\Image (1).jpg)
