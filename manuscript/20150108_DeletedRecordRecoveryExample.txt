@@ -2,6 +2,8 @@
 
 Posted: 8th January 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/registry-hive-basics.html
+
 Last night some work was done on starting to correlate recovered records with each other.
 
 So far I have associated deleted keys to the values they contain. The next step is building a tree of deleted keys/subkeys (you can do this manually below by matching up Parent Cell Offset to Rel offset). The final step is then looking for keys in the active registry to reassociate the deleted data with. Either way, all of the details will be available.

@@ -2,6 +2,8 @@
 
 Posted: 27th January 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/shellbags-explorer-0510-released.html
+
 ### **Changes**
 
 By far the biggest change in this version is replacing the offline Registry parsing code with my own. Read on for why.

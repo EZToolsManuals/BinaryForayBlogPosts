@@ -2,6 +2,8 @@
 
 Posted: 2nd February 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/registry-hive-basics-part-3-vk-records.html
+
 In part 3, we covered VK records. Next up is the SK record, or Security Key
 
 ### **SK record**

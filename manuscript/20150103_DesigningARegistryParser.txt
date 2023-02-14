@@ -2,6 +2,8 @@
 
 Posted: 3rd January 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/designing-registry-parser.html
+
 Several months ago I had a need to parse offline registry hives in .net. (I do all my work in Microsoft .net, specifically C#, but thats another post for another day). I looked around in the usual places and found a GitHub project that initially met my needs. This is the project that I used in Shellbags Explorer to get access to the BagMRU key. It worked well but I found a few issues here and there. Since it was in GitHub I forked the project and fixed the issues I found.
 
 Fast forward a few months later and I started working on my next project, a registry viewer. I initially developed my viewer around the same parsing code as explained above to design the initial interface. After getting the basics of the interface down, I started finding more areas where the parser was not handling certain keys at all. In reviewing the code it also did not support deleted keys, value slack, and other forensically relevant things.

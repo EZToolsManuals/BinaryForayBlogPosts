@@ -2,6 +2,8 @@
 
 Posted: 26th January 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/registry-hive-basics-part-2-nk-records.html
+
 ### **Background**
 
 Most people are familiar with viewing the Registry in a program like regedit.exe. regedit.exe ships with all versions of Windows and allows a user to view the basic components of the Registry. The screen shot below illustrates the different concepts that make up a hive (or at least those exposed by regedit.exe)

@@ -2,6 +2,8 @@
 
 Posted: 11th February 2015
 
+Original link: https://binaryforay.blogspot.com/2015/02/introducing-registry-explorer.html
+
 Registry Explorer is a new approach to interacting with Registry hives. It has several unique capabilities not found in other programs.
 
 The version being discussed here is 0.0.1.8 (some of the screenshots may reflect v0.0.1.7). It is an early beta version of RE compared to where it will be but the features discussed below are ready for general use.
@@ -9,6 +11,8 @@ The version being discussed here is 0.0.1.8 (some of the screenshots may reflect
 ### Known issues:
 
 Large hives (SOFTWARE hives especially) can be slow to load in RE due to the number of keys that exist (often hundreds of thousands). Give RE a few minutes to load them tho and it will work. This is being addressed.
+
+{pagebreak}
 
 ## Getting started
 
@@ -18,11 +22,15 @@ To get started, lets take a look at the main interface.
 
 There is of course a standard menu bar at the top of the screen. Most of the options are self-explanatory, but lets look at a few of them.
 
+{pagebreak}
+
 ### View | Messages
 
 The Messages window is automatically displayed when RE starts. It will contain information about loading hives, warnings, errors, etc. If you have used ShellBags Explorer, it looks and feels pretty much the same as in SBE.
 
 ![](20150211_IntroducingRegistryExplorer\messages.png)
+
+{pagebreak}
 
 ### Options menu
 
@@ -40,6 +48,8 @@ We will drill down into these options in detail below, but at a high level, the 
 The Bookmarks menu contains two submenus: Common and User created. Common bookmarks are those included in RE and User created are those created by an end user of RE. We will discuss bookmarks in detail below.
 
 There is also an option for managing user created bookmarks which will be included in the more detailed bookmark discussion below.
+
+{pagebreak}
 
 ### Loading hives
 
@@ -85,6 +95,8 @@ When there are unassociated records, they would be displayed just as we saw with
 
 ![](20150211_IntroducingRegistryExplorer\unassociated.png)
 
+{pagebreak}
+
 ### Viewing key values
 
 For both active and deleted keys, selecting a key on the left results in the values for that key being displayed in the upper right.
@@ -95,15 +107,21 @@ In the Values grid we see the value name, type, data, and any value slack.
 
 Clicking on a value will display the details of that value in the viewer area below the values grid. The type viewer will dynamically change depending on the Value type of the selected value.
 
+{pagebreak}
+
 Here we see a RegBinary value selected:
 
 ![](20150211_IntroducingRegistryExplorer\binary.png)
+
+{pagebreak}
 
 And here we see a RegDWord value selected:
 
 ![](20150211_IntroducingRegistryExplorer\dword.png)
 
 In upcoming versions, the viewers available will be expanded and improved to include dynamically generating viewers based on plugins available for Registry keys, displaying value slack in a hex editor (as well as decoding common items such as strings, etc), and so on.
+
+{pagebreak}
 
 ### Bookmarks
 

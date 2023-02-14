@@ -2,6 +2,8 @@
 
 Posted: 10th February 2015
 
+Original link: https://binaryforay.blogspot.com/2015/02/exploring-registry-at-hex-level.html
+
 Exploring the Registry at the hex level
 
 If you want to open your hives and browse the structure you can of course use any hex editor. There are several hex editors out there that let you define templates to parse data. One of these hex editors is [010 Editor](http://www.sweetscape.com/010editor/).
@@ -10,15 +12,21 @@ If you want to open your hives and browse the structure you can of course use an
 
 The template currently supports all the major structures found in hives including NK, VK. SK. and lists (LH, LF, and LI).
 
+{pagebreak}
+
 ### **How to use it**
 
 After saving the template to your computer, add it to 010 editor via the Templates | Edit Templates List option.
 
 ![](20150210_ExploringTheRegistryAtHexLevel\AddTemplate.png)
 
+{pagebreak}
+
 Click New, change the name to "Registry hive", then browse to the template you saved above. Once that is done click OK.
 
 ![](20150210_ExploringTheRegistryAtHexLevel\AddingTemplate.png)
+
+{pagebreak}
 
 Open a hive in 010 and then select Templates | Registry hive from the list.
 

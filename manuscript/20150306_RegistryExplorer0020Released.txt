@@ -2,6 +2,8 @@
 
 Posted: 6th March 2015
 
+Original link: https://binaryforay.blogspot.com/2015/02/shellbags-explorer-0540-released.html
+
 Lots of good changes in this version including:
 
 Known issues:
@@ -37,6 +39,8 @@ An option to collapse all opened Registry hives was added to the lower right cor
 
 ![](20150306_RegistryExplorer0020Released\collapse.png)
 
+{pagebreak}
+
 The Quick help menu now works and a Legend menu item has been added to the Help menu.
 
 ![](20150306_RegistryExplorer0020Released\legend.png)
@@ -51,9 +55,13 @@ In the screenshot below, i have hidden several keys (MuiCache and VirtualStore).
 
 ![](20150306_RegistryExplorer0020Released\allHideStart.png)
 
+{pagebreak}
+
 In the screen shot below, The key indicated was selected and the hide key option was selected for the key.
 
 ![](20150306_RegistryExplorer0020Released\allHide2.png)
+
+{pagebreak}
 
 After selecting a hide option, notice how ALL of the 'Local Settings\Software\Microsoft\Windows' keys are now marked hidden
 
@@ -61,9 +69,13 @@ After selecting a hide option, notice how ALL of the 'Local Settings\Software\Mi
 
 Unhiding keys works the same way in that when you unhide a key in a hive, any other keys that match that key are also unhidden.
 
+{pagebreak}
+
 Finally, in the lower right corner is an indicator of how many keys are hidden.
 
 ![](20150306_RegistryExplorer0020Released\hiddenKeys.png)
+
+{pagebreak}
 
 #### Available bookmarks
 
@@ -76,6 +88,8 @@ Before showing what the "Available bookmarks" tab looks like and how it works, l
 ![](20150306_RegistryExplorer0020Released\bookmarks.png)
 
 This is all well and good for quickly moving around a Registry hive, but there can be a lot of noise in the way in the Registry. The Available bookmarks tab seeks to make things easier by showing you the keys that relate to all available bookmarks for the currently loaded hives.
+
+{pagebreak}
 
 At first, Available bookmarks will be empty, like this:
 

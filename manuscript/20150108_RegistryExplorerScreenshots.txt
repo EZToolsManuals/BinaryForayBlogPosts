@@ -2,6 +2,8 @@
 
 Posted: 8th January 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/deleted-record-recovery-example.html
+
 Now that deleted key support is available in the parser, we can make the results usable via a nice GUI!
 
 The screenshots below show a name of "Registry Viewer Z" but I am renaming it to simply "Registry Explorer" which is more inline with what the tool can do (vs simply view things as they exist in the registry).
@@ -10,13 +12,13 @@ The screenshots below show a name of "Registry Viewer Z" but I am renaming it to
 
 In this screenshot we see the root node and Deleted records node. Deleted records has been expanded and a key selected. The values for the selected keys are shown on the right.
 
-![](20150108_RegistryExplorerScreenshots\SS1.jpg)
+![](20150108_RegistryExplorerScreenshots\SS1.png)
 
 ### **Sorting in the tree and grid**
 
 Here the tree viewer has been sorted 2 different ways. By being able to sort (and group and filter, etc) you can get to the data you need quickly.
 
-![](20150108_RegistryExplorerScreenshots\SS2.jpg)
+![](20150108_RegistryExplorerScreenshots\SS2.png)
 
 {pagebreak}
 
@@ -28,7 +30,6 @@ In a future version Registry Explorer will convert the slack space to several di
 
 Notice also that the deleted key is shown where it used to exist before it was deleted. Of course the key will also be in the Deleted records section, but seeing it in context is often more useful.
 
-![](20150108_RegistryExplorerScreenshots\SS3.jpg)
+![](20150108_RegistryExplorerScreenshots\SS3.png)
 
 Much more to come!
-

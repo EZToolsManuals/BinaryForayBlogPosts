@@ -1,4 +1,4 @@
-# Re3. gistry hive basics part 5: Lists
+# Registry hive basics part 5: Lists
 
 Posted: 20th August 2015
 

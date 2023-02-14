@@ -2,6 +2,8 @@
 
 Posted: 4th February 2015
 
+Original link: https://binaryforay.blogspot.com/2015/02/registry-hive-basics-part-4-sk-records.html
+
 Changes include:
 
 NEW: Detect deleted ShellBags. When deleted ShellBags are found they will have a red X after the name of the bag. Deleted ShellBags will also be denoted in the Miscellaneous column
@@ -14,6 +16,8 @@ FIX: Cosmetic clean up in SBECmd output (showing results twice)
 
 You can get it [here](https://binaryforay.blogspot.com/p/software.html)  or by starting ShellBags Explorer and using the update functionality.
 
+{pagebreak}
+
 ### Expanded MTP coverage
 
 MTP type 1 and 2 improvements include showing details on GUIDs, file system name, ClassID, and Storage ID name.
@@ -25,6 +29,8 @@ MTP type 1 and 2 improvements include showing details on GUIDs, file system name
 ### Type 1:
 
 ![](20150204_ShellBagsExplorerv0520Released\MTP1Changes.png)
+
+{pagebreak}
 
 ### Deleted ShellBags
 

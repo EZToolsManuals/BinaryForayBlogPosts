@@ -2,6 +2,8 @@
 
 Posted: 29th January 2015
 
+Original link: https://binaryforay.blogspot.com/2015/01/shellbags-explorer-0510-released.html
+
 In part 2, we covered NK records. Next up is an NK record's best friend, the VK record!
 
 ### **VK record**
