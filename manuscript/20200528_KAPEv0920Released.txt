@@ -2,6 +2,8 @@
 
 Posted: 28th May 2020
 
+Original link: https://binaryforay.blogspot.com/2020/05/kape-0920-released.html
+
 #### ANNOUNCEMENT!
 
 KAPE has been nominated for a 4Cast award for non-commercial software of the year! Please take 18.5 seconds to vote for KAPE! =)
@@ -32,11 +34,11 @@ This version cleans up a lot of things related to target files. Specifically, th
 
 Here is an example of the old format:
 
-![](20200528_KAPEv0920Released\Image (4).jpg)
+![](20200528_KAPEv0920Released\Image4.jpg)
 
 Vs the same Target in the new format:
 
-![](20200528_KAPEv0920Released\Image (1).jpg)
+![](20200528_KAPEv0920Released\Image1.jpg)
 
 If FileMask is omitted, it is assumed to be *, which will match everything under Path.
 
@@ -60,7 +62,7 @@ This allows for pretty much unlimited flexibility when looking for files, especi
 
 Finally, for compound targets, you can now reference a directory under the Targets folder, should you wish to dynamically include all target files under that directory. Example:
 
-![](20200528_KAPEv0920Released\Image (2).jpg)
+![](20200528_KAPEv0920Released\Image2.jpg)
 
 This tells KAPE to look for any tkape files under the Targets\Antivirus folder and include them in the compound target. This has been possible for a long time via the command line, using the name of the directory in the --targets option, but this makes it possible to specify them in target files.
 
@@ -70,12 +72,10 @@ Troy Larson asked for the ability to have KAPE wait a predetermined amount of ti
 
 To meet this requirement, an optional WaitTimeout value was added to the module header, like this:
 
-![](20200528_KAPEv0920Released\Image (3).jpg)
+![](20200528_KAPEv0920Released\Image3.jpg)
 
 This value is specified as the number of minutes to wait. In the above example, AppWithTimeout will sleep for 5 minutes, but KAPE will only wait around for 1 minute for it to finish. When KAPE is run with this module, the following happens:
 
 ![](20200528_KAPEv0920Released\Image.jpg)
 
 If no timeout is specified, KAPE will wait forever for a module to finish
-
-![](20200528_KAPEv0920Released\Image (1).jpg)
