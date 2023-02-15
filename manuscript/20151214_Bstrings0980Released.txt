@@ -2,6 +2,8 @@
 
 Posted: 14th December 2015
 
+Original link: https://binaryforay.blogspot.com/2015/12/bstrings-0980-released.html
+
 Last week, the esteemed David Cowen [@HECFBlog](https://twitter.com/HECFBlog) reported a bug when using the -d option I recently added.
 
 Specifically, he reported an error related to long file names:
@@ -12,7 +14,7 @@ So I created some long file paths, added a fix, and then did some testing.
 
 Here is the before and after:
 
-![](20151214_Bstrings0980Released\bstrings long path support.png)
+![](20151214_Bstrings0980Released\bstringslongpathsupport.png)
 
 So now you should be able to search arbitrary data for strings regardless of how crazy the paths get!
 

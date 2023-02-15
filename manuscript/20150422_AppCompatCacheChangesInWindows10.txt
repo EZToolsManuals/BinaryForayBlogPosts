@@ -2,6 +2,8 @@
 
 Posted: 22nd April 2015
 
+Original link: https://binaryforay.blogspot.com/2015/04/appcompatcache-changes-in-windows-10.html
+
 The AppCompatCache value lives at SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache.
 
 In Windows 7, 8.0, and 8.1, the header is 128 bytes in size (more details here)

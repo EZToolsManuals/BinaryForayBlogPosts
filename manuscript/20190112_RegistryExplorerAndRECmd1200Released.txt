@@ -2,6 +2,8 @@
 
 Posted: 12th January 2019
 
+Original link: https://binaryforay.blogspot.com/2019/01/registry-explorer-and-recmd-1200.html
+
 This release sees changes in several different places. Let's start with the main Registry parser.
 
 New in this release is the ability to expand a path with wildcards to all matching paths. We will see this in use when we talk about RECmd and what's new there.
@@ -21,6 +23,8 @@ FIX: Handle fringe errors related to save paths, loading bookmarks, etc
 
 The biggest changes in this release came about from work Dave Cowen was doing as it related to having Maxim Suhanov on the Forensic Lunch. Maxim showed that in certain situations the list that tracks values in a key can still hold a reference to a deleted value. Registry Explorer now checks for this and displays the recovered value differently than the active ones.
 
+{pagebreak}
+
 When this happens. you also get a new key icon. Both the new icon and an example of what this will look like is shown below.
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-12_20-01-11.jpg)
@@ -29,6 +33,8 @@ The other situation that I mentioned above was when a recovered value that has n
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-12_20-04-18.jpg)
 
+{pagebreak}
+
 Note that the value has both the "deleted" and "data record reallocated" booleans set to true here. While some tools will not show you any data at all when this happens, Registry Explorer shows you what data the value points to so YOU get to make the decision if it is relevant. Also unlike other tools, Registry Explorer is actually available for use by anyone, for free, forever, and is open source. =)
 
 The Technical Details view has also been updated to add the "Data record allocated" condition.
@@ -36,6 +42,8 @@ The Technical Details view has also been updated to add the "Data record allocat
 The Legend has been updated to show this new information as well.
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-12_20-07-25.jpg)
+
+{pagebreak}
 
 ### RECmd
 
@@ -50,6 +58,8 @@ This brings RECmd in line with my other software with common switches, recursion
 The searching stuff has not been changed (the "s*" options), nor has the other find related stuff (base64 and size).
 
 Note there is now a --debug and --trace switch. The --debug switch can help with troubleshooting and seeing a bit of what is going on under the hood. --trace on the other hand is a firehose of super granular information that can help diagnose problems. I would stick with --debug!
+
+{pagebreak}
 
 #### And now, batch mode!
 
@@ -104,15 +114,21 @@ This can save you not only time, but will actually find results you couldn't pos
 
 RECmd comes with several example batch files that you can use, including a really comprehensive one from Mike Cary (RECmd_Batch_MC.reb). Mike's batch file contains over 40 key/value pairs and includes examples of wild card usage, recursion, and so on.
 
+{pagebreak}
+
 With a batch file created, you then tell RECmd where to find it. Here is an example:
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-08_8-57-08.jpg)
+
+{pagebreak}
 
 Now this particular example only NTUSER hives existed in the -d directory, but because we can have any type of hive defined in a batch file (SYSTEM or SOFTWARE, etc.), if we pointed it to a different location, say, an E01 file mounted via Arsenal Image Mounter, it might look like this:
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-12_21-12-03.jpg)
 
 As RECmd runs in batch mode, several things are happening. First, every key and value that is found is added to a "normalized" CSV file. What this means is that you will be able to look at keys and values across hives in a consistent manner using a tool like Timeline Explorer. The challenge here is finding a balance between too little and too much data to put in such a normalized file.
+
+{pagebreak}
 
 As an example, one of these files might look like what we see below. The next two images are from the same file, but split across two images because of the overall width.
 
@@ -148,6 +164,8 @@ Going back to our normalized CSV output, as you scan through the data, you will 
 
 What if you wanted to drill down into the details, exactly as the plugin generated them? This is where the "Plugin Detail File" comes into play. If you open this file in Timeline Explorer you will see exactly the same data that you would if you loaded the hive in Registry Explorer and went to the same key and reviewing the plugin generated data.
 
+{pagebreak}
+
 Here is an example of what one of the TypedURLs CSVs might look like:
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-12_20-55-46.jpg)
@@ -166,4 +184,4 @@ I really hope you get a lot of good answers in your cases from these changes.
 
 If anything is unclear, please feel free to reach out and as always, if you run into any issues, please let me know and I will get them fixed as soon as possible.
 
-Enjoy! You can get the updates at the usual place.
+Enjoy! You can get the updates at the [usual place](https://ericzimmerman.github.io/#!index.md).

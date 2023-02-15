@@ -2,6 +2,8 @@
 
 Posted: 20th May 2015
 
+Original link: https://binaryforay.blogspot.com/2015/05/shellbags-explorer-061-released.html
+
 This version adds support for Windows XP hives. For the most part, things should "just work" with XP hives (NTUSER.DAT), but as you can see in the image below, there are some differences I need to work out/add support for.
 
 Right now, SBE is only looking at the "Software\Microsoft\Windows\ShellNoRoam\BagMRU" key when it sees an NTUSER hive. I believe ShellBags can also be found in "Software\Microsoft\Windows\Shell\BagMRU" but I need to generate more test data to be sure.

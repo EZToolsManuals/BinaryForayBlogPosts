@@ -2,6 +2,8 @@
 
 Posted: 31st July 2015
 
+Original link: https://binaryforay.blogspot.com/2015/07/amcacheparser-reducing-noise-finding.html
+
 NOTE: I just pushed 0.0.5.2 out with the following changes:
 
 NEW: Added FileExtension column to FileEntry to allow for easier sorting/filtering of results by file type
@@ -33,6 +35,8 @@ Here we see the values for the selected key. My research into the keys essential
 * Values with value name b can be an Epoch date
 * Found a few additional value data entries for value name 6
 
+{pagebreak}
+
 My list ended up looking like this (left of equals is value name, right is description):
 
 * 0 = Program name
@@ -59,6 +63,8 @@ My list ended up looking like this (left of equals is value name, right is descr
 
 Based on Yogesh's work I will update my unknowns with what he has found.
 
+{pagebreak}
+
 We will look at a File Entry next
 
 ![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\FE.png)
@@ -72,6 +78,8 @@ Most File Entry keys have five or so values in them, but some have more, like th
 ![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\FE2.png)
 
 In the above example we can get a lot more information about things. Some of the values here, while having different names than what we saw in Program Entries, are used for the same purpose (version number, etc). We also get additional info in these cases like created, modified, and access dates.
+
+{pagebreak}
 
 ### Next steps
 
@@ -94,11 +102,15 @@ AmcacheParser.exe is a command line tool with the following options:
 
 ![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\help.png)
 
+{pagebreak}
+
 At a minimum, the -f and -s switches are required. When using just the defaults, only the unassociated File Entries are exported.
 
 ![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\example1.png)
 
 This command results in a file named '20150731144524_AmcacheWin10_Unassociated file entries.tsv' being generated. The first part is a timestamp based on when the command was run, the second is taken from the name of the hive from the -f switch, and finally, the kind of file entries it contains.
+
+{pagebreak}
 
 Opening 20150731144524_AmcacheWin10_Unassociated file entries.tsv in Excel we can see the following (partial) output:
 
@@ -113,6 +125,8 @@ By approaching things in this manner, we are able to reduce the amount of data w
 Of course if you want to see ALL file entries you can. Just use the -i switch, as such:
 
 ![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\example2.png)
+
+{pagebreak}
 
 This results in three files being generated, as seen below
 
@@ -151,6 +165,8 @@ The flip side of whitelisting is blacklisting. This is useful once you have iden
 Let's say the following items are evil:
 
 ![](20150731_AmcacheParserReducingTheNoiseFindingTheSignal\blackhash.png)
+
+{pagebreak}
 
 If we add those to a text file, we can do something like this:
 

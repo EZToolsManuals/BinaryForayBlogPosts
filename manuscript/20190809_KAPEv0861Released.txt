@@ -2,6 +2,8 @@
 
 Posted: 9th August 2019
 
+Original link: https://binaryforay.blogspot.com/2019/08/kape-0861-released.html
+
 ### KAPE 0.8.6.1 released
 
 Changes in this release include:
@@ -18,6 +20,8 @@ Changes in this release include:
 - Added AWS S3 transfer support via --s3* switches
 - Added Azure Storage transfer (SAS Uri) via --asu switch
 - Updated gkape for newest features
+
+{pagebreak}
 
 ### Highlights
 
@@ -39,6 +43,8 @@ In the example below, we see the same phenomenon, but in this version, KAPE now 
 
 ![](20190809_KAPEv0861Released\2019-08-06_14-47-22.jpg)
 
+{pagebreak}
+
 Another change in this version is redirecting STANDARD_ERROR to the Console vs. the output file. This prevents contention when writing to the same output file. In the example above, the STANDARD_ERROR text is shown in yellow and has a giant red arrow pointing to it.
 
 In another tweak related to this kind of thing, a new property, **Append**, was added to modules. This allows you to control whether or not output ends up in an incrementing file (NTUSER.TXT, NTUSER_1.TXT, NTUSER_2.TXT and so on), or if all output is appended to the first NTUSER.TXT.
@@ -50,6 +56,8 @@ Switches have been added to allow for S3 and Azure Storage transfers. You can us
 Here is an example for S3:
 
 ![](20190809_KAPEv0861Released\aws.jpg)
+
+{pagebreak}
 
 And Azure Storage:
 

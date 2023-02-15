@@ -14,6 +14,8 @@ https://forensic4cast.com/forensic-4cast-awards/2020-forensic-4cast-awards/
 
 NOTE: If you get an strange errors when updating or using --sync, use the --debug option to see which file is causing the issue. For most, simply deleting the offending file will fix things. Worst case, just delete your local KAPE install and redownload.
 
+{pagebreak}
+
 ### Changelog
 
 * REMOVE IsDirectory from Target definitions. Any existing targets not part of the official repo will need to be adjusted
@@ -27,6 +29,8 @@ NOTE: If you get an strange errors when updating or using --sync, use the --debu
 * Added WaitTimeout to module definition as an optional property. When present, and greater than 0, signifies the number of minutes KAPE should wait for a module to finish. If this is excedded, KAPE will stop waiting and move on.
 * Updated nuget packages
 * Updated targets
+
+{pagebreak}
 
 #### Target definition changes
 
@@ -66,7 +70,9 @@ Finally, for compound targets, you can now reference a directory under the Targe
 
 This tells KAPE to look for any tkape files under the Targets\Antivirus folder and include them in the compound target. This has been possible for a long time via the command line, using the name of the directory in the --targets option, but this makes it possible to specify them in target files.
 
-Module definition changes
+{pagebreak}
+
+#### Module definition changes
 
 Troy Larson asked for the ability to have KAPE wait a predetermined amount of time for a module, vs. letting a run away module go on indefinitely.
 

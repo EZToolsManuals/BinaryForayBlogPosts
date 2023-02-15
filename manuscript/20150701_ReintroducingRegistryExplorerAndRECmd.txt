@@ -2,6 +2,8 @@
 
 Posted: 1st July 2015
 
+Original link: https://binaryforay.blogspot.com/2015/07/reintroducing-registry-explorer-and.html
+
 I am happy to announce the availability of the next releases of Registry Explorer and RECmd! Extensive work has been done in a variety of areas which will be detailed below.
 
 This post serves to hit the highlights of this release. The included manual should be consulted for a full description of new features and changes.
@@ -64,6 +66,8 @@ The last release of RECmd was mostly about cleanup and tweaking. This version in
 * CHANGE: Tweak command line option descriptions
 * CHANGE: Updated nlog
 
+{pagebreak}
+
 Lets unpack some of these changes. The first thing to notice is that the command line switches have been simplified. Capitalization of switches is also not required any more (so --hive or --Hive works fine).
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\1.png)
@@ -76,6 +80,7 @@ The other new switch is the --Literal switch that prevents RECmd from converting
 
 Finally, the best (IMO) and most important change is RECmd's ability to highlight the search hit in the returned information. 
 
+{pagebreak}
 The colors used to highlight hits are completely user configurable. The default can be seen below, but you can adjust the colors via the nlog.config file as shown below.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\CIS5ooIUEAEaOxh.png)
@@ -92,6 +97,8 @@ RECmd is even smart enough to highlight Regular Expression based matches, like t
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\sk2.png)
 
+{pagebreak}
+
 This functionality really shines when searching in value data and value slack. 
 
 One other thing to notice is that you are told the hits were found via RegEx at the bottom when the --RegEx switch is used.
@@ -99,6 +106,8 @@ One other thing to notice is that you are told the hits were found via RegEx at 
 Value name searching works the same way.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\sv3.png)
+
+{pagebreak}
 
 ##### Value data searches
 
@@ -115,17 +124,23 @@ So what happened here? RECmd was able to take the search term, UsErs, and search
 
 This feature provides enormous power to find data in Registry hives as search terms will be found both in binary and string based searches. In RECmd 0.6.1.0, the end user would have been required to search for each byte string in every possible capitalization format in order to find the hit. Needless to say, this would be near impossible and very tedious to attempt.
 
+{pagebreak}
+
 ##### Value slack searches
 
 Slack searches work the same way as value data searches. As an example, a search for sk was done in value slack. Since all value slack is treated as binary data, the importance of the search improvements can be seen here as well.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\ss1.png)
 
+{pagebreak}
+
 ##### Other examples
 
 Value data search for cdrom. We get back a variety of hits, some as strings of differing capitalization and some as encoded Unicode strings.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\sd3.png)
+
+{pagebreak}
 
 ## Registry Explorer
 
@@ -188,6 +203,8 @@ Fully asynchronous loading of hives. This means hives get loaded in their own th
 
 Settings for window size, position, and options persist between sessions and are stored in the Settings folder. Pretty much everything is remembered between program executions.
 
+{pagebreak}
+
 ##### Interface improvements
 
 The first thing you will notice when loading hives is that the Registry hives is that some icons have changed. The hive itself has a green icon and the hive name is in bold. The number at the end of the Registry hives tab is the total number of hives currently loaded.
@@ -198,11 +215,15 @@ The status bars across the bottom were tweaked as well. Hovering over the key pa
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\tooltip.png)
 
+{pagebreak}
+
 The checkbox to the far left toggles showing the root key name in the key path. It is not shown by default.
 
 When looking at RegBinary and value slack, a new hex viewer has been created. The current offset and selected bytes count is shown. After selecting a range of bytes, Ctrl+C copies those bytes to the clipboard.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\hexv.png)
+
+{pagebreak}
 
 In the lower right corner is a button to show a data interpreter. The data interpreter decodes the binary data from the current offset into a variety of formats. Sweeping a range of bytes does not affect the data interpreter, only the current offset. The data interpreter can be seen below.
 
@@ -211,6 +232,8 @@ In the lower right corner is a button to show a data interpreter. The data inter
 In the lower right of the data interpreter is a ? that contains a tool tip for how to copy values (and optionally the value name) to the clipboard.
 
 The data interpreter will update in real time as the offset is changed in the hex viewer.
+
+{pagebreak}
 
 Values now have a context menu, as seen below.
 
@@ -224,15 +247,21 @@ Slack: 6F-00-20-00
 
 The Export options allow for saving either value data or slack to a file (as binary data).
 
+{pagebreak}
+
 The Technical details form has been tweaked slightly. In the lower right is a ? that shows a tool tip for how to copy the properties (and optionally the property name) via Ctrl+C.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\tech.png)
 
 When a value is selected, the value's data and, if present, slack, is shown at the bottom. This allows you to verify both the VK record and the data (found at offset 0x0C) in the same place.
 
+{pagebreak}
+
 The available bookmarks tab has also been updated with the icons from the Registry hives tab. A new context menu option, 'Jump to key', has been added.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\avail.png)
+
+{pagebreak}
 
 Using this option will select the bookmarked key in the currently active hive and switch to the Registry hives tab. This is useful to see the bookmark in context with other keys in the hive.
 
@@ -240,9 +269,13 @@ Using this option will select the bookmarked key in the currently active hive an
 
 The options menu has been tweaked and improved, adding support for a different way to filter the Registry hives tree and full skin support.
 
+{pagebreak}
+
 The 'Show parent keys when filtering' option works as follows. The default option is to show all parent keys of keys that match the filter. In this case, the filter value is 0. The parent keys are highlighted in yellow.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\filter1.png)
+
+{pagebreak}
 
 Turning this option off and doing the same search results in a much different result. Notice in the screen shot below only the keys that match the filter criteria are shown. This can greatly reduce noise in the results in addition to lessening the need to scroll to the keys that match the filter criteria.
 
@@ -250,13 +283,19 @@ Turning this option off and doing the same search results in a much different re
 
 The other aspect this option controls is whether to show subkeys of keys that match a given filter. With the option on, any subkeys of keys that match the filter will continue to be shown. With the option off, subkeys of keys matching the filter are hidden.
 
+{pagebreak}
+
 Registry Explorer contains the ability to apply Excel like conditional formatting to any of the tree or grid controls. To set up conditional formatting, right click on a column header and choose the context menu option for conditional formatting at the bottom.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\condit1.png)
 
+{pagebreak}
+
 If we choose the Text that contains option and configure it like this:
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\containbag.png)
+
+{pagebreak}
 
 The Registry hives tab changes to match the rule (instances of 'Bag' are circled).
 
@@ -272,6 +311,8 @@ Finally, as mentioned above, Registry Explorer supports skinning so you can get 
 
 This is just an overview of the changes in this version of Registry Explorer. For full details, see the manual.
 
+{pagebreak}
+
 ##### Searching
 
 After loading one or more hives, use the Tools | Find option (or simply press Ctrl+F) to bring up the Find dialog. 
@@ -284,6 +325,8 @@ The Options menu lets you clear recent Standard searches as well as convert stri
 
 The Help menu contains a link to a web page that provides help on constructing .net regular expressions as well as some search tips.
 
+{pagebreak}
+
 ##### Key name and value name search
 
 To conduct a key or value name search, enter a string in the 'Search for' box and check the Key name and/or Value name boxes. Adjust the search type to be either a simple string search or a regular expression. To start the search, click the 'Search' button or just press Enter on the keyboard. Registry Explorer will adjust the default button depending on which search you are conducting, so it is often easiest just to enter your search conditions and pres Enter.
@@ -294,17 +337,25 @@ In the example above, we found 143 search hits across 13 loaded hives in 0.31 se
 
 The Hive Name indicates which hive the hit was found in and the Hit Location will indicate where the hit was found.
 
+{pagebreak}
+
 Depending on the number of search hits, it is often helpful to use the grouping feature. If we drag the Hive Name and Hit Location columns to the top of the grid, we can now browse the search results by hive and hit type.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\FindGrouping.png)
+
+{pagebreak}
 
 To view a hit in context, simply double click it and Registry Explorer will select the right hive, key, and value (assuming it is a Value Name hit). If we double click row with the MuiVerb hit above, we see the following in Registry Explorer.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\ValueNameHit.png)
 
+{pagebreak}
+
 Notice how the search term is highlighted in the value name. If we double click on a key name hit, we get the following in Registry Explorer.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\KeyHit.png)
+
+{pagebreak}
 
 ##### Value data and value slack search
 
@@ -316,6 +367,8 @@ When a search hit is found in a non RegBinary value, all instances of the search
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\ValueDataHit.png)
 
+{pagebreak}
+
 When a hit is found in a RegBinary value, the corresponding hit is highlighted in the hex viewer, as seen below. In this case, notice how the string we searched for was **An**, but we still found the hit for **an**.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\FindValueCaseHit.png)
@@ -324,9 +377,13 @@ Only the first instance of the search term is highlighted in the hex viewer, but
 
 The other thing to notice is how the search results can be filtered. These filters can be edited by clicking the 'Edit Filter' button to the far right of the filter condition at the bottom of the grid.
 
+{pagebreak}
+
 When looking at a value slack hit, the Slack viewer tab will be active and the hit will again be highlighted.
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\findslack.png)
+
+{pagebreak}
 
 ##### Last write timestamp search
 
@@ -338,6 +395,8 @@ Once the search is complete, double clicking on a row will again select the key 
 
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\tsSelect.png)
 
+{pagebreak}
+
 ##### Minimum value size search
 
 Registry Explorer can find all values with data size greater than or equal to a given size in bytes. In the example below, 228 hits across all open hives were found in 0.4 seconds.
@@ -348,6 +407,8 @@ Clicking on the Value Data Length column sorts the column and makes it easy to f
 
 As as have already seen, double clicking will select the key and value in the main Registry Explorer window.
 
+{pagebreak}
+
 ##### Miscellaneous
 
 The Bookmarks manager has been updated to allow for editing both common and user created bookmarks. You can also delete bookmarks from this interface as well.
@@ -355,6 +416,8 @@ The Bookmarks manager has been updated to allow for editing both common and user
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\bmm.png)
 
 Finally, a manual is now included that fully explains all of these things and more in detail. Be sure to read it so you can get the most out of Registry Explorer and RECmd.
+
+{pagebreak}
 
 #### Whats next?
 
@@ -372,4 +435,4 @@ I am also interested in your thoughts, ideas, and feature requests. Please let m
 
 I hope you enjoy this release!
 
-You can get the update from the Software page.
+You can get the update from the [Software](http://binaryforay.blogspot.com/p/software.html) page.

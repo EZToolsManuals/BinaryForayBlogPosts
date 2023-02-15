@@ -2,6 +2,8 @@
 
 Posted: 3rd June 2015
 
+Original link: https://binaryforay.blogspot.com/2015/06/recmd-0610-released.html
+
 This version is mostly cleanup and slight formatting changes to make things easier to use.
 You can get the updated version here or on Github
 Changes include:

@@ -2,6 +2,8 @@
 
 Posted: 3rd January 2015
 
+Original link: https://binaryforay.blogspot.com/2016/01/introducing-pecmd.html
+
 Here is the initial version of Prefetch Explorer Command line (PECmd), version 0.5.0.0!
 
 Like my other command line programs, running it without arguments will display the options:
@@ -36,7 +38,9 @@ As you can see, information is dumped about each volume, then a listing of all t
 
 Below that is the file listing and again we can see the executable was run from volume 3 as well. We can also see some temporary files were created which are highlighted (since they contain the string 'tmp').
 
-![](20160122_IntroducingPECmd\win7 2 vol.png)
+![](20160122_IntroducingPECmd\win72vol.png)
+
+{pagebreak}
 
 #### Looking for keywords
 
@@ -45,6 +49,8 @@ Next, lets take a look at how you can augment the built in keywords. The -k swit
 In the example below, you can see the -k switch was used to provide two additional strings to highlight.
 
 ![](20160122_IntroducingPECmd\win72.png)
+
+{pagebreak}
 
 #### Exporting to json
 
@@ -58,9 +64,13 @@ In the example below we are exporting json data to c:\temp which is then reflect
 
 ![](20160122_IntroducingPECmd\json.png)
 
+{pagebreak}
+
 Since we used the --pretty switch, the file looks like this:
 
 ![](20160122_IntroducingPECmd\jsonout.png)
+
+{pagebreak}
 
 #### Processing Windows 10 prefetch files on operating systems less than Windows 8
 

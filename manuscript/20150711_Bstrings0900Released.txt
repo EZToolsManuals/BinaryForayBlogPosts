@@ -2,6 +2,8 @@
 
 Posted: 11th July 2015
 
+Original link: https://binaryforay.blogspot.com/2015/07/bstrings-0900-released.html
+
 A few minor changes based on feedback and wiring up final options.
 
 NEW: More RegEx patterns
@@ -21,6 +23,8 @@ bstrings TotalSeconds                         : 10.0237084
 Sysinternals strings TotalSeconds       : 40.2289262
 
 Based on these numbers, bstrings is ~75% faster than strings.
+
+{pagebreak}
 
 #### Changes overview
 
@@ -46,4 +50,4 @@ Only the hits are saved to the target file. If you want all of the console outpu
 
 If you come up with any cool regex patterns or have any other ideas to improve bstrings, please let me know!
 
-The latest version is available here.
+The latest version is available [here](http://binaryforay.blogspot.com/p/software.html).

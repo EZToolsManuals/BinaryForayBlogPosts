@@ -2,6 +2,8 @@
 
 Posted: 17th January 2019
 
+Original link: https://binaryforay.blogspot.com/2019/01/locked-file-support-added-to.html
+
 So what does this mean for you?
 
 More access to more data, more faster!
@@ -11,6 +13,8 @@ What does it allow you to do? Automate more and leverage these tools for more pr
 Up until today, the expectation was for my programs to not have to deal with files being "in use" or open in other applications. This was generally OK, but it becomes more and more painful when doing research and for live response tasks.
 
 Let's see some examples of what things look like with the new versions.
+
+{pagebreak}
 
 Here we see what things look like in the past when running tools as a non-administrator:
 
@@ -30,6 +34,8 @@ ShellBags Explorer has always allowed you to load the live Registry (based on th
 
 When loading an offline hive tho, you did get the timestamps, because it is using my parser under the hood.
 
+{pagebreak}
+
 So with this version of SBE, if you load the active Registry without Admin rights, you will see what you always saw in that the first and last interacted timestamps are not available. You will also get a warning as seen below.
 
 ![](20190117_LockedFileSupportAdded\sbenonadmin.jpg)
@@ -42,11 +48,15 @@ This is fully automatic and SBE takes into account and processes any transaction
 
 Finally, we have Registry Explorer. If you load a hive that is in use here, Registry Explorer will handle it by opening the hive and replaying any transaction logs that are needed and then displaying it in the interface. There is no wizard displayed to select logs or save the updated hive, etc.
 
+{pagebreak}
+
 Here is an example of an in-use Amcache and NTUSER.DAT hive loaded and ready to go!
 
 ![](20190117_LockedFileSupportAdded\re.jpg)
 
 Notice also (shown in the lower right) that the Status messages will reflect the operations Registry Explorer took as well.
+
+{pagebreak}
 
 Not to be left out, RECmd has also been improved in that when searching an entire disk or mounted image for Registry hives, there are a lot less false positives. RECmd also handles locked files without issue, as seen below.
 

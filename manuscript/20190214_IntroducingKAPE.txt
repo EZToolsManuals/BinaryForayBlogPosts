@@ -2,6 +2,8 @@
 
 Posted: 14th February 2019
 
+Original link: https://binaryforay.blogspot.com/2019/02/introducing-kape.html
+
 (From the manual, which is included, and you should read...)
 
 ### What is KAPE?
@@ -79,6 +81,8 @@ Why do it this way? By keeping things granular and specific, YOU can choose to o
 
 But what about the situation where you do not know what browser is in use or you want to target the file system, Registry hives, and jump lists? 
 
+{pagebreak}
+
 This is where the concept of a **compound target** comes into play. Let's look at one:
 
 ![](20190214_IntroducingKAPE\2019-02-13_12-19-59.jpg)
@@ -90,6 +94,8 @@ When KAPE runs, it will automatically expand each of the targets above using wha
 With this in mind, you can see how powerful and flexible this approach is in that YOU get to decide what to collect and when to collect it. If you just want Registry hives and event logs, use those two targets in a new target called HivesAndEventLogs.tkape, then use that target.
 
 There is also a special target, !All, that simply locates all other targets and runs them all. While this works, it will not be as fast as using a more specific set of targets for collection.
+
+{pagebreak}
 
 ### Modules
 
@@ -130,6 +136,8 @@ as it WILL NOT WORK.
 
 The take away here is you are covered in both situations where programs can write directly to a file, like PECmd does, or, for programs that use redirection, you just have to use ExportFile to capture the output. You can name the value for the ExportFile property any file name you like.
 
+{pagebreak}
+
 #### Running KAPE
 
 KAPE requires administrator rights, so the first thing to do is open up an administrative level command prompt or PowerShell window. From there, running KAPE by itself shows us all available options.
@@ -146,6 +154,8 @@ For targets, --tsource,-- tdest, and --target are all required.
 
 For modules, --msource, --mdest, and --module are required. There is an exception to this rule however that we will see later. When using target and module options together, you can omit --msource and KAPE will assign the value for --tdest to --msource automatically.
 
+{pagebreak}
+
 #### Seeing available targets and modules
 
 Notice there are two sets of switches that list targets and modules:
@@ -156,6 +166,8 @@ Notice there are two sets of switches that list targets and modules:
 The 'list' commands will dump out the target name and other information about each target or module. Here we see --tlist in action:
 
 ![](20190214_IntroducingKAPE\2019-02-13_13-03-33.jpg)
+
+{pagebreak}
 
 If we add --tdetail to the command, we get this:
 
@@ -168,6 +180,8 @@ Notice that all of the path information inside each target is also shown when us
 #### Target source option
 
 The --tsource switch tells KAPE where to start looking for files. This can be a hard drive, external drive, network share, F-Response mapped remote disk, UNC path, mounted E01, and so on. As long as it can be referenced using a path notation supported by Windows, it will work.
+
+{pagebreak}
 
 #### Target destination options
 

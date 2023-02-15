@@ -2,6 +2,8 @@
 
 Posted: 22nd May 2015
 
+Original link: https://binaryforay.blogspot.com/2015/05/introducing-recmd.html
+
 RECmd is a command line tool to access offline (for now, live Registry support is planned) hives.
 
 The command line options look like this:
@@ -24,17 +26,23 @@ When passing in key names, the root key name is optional. This is because most o
 
 To get default values, use a value name of "(default)" as can be seen in the examples below.
 
+{pagebreak}
+
 Usage is very simple. To dump a key, you would do something like this:
 
 ![](20150522_IntroducingRECmd\keyQ.png)
 
 In this example, i asked for the ".citrixonline" key and when data was returned we can see the full key path, including the root, after the Key: label.
 
+{pagebreak}
+
 To dump just a value, something like this would be used:
 
 ![](20150522_IntroducingRECmd\keyV.png)
 
 Notice how you get more detail when you query a key and a value. This allows you to choose how much detail you want based on your needs.
+
+{pagebreak}
 
 If you need to save the contents of a value's data to a file, use the SaveToName switch.
 
@@ -48,11 +56,15 @@ Which is the same info we can see in a tool like Registry Explorer for the same 
 
 ![](20150522_IntroducingRECmd\REHex.png)
 
+{pagebreak}
+
 If the Recursive switch is used, full details about the initial key, its values, and all subkeys and their values are dumped. The data when using the Recursive switch is MUCH more comprehensive than when the Recursive switch isn't used. This again puts you in control when it comes to how much detail you want/need to see.
 
 This is a partial output from what that might look like:
 
 ![](20150522_IntroducingRECmd\Rec.png)
+
+{pagebreak}
 
 Finally, the MinSize switch can be used to find all values that are at least a given size. In the example below, all values whose value data is larger than 4,096 bytes are located:
 
@@ -72,6 +84,8 @@ Searching is broken down into two types, simple and regular expression (RegEx) b
 
 Simple searching looks for the provided string in key names, value names, and value data. It is not anchored in any way. If a search target contains the search string, it is returned as a hit.
 
+{pagebreak}
+
 In the example below, all keys with "MuiCache" somewhere in the key name are returned via the sk switch:
 
 ![](20150522_IntroducingRECmd\sskey.png)
@@ -82,9 +96,13 @@ To find all values with "edit" somewhere in the value name, we use the sv switch
 
 Notice how the key name and value name are separated by two colons (::).
 
+{pagebreak}
+
 To search for a string inside a value's data, we use the sd switch. To find value data containing "edit", we can use this:
 
 ![](20150522_IntroducingRECmd\ssd.png)
+
+{pagebreak}
 
 You can also search for binary patterns too. For a simple search, just string the hex characters together with a dash (04-00-EF-BE for example). Here is the partial output when doing something like this:
 
@@ -93,6 +111,8 @@ You can also search for binary patterns too. For a simple search, just string th
 This allows you to find signatures for common data structures ANYWHERE in the Registry. The binary signature used above is that of a BEEF0004 extension block, commonly used in ShellBags. It contains information such as MAC dates/times, MFT info, etc.
 
 To actually see the data itself, use one of the query methods.
+
+{pagebreak}
 
 #### RegEx searching
 
@@ -105,6 +125,8 @@ To use RegEx to search for key names, use the nk switch. Enclose the RegEx in qu
 Values work the same way via the nv switch (this is partial output, but finding 320 entries took 0.393 seconds on my system):
 
 ![](20150522_IntroducingRECmd\nv.png)
+
+{pagebreak}
 
 and finally and perhaps most powerfully, we can search value data using RegEx via the nd switch:
 
@@ -120,6 +142,8 @@ https://msdn.microsoft.com/en-us/library/hs600312%28v=vs.110%29.aspx
 http://www.codeproject.com/Articles/9099/The-Minute-Regex-Tutorial
 
 RegExBuddy is an awesome tool for building and testing RegEx against data sets. 
+
+{pagebreak}
 
 #### Why do we need another Registry tool?
 

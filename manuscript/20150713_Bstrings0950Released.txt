@@ -2,6 +2,8 @@
 
 Posted: 13th July 2015
 
+Original link: https://binaryforay.blogspot.com/2015/07/bstrings-0950-released.html
+
 Changes include:
 
 NEW: Added xml regex. Also matches HTML tags
@@ -13,7 +15,9 @@ NEW: Add total time elapsed and averages to search summary
 
 Here we see the new command line args, -q and -b
 
-![](20150713_Bstrings0950Released\new ops.png)
+![](20150713_Bstrings0950Released\newops.png)
+
+{pagebreak}
 
 The command line used is now included in the output below the version and author information.
 
@@ -26,6 +30,8 @@ The -b switch lets you choose a block size between 1 and 1024 megabytes. Here a 
 The xml regex option finds xml/html tags
 
 ![](20150713_Bstrings0950Released\xml.png)
+
+{pagebreak}
 
 If we run the same search with the -q option, only the matches are returned.
 
@@ -45,4 +51,4 @@ I did some testing with different block sizes to see if there was any changes in
 
 ![](20150713_Bstrings0950Released\512.png)
 
-As usual, get it here.
+As usual, get it [here](http://binaryforay.blogspot.com/p/software.html).

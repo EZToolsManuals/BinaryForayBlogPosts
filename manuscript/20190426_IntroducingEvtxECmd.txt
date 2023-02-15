@@ -2,6 +2,8 @@
 
 Posted: 26th April 2019
 
+Original link: https://binaryforay.blogspot.com/2019/04/introducing-evtxecmd.html
+
 I am happy to announce the first beta version of my Windows Event Log (evtx) parser. We will be talking about the command line version today, but I have plans for a GUI as well.
 
 Let's start with a look at the options:
@@ -9,6 +11,8 @@ Let's start with a look at the options:
 ![](20190426_IntroducingEvtxECmd\2019-04-26_12-45-34.jpg)
 
 Most of the options are like all my other programs in that you can process a single file or a directory (recursively) using -f or -d.
+
+{pagebreak}
 
 With either -f or -d, the event log(s) will be parsed, and information about the file(s) is/are displayed, like this:
 
@@ -38,6 +42,8 @@ The XML option will format the event data in exactly the same way as Windows doe
 ![](20190426_IntroducingEvtxECmd\2019-04-26_13-00-11.jpg)
 
 The XML export format will be different from others in that every attempt to adhere to the standard defined by Microsoft has been followed. This means you will not see attributes when they are of the NULL type, and so on. For most people, this is an irrelevant detail, but it is important to be as technically correct as possible.
+
+{pagebreak}
 
 #### A word about CSV (and json)
 
@@ -98,6 +104,8 @@ When a map is processed, each map entry has its Values items processed so the va
 
 It is that simple! Be sure to surround things in double quotes and/or escape quotes as in the examples. When in doubt, test your map against real data!
 
+{pagebreak}
+
 To see what this looks like in practice, consider the Security_4624.map, shown below:
 
 ![](20190426_IntroducingEvtxECmd\2019-04-26_13-47-20.jpg)
@@ -109,6 +117,8 @@ Map files are processed in alphabetical order. This means you can create your ow
 1. make a copy of the map you want to modify
 2. name it the same as the map you are interested in, but prepend 1_ to the front of the filename.
 3. edit the new map to meet your needs
+
+{pagebreak}
 
 Example:
 
@@ -134,7 +144,10 @@ Here is the normal json output (pretty printed):
 
 And here is the same record using --fj (also pretty printed):
 
+{width: 50%}
 ![](20190426_IntroducingEvtxECmd\2019-04-26_13-22-37.jpg)
+
+{pagebreak}
 
 #### The payoff
 
@@ -149,6 +162,8 @@ This allows you to see ALL events in line with ALL other events, regardless of W
 As we saw earlier, you get to make or update maps to suit your needs, your cases, your work flow, your idea of what is best. I have and will continue to make map files and include them [here](https://github.com/EricZimmerman/evtx/tree/master/evtx/Maps), and I would love to have your contributions to make this an even easier process for the community.
 
 To make your own maps, fork my [evtx](https://github.com/EricZimmerman/evtx) repo, look at the README and example maps in the evtx\Maps directory, then simply copy an existing map, rename it, update it to match the event ID/Channel you are interested in, TEST IT, then do a PR into the main repository.
+
+{pagebreak}
 
 #### Wrapping up
 

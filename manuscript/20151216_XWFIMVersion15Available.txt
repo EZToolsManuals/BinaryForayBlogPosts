@@ -2,6 +2,8 @@
 
 Posted: 16th December 2015
 
+Original link: https://binaryforay.blogspot.com/2015/12/xwfim-version-15-available.html
+
 I am happy to announce the availability of XWFIM v1.5. This is a complete rewrite which was done for several reasons including moving to C# and restructuring things in such a way to make future updates much easier (interfaces, removing duplicated code, etc).
 
 NOTE: IF YOU SEE THIS
@@ -20,6 +22,8 @@ This version now supports dongle and BYOD versions of X-Ways Forensics as well a
 
 Once at least one set of credentials is entered, installation is possible.
 
+{pagebreak}
+
 The Install type radio button will change depending in what credentials were entered.
 
 ![](20151216_XWFIMVersion15Available\3.png)
@@ -27,6 +31,8 @@ The Install type radio button will change depending in what credentials were ent
 As you can see, the interface has been streamlined and unnecessary options were removed such as whether or not to install the viewer component. Additionally, the validation option has been removed from the main window and moved to its own form under the Tools menu.
 
 The status messages have also been improved to show you the last time X-Ways was modified, both locally and on the remote server.
+
+{pagebreak}
 
 Other new features:
 
@@ -43,6 +49,6 @@ Other new features:
 
 and a lot more!
 
-Because this is a new version, older versions will NOT auto update. You can get this version manually here.
+Because this is a new version, older versions will NOT auto update. You can get this version manually [here](http://binaryforay.blogspot.com/p/software.html).
 
 Enjoy!

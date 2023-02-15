@@ -2,6 +2,8 @@
 
 Posted: 25th November 2015
 
+Original link: https://binaryforay.blogspot.com/2015/11/bstrings-0970-released.html
+
 Not a lot of changes, but important ones.
 
 Changes include:
@@ -24,9 +26,13 @@ When using -d, bstrings will search each file and show the results of each searc
 
 An interesting (and possibly problematic issue) is when strings get split across a chunk boundary. By default bstrings searches in chunks of 512 MB, but this is user definable. In previous versions of bstrings, a string across a chunk boundary would not be completely found. Rather, only the beginning and end of the string (separated at the boundary) would be reported.
 
+{pagebreak}
+
 In order to address this, bstrings now does some checking at each boundary to look for complete strings. In the example above, notice how we have strings like segment1, segment2, zimmerman, and so on. If we change the chunk size to, say, 1 MB, we get different results that look like this (I stripped out the middle part of all the Chunk processing to keep it simple):
 
 ![](20151125_Bstrings0970Released\chunk1.png)
+
+{pagebreak}
 
 As you can see, several of the words we found using the defaults are now split up, but with the new boundary checks, we are getting the additional strings as well. When a string is found at a boundary, it is prefixed with two spaces.
 
@@ -40,4 +46,4 @@ The way it works under the covers is to use a sliding scale depending on what th
 
 Let me know if there is anything else you want added and I can get it on the TODO!
 
-As usual, you can get the update here or on Github.
+As usual, you can get the update [here](http://binaryforay.blogspot.com/p/software.html) or on Github.

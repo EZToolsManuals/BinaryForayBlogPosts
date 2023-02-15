@@ -2,6 +2,8 @@
 
 Posted: 1st May 2015
 
+Original link: https://binaryforay.blogspot.com/2015/05/introducing-appcompatcacheparser.html
+
 Yesterday I got a request to put together a utility to dump shimcache entries from the Registry. Today it is available!
 
 Windows 7 (x86 and x84), Windows 8.x (Server 2012* as well), and Windows 10 are all supported.
@@ -23,6 +25,8 @@ The only required option is -s, so the program knows where to save things to. If
 
 ![](20150501_IntroducingAppCompatCacheParser\win10live.png)
 
+{pagebreak}
+
 Notice the name of the machine is used (HAX0R in this case) when dumping the live system.
 
 Here are some more examples. The program will take less than a second to run.
@@ -39,6 +43,8 @@ Windows7X64_SYSTEM_AppCompatCache.tsv
 Windows7X86_SYSTEM_AppCompatCache.tsv
 Windows10_SYSTEM_AppCompatCache.tsv
 Windows81_SYSTEMWin81_AppCompatCache.tsv
+
+{pagebreak}
 
 In short, its {OperatingSystem}_{HiveName}_AppCompatCache.tsv
 

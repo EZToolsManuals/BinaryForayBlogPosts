@@ -2,6 +2,8 @@
 
 Posted: 5th March 2019
 
+Original link: https://binaryforay.blogspot.com/2019/03/kape-v0820-released.html
+
 Changes in this release include:
 
 * Change ConsoleLog from being file based to memory based. ConsoleLog is saved to --tdest and/or --mdest as necessary
@@ -39,6 +41,8 @@ When a new version is posted online, it will contain all available targets and m
 
 The next option we will look at was written to assist in keeping KAPE up to date with changes to targets and modules between releases.
 
+{pagebreak}
+
 #### Automatic syncing with GitHub repo
 
 To help keep targets and modules up to date, a new option, `--sync`, has been added to KAPE. By default, using --sync will update all targets and module configurations with what is available on the GitHub repository. The default is to overwrite all existing files with whatever is on the server, but there is another option you can use to disable this, `--sow`. Since `--sow` is true by default (sow stands for 'sync overwrite'), if you want to disable overwriting, you would use `--sync --sow false`.
@@ -50,6 +54,8 @@ Here is an example of what this might look like. Notice that KAPE reports both u
 If overwriting is disabled via `--sow false`, any updated configurations would be reported as having an update available but skipped since overwriting is disabled.
 
 Using this option allows you to stay current with the most up to date target and module configurations. For modules, it is of course still necessary for you to place the proper binaries where they belong before using the modules.
+
+{pagebreak}
 
 #### Other KAPE changes
 
@@ -75,6 +81,8 @@ This allows you to pass things in like computer names, IP addresses, or anything
 
 Keys and values should not contain spaces.
 
+{pagebreak}
+
 #### gkape interface updated
 
 gkape has been completely overhauled to make using KAPE much more streamlined. Here is what the new interface looks like:
@@ -90,6 +98,8 @@ For Targets and Modules, a grid is now displayed that shows the Name and Descrip
 On the modules side, adding key:value pairs is supported via the Variables section at the bottom of the Module options section. To remove an item, click it, then press the DELETE key.
 
 A button to **Sync with GitHub** was added to the bottom of the interface.
+
+{pagebreak}
 
 #### Visual tweaks
 

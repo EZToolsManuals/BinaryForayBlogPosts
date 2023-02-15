@@ -2,6 +2,8 @@
 
 Posted: 19th January 2016
 
+Original link: https://binaryforay.blogspot.com/2016/01/windows-prefetch-parser-in-c.html
+
 NOTE: Here is a [link](http://binaryforay.blogspot.com/2016/01/pecmd-v0600-released.html) to a post on PECmd, my command line parser that uses the code that is discussed below.
 
 I recently completed a Windows Prefetch file parser in C# that is available [here](https://github.com/EricZimmerman/Prefetch).

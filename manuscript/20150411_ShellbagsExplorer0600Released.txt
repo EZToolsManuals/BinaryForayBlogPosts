@@ -2,6 +2,8 @@
 
 Posted: 11th April 2015
 
+Original link: https://binaryforay.blogspot.com/2015/04/shellbags-explorer-0600-released.html
+
 This version contains the following changes:
 
 NEW: Added NodeSlot info. This column is hidden by default in the grid, but will always be shown in Details view
@@ -12,6 +14,8 @@ FIX: Correct FAT vs exFAT file system hint in BEEF0004 blocks
 FIX: Correctly detect end of ShellBag in C3 bags
 
 Thanks to Dan P @4n6k for the NodeSlot request and testing!
+
+{pagebreak}
 
 ### Node slot
 
@@ -26,6 +30,8 @@ One thing to be aware of is that the NodeSlot value seen in RegEdit does NOT cor
 ![](20150411_ShellbagsExplorer0600Released\nodeSlotParent.png)
 
 ShellBags Explorer does all of this for you, so you can just go to the corresponding Bags subkey to find the related data.
+
+{pagebreak}
 
 NOTE: Not all Shellbags have a NodeSlot value (Control Panel categories for example). In these cases, a Node Slot value of -1 will be shown in SBE.
 

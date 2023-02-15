@@ -2,6 +2,8 @@
 
 Posted: 20th May 2015
 
+Original link: https://binaryforay.blogspot.com/2015/05/appcompatcacheparser-v0051-released.html
+
 This version tweaks the format of the LastModifiedTimeUTC column so that it is in the form MM-dd-yyyy HH:mm:ss which allows for easy sorting and grouping in Excel.
 
 ![](20150520_AppCompatCacheParser0052Released\sort.png)

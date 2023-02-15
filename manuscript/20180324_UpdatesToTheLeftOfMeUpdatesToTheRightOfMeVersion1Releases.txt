@@ -2,6 +2,8 @@
 
 Posted: 24th March 2018
 
+Original link: https://binaryforay.blogspot.com/2018/03/updates-to-left-of-me-updates-to-right.html
+
 Yay for version 1 releases! With Registry Explorer's v1.0 release and its underlying support of replaying transaction LOG files, it was only appropriate for my other Registry based tools to also be updated to support LOG files as well.
 
 The following is a summary of what has been released:

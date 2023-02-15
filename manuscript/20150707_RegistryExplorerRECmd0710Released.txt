@@ -2,6 +2,8 @@
 
 Posted: 7th July 2015
 
+Original link: https://binaryforay.blogspot.com/2015/07/registry-explorerrecmd-0710-released.html
+
 This is the #DFIRSummit release!
 
 Several people asked for some tweaks such as recursively searching Registry hives via RECmd and allowing Registry Explorer to be set as the default application for hives.
@@ -14,7 +16,9 @@ New: Added --Dir switch. This recursively searches for hives in a given director
 
 As an example, if you used, say X-Ways to find all available hives in an image, then recover/copied them out to a directory using the 'Recreate original path' option, you may end up with something like this:
 
-![20150707_RegistryExplorerRECmd0710Released\RECmdDirs.png)
+![](20150707_RegistryExplorerRECmd0710Released\RECmdDirs.png)
+
+{pagebreak}
 
 Using the new --dir switch, you can now search across every hive found in the specified directory and all subdirectories.  In the example output below, only beginning and ending of the console output is shown
 
@@ -33,6 +37,8 @@ In Options | Viewer programs, add Registry Explorer to the Custom viewer program
 
 ![](20150707_RegistryExplorerRECmd0710Released\XWFViewer.png)
 
+{pagebreak}
+
 After finding Registry hives, select a hive, then right click and choose Viewer Programs | RegistryExplorer.
 
 ![](20150707_RegistryExplorerRECmd0710Released\xwOpenWith.png)
@@ -41,4 +47,4 @@ X-Ways will then export the hive to its temporary directory and tell Registry Ex
 
 ![](20150707_RegistryExplorerRECmd0710Released\XWFOpen.png)
 
-As usual, get it here. Once you have 0.7.1.0, you can then check for updates via the Help menu in Registry Explorer.
+As usual, get it [here](http://binaryforay.blogspot.com/p/software.html). Once you have 0.7.1.0, you can then check for updates via the Help menu in Registry Explorer.

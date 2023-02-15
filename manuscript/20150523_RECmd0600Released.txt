@@ -2,6 +2,8 @@
 
 Posted: 23rd May 2015
 
+Original link: https://binaryforay.blogspot.com/2015/05/recmd-0600-released.html
+
 This version adds some new features and a bit of polish. Changes include:
 
 New: Added --Sort that will sort the output according to the type of data returned (size for MinSize, time stamps for date range searches, etc)
@@ -18,6 +20,8 @@ A sorting example:
 
 ![](20150523_RECmd0600Released\endwsort.png)
 
+{pagebreak}
+
 And finally, when searching for value data, show the data itself vs. just value name.
 
 ![](20150523_RECmd0600Released\valdatanew.png)
@@ -28,4 +32,4 @@ You can suppress data values from being shown by using the --SuppressData switch
 
 Additionally, when searching for key names, only keys are shown and when searching for values, the key name and value name are shown.
 
-Get the update from here.
+Get the update from [here](http://binaryforay.blogspot.com/p/software.html).

@@ -2,6 +2,8 @@
 
 Posted: 30th May 2018
 
+Original link: https://binaryforay.blogspot.com/2018/05/a-fluery-of-updates.html
+
 Pretty much all my software has been updated.
 
 The biggest changes include switching to comma separators in all of the command line tools by default. The option to export to TSV is still there via the '--cs false' switch/value.

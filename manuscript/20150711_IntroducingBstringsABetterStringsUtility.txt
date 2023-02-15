@@ -2,6 +2,8 @@
 
 Posted: 11th July 2015
 
+Original link: https://binaryforay.blogspot.com/2015/07/introducing-bstrings-better-strings.html
+
 Do you like strings? Do you like to find strings? How about in binary data? What about via regular expressions?
 
 ME TOO!
@@ -18,9 +20,13 @@ The -p switch shows a list of built in regular expression patterns.
 
 To use a pattern, simply type the name of the pattern you want to use along with the --lr switch.
 
+{pagebreak}
+
 Here we are looking for ipv4 strings.
 
 ![](20150711_IntroducingBstringsABetterStringsUtility\ip.png)
+
+{pagebreak}
 
 and here we are looking for anything looking like a url and port number.
 
@@ -30,11 +36,15 @@ Of course, simple string searches are available too via the --ls switch.
 
 ![](20150711_IntroducingBstringsABetterStringsUtility\string.png)
 
+{pagebreak}
+
 You can sort by length or alphabetically via the --sl and --sa switches.
 
 First, by length
 
 ![](20150711_IntroducingBstringsABetterStringsUtility\sl.png)
+
+{pagebreak}
 
 And alphabetically
 
@@ -42,4 +52,4 @@ And alphabetically
 
 That's pretty much it! If there's something else you would find useful, please let me know!
 
-You can get bstrings here.
+You can get bstrings [here](http://binaryforay.blogspot.com/p/software.html).

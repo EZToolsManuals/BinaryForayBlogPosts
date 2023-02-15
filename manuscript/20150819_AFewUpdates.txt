@@ -2,6 +2,8 @@
 
 Posted: 19th August 2015
 
+Original link: https://binaryforay.blogspot.com/2015/08/a-few-updates.html
+
 ### ShellBags Explorer/SBECmd
 
 **This is a highly recommended update as it fixes a lot of fringe cases and greatly improves XP support.**

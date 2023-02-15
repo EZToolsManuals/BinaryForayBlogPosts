@@ -2,6 +2,8 @@
 
 Posted: 22nd June 2018
 
+Original link: https://binaryforay.blogspot.com/2018/06/introducing-mftecmd.html
+
 MFTECmd (code name "Solved problem" :) ) is a command line MFT parser built around my MFT project, found [here](https://github.com/EricZimmerman/MFT). I wrote this program for a lot of reasons to include getting to know NTFS better, wanting to fix deficiencies in other parsers, providing to the community a pure C# based implementation of an MFT parser, and so on. In short, I felt I could make learning about and providing a means for people to leverage the information inside the MFT in ways that other tools don't. I also have plans to write a GUI based MFT viewer which will allow for an entirely different kind of interaction (think Technical details view in Registry Explorer).
 
 My design goals for the project include:
@@ -88,11 +90,15 @@ Note that the Created timestamps are next to each other vs having all the STANDA
 
 Let's take a closer look at some of these columns.
 
+{pagebreak}
+
 In the example below, notice how many of the Created0x30 columns are blank. This is because those timestamps are EXACTLY the same as the Created0x10 timestamp. When the 0x30 matches the corresponding timestamp from the 0x10 column, the 0x30 value is left blank. This provides several benefits including a much smaller file size, but the primary benefit is a lot less noise to have to wade through when looking for and examining entries where the two timestamps do NOT match.
 
 ![](20180622_IntroducingMFTECmd\ft.png)
 
 When looking at the contents of the Zone Id Contents column, it is often helpful to see the contents of the entire ADS. Since the ADS contains embedded CRLFs, this becomes difficult to represent, but if you hover over the value, a tool-tip is displayed showing the entire contents. Of course, if you filtered in the column header for ZoneID=4 for example, only rows containing that value would be displayed.
+
+{pagebreak}
 
 While I could change the /r/n found in the ADS, this would be changing data and I am very hesitant to do that. I will most likely try to come up with a different way to display this data. You can also select relevant cells and then use CTRL-v to copy the contents of the Zone Id Contents cells to the clipboard.
 
@@ -101,6 +107,8 @@ While I could change the /r/n found in the ADS, this would be changing data and 
 Because TLE allows you to group by columns, you can do things like this too:
 
 ![](20180622_IntroducingMFTECmd\isads.png)
+
+{pagebreak}
 
 Here we grouped by the HasAds column and expanded the group where this condition is true. The entries in this group are the files that have ADSs attached to them. The same could be done for the IsAds column as well (in addition to Copied, Timestomped, etc.)
 
@@ -112,6 +120,8 @@ To illustrate another awesome way to view data in TLE, check out what happens wh
 
 While it can be difficult to see the full contents of the column in the normal view due to the CRLFs present, when we creatively group, things just fall out for us to find! =)
 
+{pagebreak}
+
 #### Getting entry details
 
 The -de switch dumps all the details about a given entry and sequence number. Let's look at an example.
@@ -121,6 +131,8 @@ The -de switch dumps all the details about a given entry and sequence number. Le
 --de is generally used to inspect all the details after reviewing the CSV output. --de accepts both hex and decimal notation as well.
 
 In the above output, you can see all the details related to the entry including information from the header and all of the attributes. Notice that the second DATA attribute has a Name (Zone.Identifier) which means this is an ADS. You can also see the CRLFs in the DATA bytes (0D-0A).
+
+{pagebreak}
 
 #### Wrapping up
 

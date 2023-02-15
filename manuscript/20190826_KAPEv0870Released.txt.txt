@@ -2,6 +2,8 @@
 
 Posted: 26th August 2019
 
+Original link: https://binaryforay.blogspot.com/2019/08/kape-0870-released.html
+
 ### KAPE 0.8.7.0 released!
 
 #### Changelog
@@ -44,6 +46,8 @@ You can now use the names of the directories in --target and --module switches. 
 * The --tlist and --mlist switches now expect a path after them, like '--tlist .' for example. This will display all the configurations in the specified location, followed by a list of any directories found, like this:
 
 ![](20190826_KAPEv0870Released\tlist.jpg)
+
+{pagebreak}
 
 #### Other changes
 

@@ -2,6 +2,8 @@
 
 Posted: 7th December 2018
 
+Original link: https://binaryforay.blogspot.com/2018/12/mftecmd-0360-released.html
+
 MFTECmd 0.3.6.0 is now available.
 
 Changes include:
@@ -20,6 +22,8 @@ First, we see the new switches here:
 
 Notice there is still only a single switch to pass in files. MFTECmd will determine the kind of file being passed in and act accordingly. Let's take a look at the new files it can parse.
 
+{pagebreak}
+
 First, $Boot, which looks like this:
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-21-52.jpg)
@@ -30,6 +34,8 @@ As far as the information that's displayed, you can see things such as sector si
 
 $Boot is the only file type that does not require --csv, due to the small amount of information that is contained in the file.
 
+{pagebreak}
+
 The $SDS alternate data stream contains all of the security information associated with files. It contains things about the owner and group, along with all the granular permissions.
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-26-02.jpg)
@@ -37,6 +43,8 @@ The $SDS alternate data stream contains all of the security information associat
 The resulting CSV looks like this:
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-26-58.jpg)
+
+{pagebreak}
 
 The other columns look like this:
 
@@ -48,6 +56,8 @@ The CSV pairs down the details by showing the total number of ACE types present 
 
 Never fear tho, because you can get the full details about a security record via the --ds switch. To look at a security record, simply supply the Id of the record in either decimal or hex form.
 
+{pagebreak}
+
 For example, Id 1579 looks like this:
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-31-53.jpg)
@@ -55,6 +65,8 @@ For example, Id 1579 looks like this:
 Notice that you get the owner SID as well as the group SID, followed by all of the ACE records for the discretionary and system ACLs.
 
 This pairs nicely when looking at an MFT processed by MFTECmd because the CSV file generated will contain a Security Id column (hidden by default). This value can then be dropped into MFTECmd with the corresponding $SDS file to view the owner of the file and all the other details.
+
+{pagebreak}
 
 Here we have the MFT details filtered for ntuser.dat. Notice the full path of the file includes the username, but let's verify that with the information in the $SDS file.
 
@@ -64,11 +76,15 @@ Notice that the entry number is 490501 and the sequence number is 9. Let's get t
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-39-29.jpg)
 
+{pagebreak}
+
 Notice that the Security Id is displayed in the STANDARD_INFO attribute and has a value of 0x11FE. This converts to 4606 in decimal
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-41-18.jpg)
 
 Which, amazingly, is the same exact number that we saw in the $MFT CSV output from above.
+
+{pagebreak}
 
 Using MFTECmd again, we can dump the details for that file, using either the decimal or hex notation. Since we did a decimal one already, let's do this one in hex.
 
@@ -76,11 +92,15 @@ Using MFTECmd again, we can dump the details for that file, using either the dec
 
 Notice here we see the hex and decimal values for the security id, along with the owner.
 
+{pagebreak}
+
 Let's verify that SID to see who it is using X-Ways:
 
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-50-34.jpg)
 
 Nice!
+
+{pagebreak}
 
 Finally, $J parsing dumps all the details about changes to files (but not the changes themselves!) such as create, delete, adding to, and so on.
 
@@ -91,6 +111,8 @@ The resulting CSV looks like this:
 ![](20181207_MFTECmdv0360Released\2018-12-07_10-54-40.jpg)
 
 Here you can see the file names, entry and sequence number for the file and parent, when the activity happened, and finally, the reasons for the update to show up in the log (extend, close, etc).
+
+{pagebreak}
 
 You can of course now pivot into MFTECmd to see the full details of any of the entries. Here is an example from futher down the list:
 

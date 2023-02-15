@@ -2,6 +2,8 @@
 
 Posted: 26th June 2018
 
+Original link: https://binaryforay.blogspot.com/2018/06/mftecmd-v0260-released.html
+
 This version adds a lot of polish to the --de output and adds several new options as well.
 
 Changelog:
@@ -22,6 +24,8 @@ In several places, I added automatic decoding of resident data to both Unicode a
 ![](20180626_MFTECmdv0260Released\2018-06-26_11-46-30.png)
 
 This same decoding happens for extended attributes that are resident as well.
+
+{pagebreak}
 
 In general, the --de command output has been cleaned up significantly, including aligning of timestamps,  formatting of entry and sequence #s to allow for copy pasting (useful for following parent MFT references, etc)
 

@@ -2,6 +2,8 @@
 
 Posted: 7th May 2018
 
+Original link: https://binaryforay.blogspot.com/2018/05/introducing-wxtcmd.html
+
 WxTCmd is a parser for the new Windows 10 Timeline feature database.
 
 We have been hearing about it for several weeks now, but with 1803 finally final, I had a chance to update my system and let the feature do its thing.
@@ -47,6 +49,8 @@ This one has a lot going on, so let's talk about it.
 In most cases, the Display Text and Content Info fields are not populated. When they are however, you can see we get a lot of nice detail including the name of the file and its full path. This information isn't sitting as is in the database, but I process the json and extract things out as needed.
 
 I had TLE sorted by Display Text in the screen shot above, but you can see how sorting on Start Time would be beneficial.
+
+{pagebreak}
 
 Scrolling right, we can see these columns:
 

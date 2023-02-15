@@ -2,6 +2,8 @@
 
 Posted: 14th September 2018
 
+Original link: https://binaryforay.blogspot.com/2018/09/everything-gets-update-sept-2018-edition.html
+
 All of my software has been updated (well, almost all). Here is a list of what's changed
 
 ### General
@@ -51,4 +53,4 @@ Timeline Explorer
 
 * Can open files in raw mode if needed (i.e. bypasses locked files). This happens automatically
 
-Both chocolatey and the download page is updated.
+Both chocolatey and the [download page](https://ericzimmerman.github.io/#!index.md) is updated.

@@ -4,10 +4,12 @@ Posted: 22nd December 2015
 
 On [this](http://binaryforay.blogspot.com/2015/07/registry-explorerrecmd-0710-released.html) post, Ashraf H commented:
 
-```
+{line-numbers:false}
+```text
 It would nice if we have "Hex viewer", next to "Type viewer" for values, where we can quickly check raw binary data for values and open "Data Interpreter". Now I can only open "Data Interpreter" for values for type binary.
 I was checking "ControlSet001\Control\TimeZoneInformation" key in SYSTEM hive, "ActiveTimeBias", "Bias" and "DaylightBias" values of type RegDword are stored as signed integer, but they are interpreted by regedit and Registry Explorer as unsigned integers. I had to open "Technical Details" for "TimeZoneInformation" key, go to Values, click on "DaylightBias" and then move to "Value data" and copy value data to external data interpreter "FFFFFFC4" (LE) to know the right value "-60".
 ```
+
 The key in question, ControlSet001\Control\TimeZoneInformation, looks like this:
 
 ![](20151222_RegistryExplorerPluginOverview\xwRegViewer.png)
@@ -37,6 +39,8 @@ And a Registry viewer shows this:
 ![](20151222_RegistryExplorerPluginOverview\example.png)
 
 From what I have been able to tell, this breaks down as follows:
+
+{line-numbers:false}
 ```
 start   00 00 03 00 05 00 16 00 00 00 00 00 00 00 06 00
 hour   22
