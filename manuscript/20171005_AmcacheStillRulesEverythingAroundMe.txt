@@ -2,6 +2,8 @@
 
 Posted: 5th October 2017
 
+Original link: https://binaryforay.blogspot.com/2017/10/amcache-still-rules-everything-around.html
+
 Salutations!
 
 It seems in recent versions of Windows 10 (i.e. those in the fast ring as of the last few weeks) has introduced some changes to artifacts, similar to what was done with appcompatcache [back in March](https://binaryforay.blogspot.com/2017/03/windows-10-creators-update-vs-shimcache.html) of this year. These changes will become finalized in the Windows 10 Fall Creators update, which is due to be released on October 17, 2017. It is unknown at this time if any of the changes I am soon to discuss will be backported into any previous versions of Windows (10 or otherwise).
@@ -11,6 +13,8 @@ Before we begin, it would be helpful to understand the current workings of amcac
 The changes in the latest builds of Windows takes away some things and adds some things. As we will see, we are getting far more than we are losing (always a good thing).
 
 Many thanks go to the DFIR Oracle, Troy Larson, who pointed out the change. Without him, we would be lost.
+
+{pagebreak}
 
 AmcacheParser has been updated to support this new format. It automatically detects the format and parses things accordingly, as seen below:
 
@@ -94,6 +98,8 @@ These subkey names are also referenced in the DevicePnP section (discussed more 
 
 ![](20171005_AmcacheStillRulesEverythingAroundMe\container2p2p1.png)
 
+{pagebreak}
+
 If we take a look at the last entry in the search results, it looks like this:
 
 ![](20171005_AmcacheStillRulesEverythingAroundMe\container2p2p2.png)
@@ -101,6 +107,8 @@ If we take a look at the last entry in the search results, it looks like this:
 This data, when exported by AmcacheParser, looks like this:
 
 ![](20171005_AmcacheStillRulesEverythingAroundMe\containerre.png)
+
+{pagebreak}
 
 #### PnP information
 
@@ -168,6 +176,8 @@ The subkey name ties into several other buckets of data such as:
 Here is an example:
 
 ![](20171005_AmcacheStillRulesEverythingAroundMe\driverpackage.png)
+
+{pagebreak}
 
 This data, when exported by AmcacheParser, looks like this:
 

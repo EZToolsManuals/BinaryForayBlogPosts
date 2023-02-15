@@ -15,6 +15,8 @@ The following is a summary of what has been released:
 * AmcacheParser v1.0
 * Timeline Explorer v0.8.0.0
 
+{pagebreak}
+
 ### So what has changed?
 
 This is a minor update for Registry Explorer that adds the ability to see the Access Flags in newer hives on the Technical details view:
@@ -24,6 +26,8 @@ This is a minor update for Registry Explorer that adds the ability to see the Ac
 For everything else (except Timeline Explorer), the biggest change is detecting when a hive being processed is dirty and, if the LOG files are found in the same directory as the hive, replaying the LOG files before proceeding. If the LOG files are missing, the tool will complain and not process the hive.
 
 Here is an example of what the updated tools might look like:
+
+{pagebreak}
 
 In this case, the Amcache.hve file is in D:\temp, but no LOG files are present. Because the hive is dirty and no LOGs were found, the parser bails:
 
@@ -49,6 +53,8 @@ https://youtu.be/O-1ImmWR1hE
 
 In addition to Registry transaction log support, all the tools have also had any 3rd party components and controls updated to the latest versions as well.
 
+{pagebreak}
+
 ### Timeline Explorer changes
 
 The changes for Timeline Explorer (TLE) are rather significant and deserve some detail.
@@ -71,6 +77,8 @@ The Power filter on the other hand, DOES filter out data and allows for very pow
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\1.png)
 
+{pagebreak}
+
 Here we can see the different functionality we can use with the Power filter. Notice that you can do logical ANDs, negation, searching in specific columns, and so on.
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\2.png)
@@ -78,6 +86,8 @@ Here we can see the different functionality we can use with the Power filter. No
 Another very nice use of the Power filter is searching for an exact timestamp. To do this, put the entire timestamp in double quotes, like this:
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\3.png)
+
+{pagebreak}
 
 Of course, you do not have to do an entire timestamp:
 
@@ -89,13 +99,19 @@ Here we can see we have a supertimeline loaded:
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\5.png)
 
+{pagebreak}
+
 Let's say were interested in, oh, I don't know, a user successfully logging onto this computer. We use the Power filter and enter '4624' into the box
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\6.png)
 
+{pagebreak}
+
 Notice that all rows that do not contain the search term have been filtered out. Additionally, notice that Line 542 is selected (the little black arrow on the left is the selected row indicator). The details for this row look like this:
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\7.png)
+
+{pagebreak}
 
 While there is a wealth of information on the screen, let's say you had zero interest in when tdungan logged in. As such, it would be nice to get rid of anything that contains 'tdungan'. To accomplish this, we would do something like this:
 
@@ -109,11 +125,15 @@ If you then had a need to find only 4624 events that didnt contain tdungan but d
 
 And we have really dropped our row count down (to 78 in this case).
 
+{pagebreak}
+
 Of course the data does not have to all be in the same column. Perhaps you are only interested in these kinds of things on a certain date:
 
 ![](20180324_UpdatesToTheLeftOfMeUpdatesToTheRightOfMeVersion1Releases\10.png)
 
 Of course, this is just the tip of the iceberg for what is possible to build.
+
+{pagebreak}
 
 The Power filter remembers all the filters on a per tab basis (but only for the current session). Clicking the drop down arrow to the right of the Power filter shows you previously used filters:
 

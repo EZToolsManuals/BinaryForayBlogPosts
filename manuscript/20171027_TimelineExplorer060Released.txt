@@ -2,6 +2,8 @@
 
 Posted: 27th October 2017
 
+Original link: https://binaryforay.blogspot.com/2017/10/timeline-explorer-060-released.html
+
 The changelog for this version includes:
 
 NEW: More file formats (pescan, sigcheck, density scout, all new AmacacheParser formats)
@@ -21,6 +23,8 @@ FIX: Some general fixes
 
 This version includes newer versions of the grid as well as the back end CSV parser. One of the changes in the CSV parser includes "Massive speed improvements" which is always a nice thing.
 
+{pagebreak}
+
 #### New options
 
 The new menu items look like this:
@@ -35,13 +39,15 @@ The tools menu adds two new options, one to control the timestamp format and the
 
 When changing the timestamp format, be sure to adjust it BEFORE loading a file.
 
+{pagebreak}
+
 #### Improved filter editing
 
 When editing filters, you can now optionally use text mode which can be faster than adding new conditions with the mouse.
 
 It has IntelliSense support and will autocomplete available columns and filter conditions, etc.
 
-![](20171027_TimelineExplorer060Released\text filter.png)
+![](20171027_TimelineExplorer060Released\textfilter.png)
 
 #### Column pinning
 
