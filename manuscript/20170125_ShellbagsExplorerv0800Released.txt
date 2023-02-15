@@ -2,6 +2,8 @@
 
 Posted: 25th January 2017
 
+Original link: https://binaryforay.blogspot.com/2017/01/shellbags-explorer-v0800-released.html
+
 Hello! This release is long overdue!
 
 NOTE: All of my software is now digitally signed starting with this release going forward. Most of my other programs have also been signed (but not necessarily changed beyond that). Redownload as needed if you want the signed versions.

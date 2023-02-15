@@ -2,6 +2,8 @@
 
 Posted: 3rd March 2017
 
+Original link: https://binaryforay.blogspot.com/2017/03/shellbags-explorer-0900-released.html
+
 This is the biggest and most comprehensive update for ShellBags Explorer to date. While the change log may not be lengthy, there are significant and important changes and optimizations in many of the changes.
 
 NEW: Added support for Windows backup related shellbags. These are populated as backup sets are navigated

@@ -2,6 +2,8 @@
 
 Posted: 25th February 2016
 
+Original link: https://binaryforay.blogspot.com/2016/02/jump-lists-in-depth-understand-format.html
+
 A few days ago I was emailed by Harry Parsonage after he tried LECmd (he liked it!). He recommended some changes to the date format used for CSV output which I will be implementing in the next release of LECmd (and PECmd too) that will allow for better sorting and what not.
 
 In closing. Harry requested that I take a look at jump lists next, so I did.

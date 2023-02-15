@@ -2,6 +2,8 @@
 
 Posted: 12th February 2016
 
+Original link: https://binaryforay.blogspot.com/2016/02/introducing-lecmd.html
+
 LECmd, or Lnk Explorer Command line edition, is a tool to decode all available information contained in shortcut files found on Windows operating systems.
 
 For some background on lnk files, start here and to get really in the weeds, check out Microsoft's documentation [here](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/16cb4ca1-9339-4d0c-a68d-bf1d6cc0f943?redirectedfrom=MSDN) as well as Joachim Metz documentation [here](https://github.com/libyal/liblnk/blob/main/documentation/Windows%20Shortcut%20File%20(LNK)%20format.asciidoc).

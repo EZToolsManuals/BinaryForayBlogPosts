@@ -2,6 +2,8 @@
 
 Posted: 1st September 2016
 
+Original link: https://binaryforay.blogspot.com/2016/09/let-benchmarks-hit-floor-autopsy-vs.html
+
 *Update 09-12-2016*
 
 I did some additional testing using bigger data and raw vs E01 for a few things. These results are on the spreadsheet and are summarized in a blog post which is found [here](http://binaryforay.blogspot.com/2016/09/benchmark-followup-bigger-data-and-raw.html).

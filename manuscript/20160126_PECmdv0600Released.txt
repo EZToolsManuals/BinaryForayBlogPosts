@@ -2,6 +2,8 @@
 
 Posted: 26th January 2016
 
+Original link: https://binaryforay.blogspot.com/2016/01/pecmd-v0600-released.html
+
 Changes in this version include:
 
 * New: Added --local switch to display dates as local time of machine PECmd is running on vs UTC (which is now the  default in the Prefetch project as well)

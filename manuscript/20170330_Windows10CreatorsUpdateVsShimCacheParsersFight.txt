@@ -2,6 +2,8 @@
 
 Posted: 30th March 2017
 
+Original link: https://binaryforay.blogspot.com/2017/03/windows-10-creators-update-vs-shimcache.html
+
 So it seems Microsoft has tweaked the format of AppCompatCache, aka shimcache, yet again with the latest release (or soon to be released) of Windows 10 (Creators update).
 
 Here is an example of what ControlSet001\Control\Session Manager\AppCompatCache looked like on Windows 10 prior to Creators update:

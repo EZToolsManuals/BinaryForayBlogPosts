@@ -2,6 +2,8 @@
 
 Posted: 7th September 2016
 
+Original link: https://binaryforay.blogspot.com/2016/09/jlecmd-v0960-released.html
+
 NOTE: This blog post's images were not available at the time of publication.
 
 A few days ago, Guillermo Fritz contacted me stating he found an automatic jump list that had more directory entries than what was showing up in the DestList section.

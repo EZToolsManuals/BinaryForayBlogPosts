@@ -2,6 +2,8 @@
 
 Posted: 25th April 2016
 
+Original link: https://binaryforay.blogspot.com/2016/04/lecmd-and-jlecmd-updated.html
+
 [Tom Yarrish](https://twitter.com/CdtDelta) (via Harrison Mbugi) was doing some testing with LECmd and noticed the target modified and target accessed times were transposed. This issue was tracked down and fixed in my lnk project.
 
 This is what version 0.7.0 was showing:

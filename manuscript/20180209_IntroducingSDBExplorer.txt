@@ -2,13 +2,18 @@
 
 Posted: 9th February 2018
 
+Original link: https://binaryforay.blogspot.com/2018/02/introducing-sdb-explorer.html
+
 This is the initial release of SDB Explorer.
 
 SDB Explorer is a GUI program that allows for interacting with Microsoft Shim databases. For more details on what kind of data is contained in these types of files, go [here](https://geoffchappell.com/studies/windows/win32/apphelp/sdb/index.htm?tx=54) and [here](https://msdn.microsoft.com/en-us/library/bb432182%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396) and [here](https://blogs.technet.microsoft.com/askperf/2011/06/17/demystifying-shims-or-using-the-app-compat-toolkit-to-make-your-old-stuff-work-with-your-new-stuff/).
 
 If you have used any of my other programs, usage of SDB Explorer will be familiar.
 
-Getting started
+{pagebreak}
+
+### Getting started
+
 Let's start by taking a look at the main interface. On the left, a tree view will be populated with data from the SDB file. As a node in the tree is selected, the text area in the upper right will be populated with details about the selected node as well as all child nodes. This will be shown in more detail below. When looking at binary keys, the contents are displayed in the hex viewer in the lower right. There is also a data interpreter available in the hex viewer.
 
 ![](20180209_IntroducingSDBExplorer\main.png)
@@ -25,6 +30,8 @@ Each node also contains the offset where the data displayed in a node can be fou
 
 Selecting a node in the tree will update the textbox, as shown below. The textbox contains all the data from the selected node down.
 
+{pagebreak}
+
 In the example below, the Database node is selected. Notice how every child node's details are pulled into the text box and indented according the level they are found in the database heirarchy.
 
 ![](20180209_IntroducingSDBExplorer\sel.png)
@@ -32,6 +39,8 @@ In the example below, the Database node is selected. Notice how every child node
 Selecting a different node updates the text box. Notice here we see everything from the PATCH tag down.
 
 ![](20180209_IntroducingSDBExplorer\sel2.png)
+
+{pagebreak}
 
 You may have noticed that one of the keys, PATCH_BITS, shows a value of (Binary data). If we click on this tag, notice what happens to the interface.
 
@@ -41,6 +50,8 @@ PATCH_BITS tags contain one or more sub items, which SDB Explorer automatically 
 
 ![](20180209_IntroducingSDBExplorer\b2.png)
 
+{pagebreak}
+
 In some cases, there are multiple items. When this happens, more sub items are listed:
 
 ![](20180209_IntroducingSDBExplorer\p.png)
@@ -49,9 +60,13 @@ Should you need one, the hex viewer contains a data interpreter as well.
 
 ![](20180209_IntroducingSDBExplorer\di.png)
 
+{pagebreak}
+
 You can also select bytes and copy them out in several formats:
 
 ![](20180209_IntroducingSDBExplorer\h2.png)
+
+{pagebreak}
 
 #### Finding and filtering nodes
 
@@ -67,6 +82,8 @@ Compare that to what we see if we do NOT have a filter in place and select the D
 
 ![](20180209_IntroducingSDBExplorer\f2.png)
 
+{pagebreak}
+
 The Info menu allows you to see the distribution of tags in a given database. For larger databases, you may need to make the Metrics window bigger (or just maximize it) to see all the data.
 
 ![](20180209_IntroducingSDBExplorer\mmm.png)
@@ -77,11 +94,15 @@ Finally, you can dump all the strings to a text file via the File menu . This is
 
 Lets take a look at a more specific and useful example, a FIN7 SDB file, as discussed [here](https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html).
 
+{pagebreak}
+
 In SDB Explorer, a database related to FIN7 looks like this:
 
 ![](20180209_IntroducingSDBExplorer\ff.png)
 
 Notice there is a tag named PATCH_REF right above STRINGTABLE. One of the child items of that tag is another tag named PATCH_TAGID which has a value of 0x60. TAGIDs point to another tag in the DATABASE and the value is the offset to where the actual data lives.
+
+{pagebreak}
 
 Since we have a value of 0x60, we have to look for a PATCH tag with an offset of 0x60, which we see below.
 
@@ -92,7 +113,5 @@ Now that we are at the correct offset, we can interact with the PATCH tag and di
 If you have any ideas, suggestions, etc. please let me know and I will be happy to add them!
 
 You can get SDB Explorer at the [usual place](http://ericzimmerman.github.io/).
-
-
 
 Enjoy!!!

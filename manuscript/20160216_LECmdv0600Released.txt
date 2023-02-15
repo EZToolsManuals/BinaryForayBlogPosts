@@ -2,6 +2,8 @@
 
 Posted: 16th February 2016
 
+Original link: https://binaryforay.blogspot.com/2016/02/lecmd-v0600-released.html
+
 Changes in this version include:
 
 NEW: Added -q switch for quiet operation. Useful to suppress output to screen when using the various export options

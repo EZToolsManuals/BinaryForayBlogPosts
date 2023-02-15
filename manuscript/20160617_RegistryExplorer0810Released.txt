@@ -2,6 +2,8 @@
 
 Posted: 17th June 2016
 
+Original link: https://binaryforay.blogspot.com/2016/06/registry-explorer-0810-released.html
+
 The primary focus of this release is the addition of plugins. A plugin allows for processing a key and/or value in order to further process the data available within. For example, UserAssist is Rot13 encoded, so the plugin for UserAssist would un-Rot13 the value names and extract other meaningful things from values. All of this information is then returned from the plugin and displayed to the user. The data returned from a plugin can then be sorted, filtered, exported, and so on.
 
 We will cover all of the available plugins that are shipping with this release below.

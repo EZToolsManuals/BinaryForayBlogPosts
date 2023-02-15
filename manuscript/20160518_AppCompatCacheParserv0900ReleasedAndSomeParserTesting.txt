@@ -2,6 +2,8 @@
 
 Posted: 18th May 2016
 
+Original link: https://binaryforay.blogspot.com/2016/05/appcompatcacheparser-v0900-released-and.html
+
 Last week a user emailed me and asked if I would include a column showing whether or not an executable found in appcompatcache was executed.
 
 Once this was done I sent a test version for verification back to the user. They reported AppCompatCacheParser (ACCP) was not displaying all of the entries that other tools were displaying for a few test hives.

@@ -2,6 +2,8 @@
 
 Posted: 19th May 2017
 
+Original link: https://binaryforay.blogspot.com/2017/05/registry-explorer-v0900-released.html
+
 This is a big release with a lot of cool new stuff including both features and new plugins.
 
 Overall, the changes look like this:

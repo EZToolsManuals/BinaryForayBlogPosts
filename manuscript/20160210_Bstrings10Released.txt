@@ -2,6 +2,8 @@
 
 Posted: 10th February 2016
 
+Original link: https://binaryforay.blogspot.com/2016/02/bstrings-10-released.html
+
 While browsing https://www.reddit.com/r/computerforensics/ today, forensium asked for some changes to bstrings such as:
 
 * Being able to supply the Code page when searching for non-Unicode (I will refer to this as ASCII) strings

@@ -2,6 +2,8 @@
 
 Posted: 7th March 2016
 
+Original link: https://binaryforay.blogspot.com/2016/03/introducing-jlecmd.html
+
 JLECmd, or Jump List Explorer Command line edition, is a tool to decode information contained in custom and automatic destinations jump list files found on Windows operating systems, starting with Windows 7 and continuing through Windows 10.
 
 If you are unfamiliar with jump list files, a previous post, found [here](http://binaryforay.blogspot.com/2016/02/jump-lists-in-depth-understand-format.html), provides background on jump lists including how they are structured and what information they contain.

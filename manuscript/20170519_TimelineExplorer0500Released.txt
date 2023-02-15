@@ -32,4 +32,4 @@ and once you hit OK, you are magically transported to that row:
 
 ![](20170519_TimelineExplorer0500Released\3.png)
 
-Get the update here or Chocolatey.
+Get the update [here](https://ericzimmerman.github.io/) or Chocolatey.

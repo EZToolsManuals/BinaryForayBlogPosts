@@ -2,6 +2,8 @@
 
 Posted: 4th February 2016
 
+Original link: https://binaryforay.blogspot.com/2016/02/bstrings-0990-released.html
+
 A few days ago on Twitter Jared Greenhill [asked](https://twitter.com/jared703/status/693833460771901441) if bstrings supported showing the offsets to strings. This is something I have been planning to add support for for a while now and it is now complete!
 
 The following changes have been made in this version:
