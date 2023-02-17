@@ -33,6 +33,8 @@ In addition to the --mask switch, we limit our results to strings over 50 charac
 
 Note: --mask only works when using the -d switch!
 
+{pagebreak}
+
 ### Specifying ranges of characters to search for
 
 Next, let's take a look at the --ar and --ur switches (although we will only demonstrate one of them for simplicity).
@@ -43,6 +45,8 @@ To demonstrate the effect, let's only look for ASCII hits (so we disable Unicode
 
 As you can see, we found 36 strings using the default range of "[\x20-\x7E]".
 
+{pagebreak}
+
 Now let's change our range of characters to "[\x20-\x47]" by using the --ar switch:
 
 ![](20160210_Bstrings10Released\arAfter.png)
@@ -52,6 +56,8 @@ As you can see here, we have limited the characters we are interested to numbers
 Because of this, we have a lot less hits from the initial search above.
 
 The --ur switch works exactly the same way.
+
+{pagebreak}
 
 ### Code pages
 
