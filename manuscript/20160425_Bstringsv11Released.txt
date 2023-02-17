@@ -24,6 +24,8 @@ This version also saw a change to the regex pattern used for email and a nuget p
 
 Once I added the --fs and --fr switches and got things working, I started refactoring code and in doing so made an additional improvement in that you can now use any combination of switches to supply search terms and/or regex patterns. I also threw some performance tuning into this release.
 
+{pagebreak}
+
 ### Some examples
 
 In the example below, notice how I provided both a regex pattern and a string to search for:
@@ -33,6 +35,8 @@ In the example below, notice how I provided both a regex pattern and a string to
 Of course I could have used either, or both, of the --fs and --fr switches to further extend my searches.
 
 This now allows you to do one search using as many different search terms/regexes as necessary and bstrings will do the work in one pass vs. having to do a bunch of different searches with bstrings to get the same results.
+
+{pagebreak}
 
 #### --ro
 
