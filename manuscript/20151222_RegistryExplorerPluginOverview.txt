@@ -30,13 +30,19 @@ We can see in the binary data 0x0A, which is 10 in decimal. This seems to corres
 
 To confirm this, I looked for time zones in X-Ways that used more of the fields, specifically the 'day of week' value. I settled on two time zones, UTC-3 Greenland and UTC-4 Santiago.
 
+{pagebreak}
+
 X-Ways defines UTC-3 as follows:
 
 ![](20151222_RegistryExplorerPluginOverview\xwutc3.png)
 
+{pagebreak}
+
 And a Registry viewer shows this:
 
 ![](20151222_RegistryExplorerPluginOverview\example.png)
+
+{pagebreak}
 
 From what I have been able to tell, this breaks down as follows:
 
@@ -84,6 +90,8 @@ month   10
    06 00  day of week
 ```
 
+{pagebreak}
+
 Notice in that last example, for whatever reason, Microsoft is using essentially as close as they can to 24 (23 hours, 59 minutes, 59 seconds, and 999 milliseconds) and this corresponds to within 1 millisecond of what X-Ways shows for UTC-4:
 
 ![](20151222_RegistryExplorerPluginOverview\xwutc4.png)
@@ -93,6 +101,8 @@ Here is another example showing the relationship between the value data and X-Wa
 ![](20151222_RegistryExplorerPluginOverview\breakdown.png)
 
 With this information in hand, a new plugin was written: TimeZoneInformation.
+
+{pagebreak}
 
 First, we can of course see the raw values in Registry Explorer by clicking on the corresponding key:
 
@@ -105,6 +115,8 @@ Now that we have a plugin that is interested in this key however, notice we get 
 Here we can see not only the information we saw in RegRipper, but every other value as well including our newly decoded StandardStart and DaylightStart values.
 
 While this will most likely never be the key to break a case, we now have some insight into how Microsoft is storing time zone information and how that data relates to our forensic tools.
+
+{pagebreak}
 
 This is merely one example of the powerful capabilities of plugins for Registry Explorer. Here are some screenshots of other plugins that are currently completed.
 
