@@ -227,6 +227,8 @@ The VHD option works exactly the same way, except you end up with a VHD containe
 
 **Note**: the first time you mount a container in Windows, it has to be done in read-write mode! Once it is initially mounted and unmounted, you can use PowerShell to mount the container as read-only, but it MUST be done r-w the first time or Windows will not recognize the file system. This does nothing to the data inside the container, just the VHDX file itself.
 
+{pagebreak}
+
 To unmount the container, right-click on the new drive letter and choose **Eject**.
 
 ![](20190214_IntroducingKAPE\2019-02-13_12-42-26.jpg)
@@ -234,6 +236,8 @@ To unmount the container, right-click on the new drive letter and choose **Eject
 In the images above, notice that the directory in the root of the container is the C drive. If we used the option to process volume shadow copies, we would end up with a different set of directories. If we ran this command (the same command as before, we just added --vss to the end):
 
 `kape.exe --tsource c --tdest c:\temp\tout --target evidenceofexecution --vhdx MyBaseNameExample --vss`
+
+{pagebreak}
 
 We would see the following when we mounted the VHDX:
 
@@ -325,9 +329,13 @@ The command line might look like this:
 
 `kape.exe --tsource c: --tdest L:\collect --target QuickTimeline --mdest L:\output --module QuickTimeline`
 
+{pagebreak}
+
 So what is going on here? Where did the "QuckTimeline" target and module come from? Quite simply, you create it! Remember that target and module configuration files are just YAML, so using your favorite text editor, make a copy of an existing target (like the WebBrowsers one), then update the new file to point to the other targets you want, like this:
 
 ![](20190214_IntroducingKAPE\2019-02-13_11-24-53.jpg)
+
+{pagebreak}
 
 Starting with one of the included module files, our new module would be handled in exactly the same way:
 
@@ -337,6 +345,8 @@ With the target and module in place, we would just run KAPE as shown in the exam
 
 KAPE will first look for and copy all files based on the Target file, copy them all to L:\collect, then call each processor against the files in L:\collect. The output from each program will be saved to L:\output which will contain directories for each category. The CSVs in these directories can be loaded into Timeline Explorer and analyzed, all within a few seconds!
 
+{pagebreak}
+
 Running this command might look like this:
 
 ![](20190214_IntroducingKAPE\2019-02-13_13-21-42.jpg)
@@ -344,6 +354,8 @@ Running this command might look like this:
 Alot of this we have seen before, but notice, in my case, that I do not have the binary in the right place for the plaso module to work properly. In this case, KAPE tells us this is the case, but it does not cause KAPE to not function properly.
 
 The other thing to notice here is that several other processors were found and executed. 
+
+{pagebreak}
 
 In this case, --mdest would look like this:
 
@@ -383,19 +395,27 @@ KAPE is a command line tool at heart, and it is not difficult to use once you se
 
 With that said, KAPE has a secondary helper program, gkape, that wraps the command line version and makes it easier to use and get familiar with. 
 
+{pagebreak}
+
 The main interface looks like this:
 
 ![](20190214_IntroducingKAPE\2019-02-13_13-30-14.jpg)
 
+{pagebreak}
+
 As options are enabled, other sections open up. Here we see how things change when the target and module options are checked and a few of the required properties (outlined in red) are populated:
 
 ![](20190214_IntroducingKAPE\2019-02-13_13-32-00.jpg)
+
+{pagebreak}
 
 As options are populated, the command line is built at the bottom. Continuing to pick the required options, we would end up with this:
 
 ![](20190214_IntroducingKAPE\2019-02-13_13-34-25.jpg)
 
 When a valid command line is built, the **Execute** and **Copy command** button are enabled. 
+
+{pagebreak}
 
 Clicking **Execute** will run KAPE in a new window:
 
