@@ -98,6 +98,8 @@ The information is blended together to produce this:
 
 Notice that the URL itself along with anything in slack space is also presented. As these values get reused, slack space can contain previous entries (or parts of them).
 
+{pagebreak}
+
 #### WordWheelQuery
 
 This key and subkeys hold search terms. Here is an example of what the key may look like:
@@ -130,11 +132,15 @@ There is now a new option to the Values context menu:
 
 ![](20170519_RegistryExplorerv0900Released\13.png)
 
+{pagebreak}
+
 When this option is selected, the Data interpreter is shown for the selected value's raw data:
 
 ![](20170519_RegistryExplorerv0900Released\14.png)
 
 From here you can see how the raw value converts to a wide variety of formats. This release sees a few new options in the Data interpreter as well (From Base64 and the 128-bit timestamp).
+
+{pagebreak}
 
 #### Excel-like filtering throughout
 
@@ -145,6 +151,8 @@ While the default in previous versions was for column filters to be in "Contains
 ![](20170519_RegistryExplorerv0900Released\15.png)
 
 This works for string and number columns.
+
+{pagebreak}
 
 Timestamp columns also get vastly improved filtering. For example, consider you had a case where some activity occurred in August of 2013 and you wanted to see every key that was changed in that span of time.
 
@@ -160,12 +168,15 @@ But if we click the Values tab in the filter, we get this:
 
 ![](20170519_RegistryExplorerv0900Released\18.png)
 
+{pagebreak}
+
 Since our interesting time frame was August of 2013, if we check that box, like this:
 
 ![](20170519_RegistryExplorerv0900Released\19.png)
 
 All hives loaded into Registry Explorer are recursively expanded and any keys not matching the selected criteria disappear! We are then left with this view:
 
+{width: 75%}
 ![](20170519_RegistryExplorerv0900Released\20.png)
 
 Notice that we DO see some keys with a last write time that is outside the window we specified, but these keys are necessary to display in order to maintain the hierarchical relationship between keys and subkeys.
@@ -174,8 +185,11 @@ Recall though, there exists an option in the Tools menu, Show parent keys when f
 
 ![](20170519_RegistryExplorerv0900Released\21.png)
 
+{pagebreak}
+
 With that option toggled off, we are left with this:
 
+{width: 75%}
 ![](20170519_RegistryExplorerv0900Released\22.png)
 
 So no matter which way you prefer to review your data, the choice is yours!
@@ -192,6 +206,8 @@ There is also another new option in the File menu to unload all hives. This make
 
 This release also makes it easier to differentiate between Common (included) bookmarks and user-created bookmarks.
 
+{pagebreak}
+
 Here we see some Usrclass.dat hives loaded into Registry Explorer. Notice we have 1/0 for bookmarks in the menu.
 
 ![](20170519_RegistryExplorerv0900Released\24.png)
@@ -204,6 +220,8 @@ Any bookmarks in the User folder will be highlighted in blue to make it easier t
 
 This allows you to move bookmarks in and out of both the Common and User directories under the Bookmarks folder so that you can hone in on things easier. For example, rather than wade through 25 bookmarks that are usually in the Common folder, move the ones most relevant to you to the User folder and they will show up in blue.
 
+{pagebreak}
+
 #### Find changes
 
 A column indicating whether or not the search hit was found in a deleted (and recovered/reassociated) key/value was added:
@@ -214,9 +232,13 @@ The Options menu also got a new addition, Convert selected | To ROT-13, which is
 
 While Registry Explorer has a plugin to decode UserAssist keys, if you had the name of an executable you wanted to search for and aren't sure if it exists, you can convert it to ROT-13 and search that way.
 
+{pagebreak}
+
 For example, consider a case where you suspect the use of the sc.exe tool. You are looking at user's NTUSER.DAT hives and do a search for sc.exe, but it comes up empty:
 
 ![](20170519_RegistryExplorerv0900Released\27.png)
+
+{pagebreak}
 
 First, select the search term to encode, then use the To ROT-13 option:
 
@@ -243,5 +265,3 @@ You can find the update in the [usual places](https://ericzimmerman.github.io/) 
 If you would not mind, please vote for me!**
 
 https://forensic4cast.com/forensic-4cast-awards/
-
-
