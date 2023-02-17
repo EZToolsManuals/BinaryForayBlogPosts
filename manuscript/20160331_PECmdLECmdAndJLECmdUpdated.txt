@@ -23,9 +23,13 @@ NOTE: All switches for exporting now expect a DIRECTORY and not a file name. Thi
 
 The previous version duplicated a lot of things in the HTML output. This version cleans up the redundancy.
 
+{pagebreak}
+
 Here is an example of automaticDestinations output. In this example we see the end of one jump list and the start of the next. The large number on the left is the entry number. This helps break up the output a bit so its easier to see where things begin and end.
 
 ![](20160331_PECmdLECmdAndJLECmdUpdated\autoDest.jpg)
+
+{pagebreak}
 
 Here is example of a customDestinations jump list. Since there is nothing similar to an entry number in custom jump lists, a counter is displayed that shows the order in which the lnk was found in the jump list. Again, the large number helps break up the flow and allows for a point of reference for reporting, etc.
 
@@ -36,6 +40,8 @@ PECmd v0.7.0.0
 - CSS tweaks and HTML format changes
 - updated nuget packages
 
+{pagebreak}
+
 The HTML output was tweaked to include an icon for directories and files.
 
 ![](20160331_PECmdLECmdAndJLECmdUpdated\pf.jpg)
@@ -45,6 +51,8 @@ Rob Lee (yea, that one) asked for the capability to generate a timeline when pro
 Here we are processing a directory for prefetch files and generating csv (well, tsv, but you get the idea):
 
 ![](20160331_PECmdLECmdAndJLECmdUpdated\pft.jpg)
+
+{pagebreak}
 
 The implementation is very simple. For every run time stamp in the prefetch file, add an entry in the  time line with said run time and the full path to the executable. This can then be copy/pasted right into a super time line.
 
@@ -58,8 +66,10 @@ Opening the time line output in Excel gets us this:
 * allow for full precision timestamps via mp
 * allow for custom date time format via dt
 
+{pagebreak}
+
 Since I have added high precision time stamp output and custom date time formatting to my other tools, LECmd how has the same capabilities as seen below:
 
 ![](20160331_PECmdLECmdAndJLECmdUpdated\le.jpg)
 
-All of these are available at GitHub under each program's Releases section or as a direct link on the Software page.
+All of these are available at GitHub under each program's Releases section or as a direct link on the [Software](http://binaryforay.blogspot.com/p/software.html) page.
