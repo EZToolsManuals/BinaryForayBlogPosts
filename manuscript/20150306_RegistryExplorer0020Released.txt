@@ -93,16 +93,19 @@ This is all well and good for quickly moving around a Registry hive, but there c
 
 At first, Available bookmarks will be empty, like this:
 
+{width: 80%}
 ![](20150306_RegistryExplorer0020Released\availEmp.png)
 
 But if we load a few hives, say a UsrClass and NTUser hive, things change. The Registry hive tab will show the hives in their entirety.
 
+{width: 80%}
 ![](20150306_RegistryExplorer0020Released\hivesloaded.png)
 
 But if we now look at the Available bookmarks tab, we see something very different.
 
 The first thing to notice is the numbers at the end. The first is the total number of Common bookmarks that were found across all hives. The second is the total number of User bookmarks that were found across all hives. These numbers will dynamically update as new bookmarks are added or hives are loaded.
 
+{width: 80%}
 ![](20150306_RegistryExplorer0020Released\avbm.png)
 
 Here we see each of our loaded hives. but only the bookmarks that exist in each hive show up. The rest of the keys are not shown at all (but subkeys of bookmarked keys are).
