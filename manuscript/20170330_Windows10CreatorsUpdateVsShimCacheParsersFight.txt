@@ -10,6 +10,8 @@ Here is an example of what ControlSet001\Control\Session Manager\AppCompatCache 
 
 ![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\win10.jpg)
 
+{pagebreak}
+
 And this is what it looks like in Creators update:
 
 ![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\win10c.jpg)
@@ -17,6 +19,8 @@ And this is what it looks like in Creators update:
 As you can see, the signature/offset to the start of records has changed from 0x30 to 0x34 and the initial record (signature 10ts) has now been shifted 4 bytes from where it used to be.
 
 This pretty much breaks all AppCompatCache parsers:
+
+{pagebreak}
 
 Registry Explorer plugin failure:
 
@@ -32,7 +36,7 @@ Mandiant ShimCacheParser failure:
 
 An issue was filed here about this issue, so it shouldn't be long before ShimCacheParser gets updated.
 
-Updating AppCompatCacheParser
+#### Updating AppCompatCacheParser
 
 After noticing this difference, I extracted out a SYSTEM hive from Creators update, added a new unit test, and wrote some new code.
 
@@ -44,6 +48,6 @@ Repeating our test from above with AppCompcatCacheParser, we now get:
 
 ![](20170330_Windows10CreatorsUpdateVsShimCacheParsersFight\appnew.jpg)
 
-AppCompatCacheParser has been updated to 0.9.7.0 and is now available in the usual place. An updated Chocolatey package is also under review.
+AppCompatCacheParser has been updated to 0.9.7.0 and is now available in the [usual place](https://ericzimmerman.github.io/). An updated Chocolatey package is also under review.
 
 Enjoy!
