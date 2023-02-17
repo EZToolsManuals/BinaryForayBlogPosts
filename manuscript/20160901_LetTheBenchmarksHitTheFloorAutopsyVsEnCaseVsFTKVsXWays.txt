@@ -171,7 +171,7 @@ Default settings were used with the exception of the max number of threads. Test
 
 ##### Search
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0.png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0.png)
 
 ##### Benchmarks
 
@@ -180,7 +180,7 @@ All times are denoted in minutes:seconds format
 
 Grey blocks below can be inferred by looking at similar times from other VM configs
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (1).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(1).png)
 
 GS5 had rw disk cache, GS4 just read
 
@@ -221,7 +221,7 @@ Memory usage was around 81 MB
 
 ##### Benchmarks
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (2).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(2).png)
 
 F1 – did not have Enscript to search index.
 
@@ -241,7 +241,7 @@ Encase was using upwards of 5,000 MB of memory with case open
 
 See Encase 8 testing for times where blocks are grayed out below
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (3).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(3).png)
 
 F1- Did not see a way to search for all terms at once in index. Had to do them one at a time (and add all the hits up manually)
 
@@ -265,7 +265,7 @@ Memory usage was up to 4,500 MB on some VMs
 
 ##### Benchmarks
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (4).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(4).png)
 
 F1- Did not see a way to search for all terms at once in index. Had to do them one at a time (and add all the hits up manually)
 
@@ -294,7 +294,7 @@ CPU near 100% memory around 500 MB
 
 ##### Benchmarks
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (5).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(5).png)
 
 * ANSI only keyword search took 5 minutes and 31 seconds. Time above is for ANSI and Unicode (same as all other tests)
  ** Had to push temp file to database directory since temp drive was only 8 GB and FTK wanted 50GB
@@ -321,7 +321,7 @@ I found using keyword searching difficult in that I could not really tell what w
 
 ##### Benchmarks
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (6).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(6).png)
 
 ??? I missed manually watching the GS5 results. Based on other results, I would estimate it was close to the 24 minute mark.
 #### IEF
@@ -330,7 +330,7 @@ Left all options at their defaults.
 
 ##### Benchmarks
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (7).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(7).png)
 
 IEF was sitting around 80% CPU and using 2,000 MB of memory while processing. 
 
@@ -340,7 +340,7 @@ This table summarizes each of the program's abilities to verify the test image o
 
 All times in minute:second format
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (8).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(8).png)
 
 All of the hashing times are available in the spread sheet linked above. Just sort by the Hashing column and filter as needed by machine type.
 
@@ -443,7 +443,7 @@ In each case, any previous search results were discarded before searching again.
 
 Time listed is minutes:seconds or hours:minutes:seconds.
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (9).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(9).png)
 
 In each of the tests, X-Ways was the fastest and used the lowest amount of resources.
 
@@ -459,13 +459,13 @@ When looking at FTK results, X-Ways was 138 times faster for 8 terms, 250.1  tim
 
 To summarize in handy chart form:
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (10).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(10).png)
 
 ##### ANSI vs. Unicode comparison
 
 As mentioned above, FTK seems to only index Unicode encoded strings. It may also add ANSI encoded strings to the index if a file is entirely ANSI, but anything mixed will be Unicode only. I tested this by looking at hits in X-Ways (which indexes up to 6 code pages at once) and filtered for ANSI and Unicode encoded hits. Some of the comparisons are as follows:
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (11).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(11).png)
 
 ### Carving test
 
@@ -491,7 +491,7 @@ The following tests were conducted:
 
 Time is in hours:minutes:second format, followed by files recovered count
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (12).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(12).png)
 
 #### Carving notes
 
@@ -543,7 +543,7 @@ These options require another level of confirmation in X-Ways but both are inclu
 
 The following list of times represents the time it would take to hash, process the case, create an index, and search (using 1 thread or the default). All times taken from the DS13_v2 VM.
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (13).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(13).png)
 
 ### GS5 default case processing test
 
@@ -574,7 +574,7 @@ Time: NA
 
 Hits: 432,901
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (14).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(14).png)
 
 ##### Simultaneous search for 18 terms
 
@@ -584,7 +584,7 @@ Time: 41 seconds
 
 Hits (ANSI count/Unicode count): 553,966
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (15).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(15).png)
 
 ** X-Ways searches through all items in the volume snapshot, even derivative items such as browser history reports that are added to the volume snapshot. These can be filtered out if needed. In this cases, the term "x-ways" was found in the HTML reports for browser history.
 
@@ -596,14 +596,14 @@ Time: 33 seconds
 
 Hits: 426,628
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (16).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(16).png)
 
 Unicode only
 Time: 30 seconds
 
 Hits: 126,870
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (17).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(17).png)
 
 #### FTK
 
@@ -621,7 +621,7 @@ Time: NA
 
 Hits: 113,522 (without false positive)
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (18).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(18).png)
 
 There are far more results from the live search than an index search.  This seems to make it necessary to do both an index and live search to make sure nothing is missed.
 
@@ -635,7 +635,7 @@ Time: ??
 
 Hits (ANSI/Unicode): 370,034/120,103 (490,137)
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (19).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(19).png)
 
 ANSI only
 
@@ -643,7 +643,7 @@ Time: 14 minutes and 41 seconds
 
 Hits: 385,607
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (20).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(20).png)
 
 Unicode only
 
@@ -661,7 +661,7 @@ Hits: 120,103 (canceled at 1 hour 15 minutes)
 
          66,174 3 hours, 3 minutes, 18 seconds (allowed to complete)
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (21).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(21).png)
 
 The hit count for the first canceled run (1 hour and 15 minutes), on several occasions, is higher than when the search was allowed to complete (3 hours 3 minutes 18 seconds). To verify the findings, the same search was run again (using ‘max hits’ value of 200 again).
 
@@ -687,7 +687,7 @@ All FTK standard options were used
 
 #### Encase 8
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (22).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(22).png)
 
 Defaults took 11 minutes and 34 seconds.
 
@@ -697,7 +697,7 @@ Encase returns each search hit and the number of items for each term but provide
 
 #### Keyword search
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (23).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(23).png)
 
 ANSI and Unicode
 
@@ -705,7 +705,7 @@ Search took 5 minutes and 42 seconds.
 
 Hits: 621,508
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (24).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(24).png)
 
 ANSI only
 
@@ -715,7 +715,7 @@ Search took 5 minutes and 32 seconds
 
 Hits: 492,998
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (25).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(25).png)
 
 Unicode only
 
@@ -725,7 +725,7 @@ Search took 4 minutes and 59 seconds
 
 Hits: 128,510
 
-![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pasted image 0 (26).png)
+![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\pastedimage0(26).png)
 
 ### Wrapping up
 
