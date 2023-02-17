@@ -10,6 +10,8 @@ This is what version 0.7.0 was showing:
 
 ![](20160425_LECmdAndJLECmdUpdated\70.jpg)
 
+{pagebreak}
+
 This is what X-Ways shows for the same lnk file:
 
 ![](20160425_LECmdAndJLECmdUpdated\71.jpg)
