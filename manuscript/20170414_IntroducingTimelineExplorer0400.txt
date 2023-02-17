@@ -16,6 +16,8 @@ The interface is very simple:
 
 ![](20170414_IntroducingTimelineExplorer0400\Interface.png)
 
+{pagebreak}
+
 The **File** menu contains the following options:
 
 Open: Select one or more file to open
@@ -34,9 +36,13 @@ Quick help: Displays an overview of Timeline Explorer and how to use it
 Legend: Contains the color codes used in mactime and super timelines for various types of artifacts
 About: Contains information about the program version and contact info
 
+{pagebreak}
+
 Here is what Quick Help looks like:
 
 ![](20170414_IntroducingTimelineExplorer0400\quickHelp.png)
+
+{pagebreak}
 
 The Legend looks like this:
 
@@ -61,6 +67,8 @@ Plaso super timelines
 
 As mentioned above, TLE can also import any CSV or Excel file (first workbook only). The difference between the dynamically imported files and a supported file is TLE's ability to massage the data (combining the Date and Time columns into a single timestamp is one such example).
 
+{pagebreak}
+
 Below are several examples of timelines that illustrate the conditional coloring capabilities of TLE. These colors correspond to the categories as outlined in the Legend.
 
 ![](20170414_IntroducingTimelineExplorer0400\matimeColoring.png)
@@ -72,6 +80,8 @@ Here is a Plaso timeline:
 In this final example, the Color column has been used to group rows. The Color column is hidden by default, but right-clicking on any column header and selecting Column Chooser will bring up a means to add any hidden column to the interface.
 
 Once the Color column was unhidden, it was dragged into the group by area at the top of the grid. 
+
+{pagebreak}
 
 Using this technique allows you to quickly view different artifacts that fall into a specific category.
 
@@ -85,11 +95,15 @@ When we do this and then try to interact with it, we can end up with something a
 
 ![](20170414_IntroducingTimelineExplorer0400\Details1.png)
 
+{pagebreak}
+
 Notice here the tooltip contains a wealth of information that is contained on a single line. If we select that cell and use CTRL-C to copy it to the clipboard, then paste it into a text editor, we can see the details a bit more clearly:
 
 ![](20170414_IntroducingTimelineExplorer0400\Details2.png)
 
 Even in this scenario, the data is not very clean in that there are tab and linefeed characters throughout. While we can certainly do a find and replace on those, that would be impractical in the long term.
+
+{pagebreak}
 
 TLE solves this problem by making all the data available in a super timeline visible (regardless of whether a column visibility in the main grid). It does this via the Details form which is available from the Tools menu. It can also be shown via the CTRL-D shortcut or by simply double-clicking a row.
 
@@ -107,13 +121,18 @@ Once a document is opened, TLE allows for searching, filtering, and grouping. TL
 
 Like all other columns, the filter is invoked via the funnel icon in the upper right corner of a column.
 
+{pagebreak}
+
 The Values tab contains a granular way to filter based on timestamps:
 
+{width: 80%}
 ![](20170414_IntroducingTimelineExplorer0400\DateFilter.png)
 
 The Date Filters tab allows for quickly filtering based on specific time periods:
 
 ![](20170414_IntroducingTimelineExplorer0400\DateFilter2.png)
+
+{pagebreak}
 
 #### Searching
 
@@ -135,6 +154,8 @@ If this option is enabled and we do the same search again, notice what happens:
 
 Here we can see the rows that didn't contain our search term are now filtered out.
 
+{pagebreak}
+
 #### Tagging
 
 All natively supported formats include the ability to tag rows via CTRL-T. This shortcut will tag or untag a row depending on its current state.
@@ -155,19 +176,27 @@ Below is an example of what the data from above looks like in Excel.
 
 ![](20170414_IntroducingTimelineExplorer0400\TaggingExported.png)
 
+{pagebreak}
+
 #### Dynamic mode
 
 Below is a random Excel file (you know this because the column names say so...) as seen in Excel:
 
 ![](20170414_IntroducingTimelineExplorer0400\DynamicExcel.png)
 
+{pagebreak}
+
 When this file is imported into TLE, we get this:
 
 ![](20170414_IntroducingTimelineExplorer0400\DynamicExcelImported.png)
 
+{pagebreak}
+
 A CSV example is next. First, let's take a look at our source document:
 
 ![](20170414_IntroducingTimelineExplorer0400\DynamicSource.png)
+
+{pagebreak}
 
 Once imported into TLE, it looks like this:
 
