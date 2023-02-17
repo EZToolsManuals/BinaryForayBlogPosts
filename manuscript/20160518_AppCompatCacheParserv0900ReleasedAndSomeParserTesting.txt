@@ -58,15 +58,21 @@ To see which one is current, we look at the Select key and the Current value. He
 
 On Windows 7 systems, AppCompatCache maintains a counter for the number of shimcache entries being tracked. This counter is found at offset 0x4.
 
+{pagebreak}
+
 For ControlSet001, the beginning of AppCompatCache looks like this:
 
 ![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\cc1.jpg)
+
+{pagebreak}
 
 and for ControlSet002, the beginning of AppCompatCache looks like this:
 
 ![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\cc2.jpg)
 
 and from this we know to expect 82 entries for ControlSet001 and 12 entries for ControlSet002, for a total of 94 entries.
+
+{pagebreak}
 
 Here is another visualization of the data from the test hive. Here we can see the ControlSet number, the EntryCount from offset 0x04, and how many cache entries were extracted.
 
@@ -88,6 +94,8 @@ There is a bug with this tool in that it is dropping the last two entries in the
 
 This issue was reported on the GitHub page pointing to this post on the day this post was published.
 
+{pagebreak}
+
 While we haven't looked at AppCompatCacheParser yet, here is a comparison between the output of the two tools:
 
 ![](20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting\Missing.jpg)
@@ -101,6 +109,8 @@ To further verify this, a list of every executable from AppCompatCacheParser's o
 Here we can see the four entries (two from each ControlSet) that do not exist at all in ShimCacheParser.py's output.
 
 The other entries shown above are deduplicated entries.
+
+{pagebreak}
 
 Finally, the verbose option was used which resulted in the following (the red box denotes the switch from ControlSet01 to ControlSet02):
 
