@@ -20,6 +20,7 @@ Like everything that affects the volume snapshot, the File header signature sear
 
 Here the File header signature search option is checked.
 
+{width: 90%}
 ![](20160822_WorkflowOverview\fhs.png)
 
 After clicking OK, groups of file signatures (or types within them) are selected. Additional options to categorize or place carved files with their "parent" files are also available. X-Ways displays the most commonly used groups of things first and inside each group, the most common types are at the top. You can also type an extension to quickly jump to the first match.
@@ -135,6 +136,7 @@ To create the index, use the Refine Volume Snapshot option
 
 Then select Indexing
 
+{width: 90%}
 ![](20160822_WorkflowOverview\xi.png)
 
 Set preferences (the defaults are almost always right, but things like character substitution are very nice for foreign language related cases)
