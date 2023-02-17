@@ -29,6 +29,7 @@ Over the last several years, I have collected a wide range of Registry hives. To
 
 The result of this program is shown below.
 
+{width: 70%}
 ![](20170303_ShellbagsExplorerv0900Released\corpus.png)
 
 All told, over 65,200 unique shellbags exist in my test data.
@@ -41,6 +42,7 @@ Once the tests were set up however, refactoring can begin to ensure proper parsi
 
 After a whole lot of work, the end result is this:
 
+{width: 90%}
 ![](20170303_ShellbagsExplorerv0900Released\tests.png)
 
 Now that a robust set of tests exist, any new data that gets reported can be easily incorporated and the code updated to handle the new data, all without worrying about breaking any existing functionality.
@@ -81,7 +83,7 @@ Now let's look at the same usrclass.dat hive in version 0.9.0.0:
 
 Here we see the MTP device. Notice we have a much more complete picture of the data available inside the shellbag.
 
-![](20170303_ShellbagsExplorerv0900Released\oldmtp (1).png)
+![](20170303_ShellbagsExplorerv0900Released\oldmtp(1).png)
 
 Next, MTP storage:
 
