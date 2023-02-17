@@ -47,8 +47,8 @@ introduction.txt
 20160225_JumpLIstsInDepthUnderstandFormat.txt
 20160307_IntroducingJLECmd.txt
 20160331_PECmdLECmdAndJLECmdUpdated.txt
-20160425_Bstringsv11Released.txt
 20160425_LECmdAndJLECmdUpdated.txt
+20160425_Bstringsv11Released.txt
 20160518_AppCompatCacheParserv0900ReleasedAndSomeParserTesting.txt
 20160617_RegistryExplorer0810Released.txt
 20160822_WorkflowOverview.txt
