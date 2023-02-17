@@ -26,7 +26,7 @@ Most of these options will be very familiar if you have used any of my other too
 
 To process a single file, use -f and the path to the jump list you want to process.
 
-![](20160307_IntroducingJLECmd\f switch.jpg)
+![](20160307_IntroducingJLECmd\fswitch.jpg)
 
 At the top we see information about the AppID and its description. JLECmd has many built in AppID descriptions and when a match is found, the program the jump list relates to is shown. In this case, we are looking at Windows Explorer.
 
@@ -36,7 +36,7 @@ Below that, each DestList entry is displayed including the entry number, the pat
 
 The information about lnk files is kept at a minimum, but to get a bit more detail, use the --ld switch for more lnk detail. Here is an example of this:
 
-![](20160307_IntroducingJLECmd\f switch ld.jpg)
+![](20160307_IntroducingJLECmd\fswitchld.jpg)
 
 The additional information in this case is highlighted in the red box. If you need to see ALL lnk detail, the best option is to export all embedded lnk files and then use LECmd to analyze them. We will discuss extracting lnk files below.
 
@@ -48,15 +48,15 @@ We will have the AppID but after that, it is only embedded lnk files. Here is an
 
 Here is the same file using the --ld switch with the additional information highlighted:
 
-![](20160307_IntroducingJLECmd\custom ld.jpg)
+![](20160307_IntroducingJLECmd\customld.jpg)
 
 I recently added high precision time stamp support to LECmd and this functionality is also included in JLECmd via the --mp switch. Here you can see the additional time stamp resolution when using this switch.
 
-![](20160307_IntroducingJLECmd\f switch mp.jpg)
+![](20160307_IntroducingJLECmd\fswitchmp.jpg)
 
 You can also specify your own time stamp format using the --dt switch and any of the standard .net DateTime format strings. Here we are using a format string of "ddd MMM dd yyyy HH:mm:ss.fff K" which results in the output seen below:
 
-![](20160307_IntroducingJLECmd\f switch dt.jpg)
+![](20160307_IntroducingJLECmd\fswitchdt.jpg)
 
 These options are also honored when exporting data to CSV and HTML as well.
 
