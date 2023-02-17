@@ -40,6 +40,8 @@ To make things more consistent, most of the icons have been tweaked. A list of a
 
 Deleted/recovered shellbags are also now shown in red as opposed to having an X after them as in previous versions.
 
+{pagebreak}
+
 Here is an example of the new icons in action.
 
 ![](20170125_ShellbagsExplorerv0800Released\icons.png)
@@ -48,29 +50,43 @@ Here is an example of the new icons in action.
 
 ShellBags Explorer now uses the same 3rd party controls as Registry Explorer and, as such, adds a lot of functionality that didn't exist in the previous version. Changes include being able to filter on the tree, search via CTRL-F, Excel-like filters on the grid, conditional coloring, and so on.
 
+{pagebreak}
+
 Here we see an example of the new Excel-like filters. This allows for selecting items based on their name and also allows for searching through unique options.
 
 ![](20170125_ShellbagsExplorerv0800Released\excel.png)
+
+{pagebreak}
 
 Here is another example of the new filter for a numeric value.
 
 ![](20170125_ShellbagsExplorerv0800Released\f2.png)
 
+{pagebreak}
+
 Right clicking on a column header in the tree or grid brings up a context menu allowing for a lot of different options.
 
 ![](20170125_ShellbagsExplorerv0800Released\context.png)
+
+{pagebreak}
 
 Both the tree and grid support searching across all fields. Find is invoked either via the context menu of a column header or via CTRL-F. In the example below, a search for 'or' was done. All instances of matching values are highlighted.
 
 ![](20170125_ShellbagsExplorerv0800Released\find.png)
 
+{pagebreak}
+
 Finally, conditional coloring is available both for the tree and the grid. In the example below, any values that contain 'code' are shown in bold, red font with a red background.
 
 ![](20170125_ShellbagsExplorerv0800Released\ccf.png)
 
+{pagebreak}
+
 The tree works the same way.
 
 ![](20170125_ShellbagsExplorerv0800Released\cc2.png)
+
+{pagebreak}
 
 The rules manager allows for a wide variety of formatting options.
 
@@ -86,6 +102,8 @@ The Details window allows you to see all available columns regardless of the sta
 
 The Details form is updated as shellbags are selected in the interface.
 
+{pagebreak}
+
 #### Options
 
 Options have been consolidated in this version and several new options have been added.
@@ -98,6 +116,7 @@ The first option, **Show parent tree nodes when filtering**, controls whether pa
 
 When this option is turned on, the same filter would look like this:
 
+{width: 70%}
 ![](20170125_ShellbagsExplorerv0800Released\filter2.png)
 
 There are pros and cons to each approach. Generally, the default is what you want because once you filter down to what you are interested in you can quickly select the matching nodes to see what child bags exist, look at details, etc.
