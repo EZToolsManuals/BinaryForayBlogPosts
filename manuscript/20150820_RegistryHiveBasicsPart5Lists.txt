@@ -37,19 +37,7 @@ It helps to think of the hbins as containers for various record types. **There i
 
 The general rules for parsing a hive can be summarized as follows:
 
-1. Open file
-2. Read header
-  1. Get RootCellOffset
-  2. Get length
-3. Locate hbin
-  1. Determine length of hbin
-4. Find records in hbin
-  1. Cells
-  2. Lists
-  3. Data
-5. "Do stuff" with records
-6. GOTO 3 until Length (Step 2.2) is reached
-7. Close file
+![](20150820_RegistryHiveBasicsPart5Lists\bulletlist.jpg)
 
 The starting point would be the NK record at RootCellOffset (Step 2.1). See here for details on how to find the RootCellOffset. From here you can start walking the tree of keys and their related values and security records.
 
