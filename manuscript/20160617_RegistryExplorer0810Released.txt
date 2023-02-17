@@ -58,6 +58,8 @@ For example, bookmarks are now sorted by name which makes bookmarks easier to fi
 
 New in this version is the ability to enter more than one search term to look for. In previous versions, only one search term was allowed which meant if you had 10 things to search for you had to search 10 times. 
 
+{pagebreak}
+
 Because of this new feature, the Find window was slightly redesigned. In the example below, we are searching for nine terms at the same time.
 
 ![](20160617_RegistryExplorer0810Released\fi.png)
@@ -276,6 +278,8 @@ It looks like this normally:
 
 We can see each value is RegBinary and in looking at the hex viewer at the bottom, Unicode strings are present. We also have an MRU list.
 
+{pagebreak}
+
 The plugin processes all of the values and we end up with this:
 
 ![](20160617_RegistryExplorer0810Released\ff2.png)
@@ -300,9 +304,13 @@ In the example above, the data for value 2 is displayed in the Type viewer. In t
 
 If you have looked at ShellBags Explorer you will have seen some of these same signatures. Likewise, if you have used ShellBags Explorer, you know how much rich detail is present in shell items.
 
+{pagebreak}
+
 When this plugin runs, its output looks like this:
 
 ![](20160617_RegistryExplorer0810Released\lvp2.png)
+
+{pagebreak}
 
 Here we can see the MRU position, executable name, and absolute path that was accessed. When an invididual value is selected in the plugin output, a new tab is displayed below the plugin output, next to the Type viewer, that looks like this:
 
@@ -310,19 +318,27 @@ Here we can see the MRU position, executable name, and absolute path that was ac
 
 Notice the Absolute Path column is made up from the diffferent parts of the details presented.
 
+{pagebreak}
+
 This data is displayed as each value is selected in the plugin output. It is possible however, to view the details of each value in the grid, but it requires the Details column to be unhidden. To do this, right click on the column headers and choose 'Column Chooser.'
 
 ![](20160617_RegistryExplorer0810Released\cc.png)
 
+{pagebreak}
+
 The Customization box for the grid will be shown. From here, click and hold the mouse button on the Details column, then drag it anywhere you want in the grid.
 
 ![](20160617_RegistryExplorer0810Released\cc2.png)
+
+{pagebreak}
 
 This will then show the Details column in the main grid, like this:
 
 ![](20160617_RegistryExplorer0810Released\cc3.png)
 
 Notice the information in the above screenshot is the same we saw above when the Details tab was shown next to the Type viewer.
+
+{pagebreak}
 
 One reason you may want to show the Details column is that you can then filter on anything within it. Perhaps you are interested in any entries with an MFT entry number of 0x25C60. You can simply enter this value in the Details filter below the column header and any matching rows will be displayed, like this:
 
@@ -360,6 +376,8 @@ This is another plugin that has a Details column which is initially hidden.
 
 This plugin works in a similar manner as the plugins we saw from ComDlg32 in that the main key has subkeys which contain values (including an MRU) that tracks recently opened files and folders.
 
+{pagebreak}
+
 All of the values are RegBinary and look something like this:
 
 ![](20160617_RegistryExplorer0810Released\rd.png)
@@ -382,6 +400,8 @@ For more details on this technique and why it works, please read [Dan's post](ht
 
 Thanks to Dan for the idea and for Juan/Phil/Eric's efforts at automating this process with their scripts.
 
+{pagebreak}
+
 ##### RunMRU
 
 This is a very simple plugin that turns this:
@@ -391,6 +411,8 @@ This is a very simple plugin that turns this:
 Into this:
 
 ![](20160617_RegistryExplorer0810Released\rm2.png)
+
+{pagebreak}
 
 ##### User accounts
 
