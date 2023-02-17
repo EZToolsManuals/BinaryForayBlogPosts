@@ -71,6 +71,8 @@ At the very bottom of the file is the footer:
 
 ![](20160225_JumpLIstsInDepthUnderstandFormat\customfooter.jpg)
 
+{pagebreak}
+
 If we carve out the bytes in pink and save them to a file, we can use LECmd to process it, like this:
 
 ![](20160225_JumpLIstsInDepthUnderstandFormat\LECmdcus.jpg)
@@ -133,6 +135,8 @@ The header is 512 bytes long and contains a bunch of critical information needed
 This is what a header might look like:
 
 ![](20160225_JumpLIstsInDepthUnderstandFormat\header.jpg)
+
+{pagebreak}
 
 Some of the more important properties are:
 
@@ -326,6 +330,8 @@ The header contains things like:
 * Number of pinned DestList entries
 * Last entry number used
 
+{pagebreak}
+
 and each DestList entry contains things like:
 
 * Volume Droid ID
@@ -352,6 +358,8 @@ The difference between the two formats is not drastic, but it is enough. In vers
 #### But where are the lnk files?
 
 Ah, I am glad you asked! Recall the Directory is like a catalog of everything stored in the jump list. Each lnk file that is referenced by a DestList entry is stored as an item in the Directory and has all the same info (Name, start sector, etc) we saw when we initially discussed the Directory. To get the bytes that actually make up a lnk file, we simply check the size of the lnk, then use either the SAT or the SSAT to build our data run and gather the bytes we need.
+
+{pagebreak}
 
 #### Putting it all together
 
@@ -432,7 +440,7 @@ With this example you can clearly tell something is wrong.
 
 Here is another tool that tells us there is a problem:
 
-![](20160225_JumpLIstsInDepthUnderstandFormat\tool 3.jpg)
+![](20160225_JumpLIstsInDepthUnderstandFormat\tool3.jpg)
 
 And another:
 
@@ -440,11 +448,11 @@ And another:
 
 And another that indicates an issue:
 
-![](20160225_JumpLIstsInDepthUnderstandFormat\tool 4.jpg)
+![](20160225_JumpLIstsInDepthUnderstandFormat\tool4.jpg)
 
 And another:
 
-![](20160225_JumpLIstsInDepthUnderstandFormat\tool 5.jpg)
+![](20160225_JumpLIstsInDepthUnderstandFormat\tool5.jpg)
 
 #### Who cares?
 
@@ -458,11 +466,9 @@ In my testing I do things like this:
 
 That last line says if the number of DestList entries does not equal the number of entries as reported in the header, the test should fail. You can see by the green dot it does not fail and I have test cases with over 700 DestList entries in them from Windows 10.
 
-
 #### Wrapping up
 
 You still here? Wow! I am impressed! I barely made it myself. I hope this post has made it a bit more clear how jump lists work and the importance of automated testing via unit tests.
-
 
 The next tool I will be releasing is my jump list (custom and automatic) parsing tool, JLECmd, which will handle Windows 7 thru Windows 10 jump lists. It will be open source and available on GitHub after the initial release.
 
