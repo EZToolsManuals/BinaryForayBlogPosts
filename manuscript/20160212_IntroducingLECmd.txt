@@ -20,6 +20,8 @@ The core functionality in LECmd comes via my Lnk project, which is open source a
 
 LECmd is also open source and can be found [here](https://github.com/EricZimmerman/LECmd).
 
+{pagebreak}
+
 ### LECmd overview
 
 As with most of my tools, running without any arguments will display all available options:
@@ -56,6 +58,8 @@ As you can see below a flag is set that tells us there is a Volume information s
 
 In some cases, the Link information will contain a different flag, CommonNetworkRelativeLinkAndPathSuffix. When this flag is present, we get additional information such as a UNC path to a share, the type of share, and so on.
 
+{pagebreak}
+
 #### Target ID information
 
 The next section, again only present if a flag is set, is the Target ID information. It looks like this:
@@ -79,6 +83,8 @@ As you can see above, our old friend, Beef0004, is alive and well in lnk files j
 Finally, we have the the extra blocks information section. This section can contain many different kinds of information ranging from console properties to serialized property store structures. here is an example of a Console data block:
 
 ![](20160212_IntroducingLECmd\console.png)
+
+{pagebreak}
 
 #### Property store data block
 
@@ -104,6 +110,8 @@ Here is another example of the various kinds of information contained in the pro
 
 ![](20160212_IntroducingLECmd\ps1.png)
 
+{pagebreak}
+
 #### Tracker database block
 
 The Tracker database block contains things such as the NETBIOS name of the computer where the lnk was generated as well as as several GUIDs pertaining to the volume and target file.
@@ -128,6 +136,8 @@ When exporting json data, one json file will be created for each lnk file proces
 
 You can also export to CSV (well, its tab separated, but you get the idea). When exporting to CSV, one CSV file will be created for all lnk files processed.
 
+{pagebreak}
+
 For example, if we process a directory and export to CSV as seen below:
 
 ![](20160212_IntroducingLECmd\dircsv.png)
@@ -135,6 +145,8 @@ For example, if we process a directory and export to CSV as seen below:
 We get a file that looks like this:
 
 ![](20160212_IntroducingLECmd\csv.png)
+
+{pagebreak}
 
 Which can then be imported into Excel and ends up looking like this:
 
@@ -150,12 +162,14 @@ If we redirect the output to a file, things speed up dramatically, like this:
 
 In both examples, notice how any failed files are displayed at the end along with the reason the file could not be parsed.
 
+{pagebreak}
+
 #### Suppressing data
 
 Finally, there are two options to suppress displaying of data, --nid and --neb. When these switches are used, either the Target ID information and Extra blocks information will be suppressed. These switches can speed up processing a large volume of lnk files as all of the data in those two sections won't need to be displayed.
 
 #### That's it!
 
-That sums up everything LECmd can do for you. You can get LECmd here or [here](https://github.com/EricZimmerman/LECmd/releases).
+That sums up everything LECmd can do for you. You can get LECmd [here](http://binaryforay.blogspot.com/p/software.html) or [here](https://github.com/EricZimmerman/LECmd/releases).
 
 If there is anything else you want LECmd to do, or you find a lnk file it cannot handle, please reach out to me so I can get the issue resolved or add your feature request for you.
