@@ -299,6 +299,7 @@ If we choose the Text that contains option and configure it like this:
 
 The Registry hives tab changes to match the rule (instances of 'Bag' are circled).
 
+{width: 80%}
 ![](20150701_ReintroducingRegistryExplorerAndRECmd\conditDone.png)
 
 This lets you highlight conditions that are meaningful to you and your investigations.

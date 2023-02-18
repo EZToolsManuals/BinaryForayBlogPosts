@@ -31,4 +31,4 @@ CHANGE: Fix parsing of v18 report files
 
 Note: Only the latest version of X-Ways Forensics is supported!
 
-You can download the update here or just start XWFRT to get the latest version.
+You can download the update [here](http://binaryforay.blogspot.com/p/software.html) or just start XWFRT to get the latest version.

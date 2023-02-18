@@ -164,8 +164,6 @@ Going back to our normalized CSV output, as you scan through the data, you will 
 
 What if you wanted to drill down into the details, exactly as the plugin generated them? This is where the "Plugin Detail File" comes into play. If you open this file in Timeline Explorer you will see exactly the same data that you would if you loaded the hive in Registry Explorer and went to the same key and reviewing the plugin generated data.
 
-{pagebreak}
-
 Here is an example of what one of the TypedURLs CSVs might look like:
 
 ![](20190112_RegistryExplorerAndRECmd1200Released\2019-01-12_20-55-46.jpg)

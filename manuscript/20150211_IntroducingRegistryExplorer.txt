@@ -49,8 +49,6 @@ The Bookmarks menu contains two submenus: Common and User created. Common bookma
 
 There is also an option for managing user created bookmarks which will be included in the more detailed bookmark discussion below.
 
-{pagebreak}
-
 ### Loading hives
 
 There are two ways to load Registry hives in RE. The easiest is to simply drag and drop hives on the left side of the main interface. This method allows for loading several hives at once. The File menu can also be used to load hives. 

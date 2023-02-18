@@ -22,6 +22,7 @@ As an example, if you used, say X-Ways to find all available hives in an image, 
 
 Using the new --dir switch, you can now search across every hive found in the specified directory and all subdirectories.  In the example output below, only beginning and ending of the console output is shown
 
+{width: 75%}
 ![](20150707_RegistryExplorerRECmd0710Released\RECmd.png)
 
 When the search is complete, the total number of hits and so on is displayed. If there are any non-Registry hives found during the search they are skipped and this fact is also displayed in the summary (17 hives out of 18 files).

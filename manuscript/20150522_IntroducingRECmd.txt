@@ -112,8 +112,6 @@ This allows you to find signatures for common data structures ANYWHERE in the Re
 
 To actually see the data itself, use one of the query methods.
 
-{pagebreak}
-
 #### RegEx searching
 
 RegEx searching is much more powerful than simple searches, but the trade off is that it can be slower depending on how complicated your RegEx is.

@@ -8,11 +8,15 @@ Now that deleted key support is available in the parser, we can make the results
 
 The screenshots below show a name of "Registry Viewer Z" but I am renaming it to simply "Registry Explorer" which is more inline with what the tool can do (vs simply view things as they exist in the registry).
 
+{pagebreak}
+
 ### **Deleted records collection**
 
 In this screenshot we see the root node and Deleted records node. Deleted records has been expanded and a key selected. The values for the selected keys are shown on the right.
 
 ![](20150108_RegistryExplorerScreenshots\SS1.png)
+
+{pagebreak}
 
 ### **Sorting in the tree and grid**
 

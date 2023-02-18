@@ -32,14 +32,18 @@ Open a hive in 010 and then select Templates | Registry hive from the list.
 
 ![](20150210_ExploringTheRegistryAtHexLevel\RunTemplate.png)
 
+{pagebreak}
+
 Here is an example of what you would see before applying the template:
 
+{width: 70%}
 ![](20150210_ExploringTheRegistryAtHexLevel\beforetemplate.png)
 
 And after applying the template.
 
 As you browse the data at the bottom the relevant bytes are selected in the hex view. In the image below I selected the Descriptor struct and all the bytes that make up that struct are selected. If I select a member of a struct, the bytes belonging to that member are selected.
 
+{width: 70%}
 ![](20150210_ExploringTheRegistryAtHexLevel\aftertemplate1.png)
 
 From here you can explore at will and verify hives by hand (just be sure to add 0x1000 to any offsets to get to the proper position in the file).

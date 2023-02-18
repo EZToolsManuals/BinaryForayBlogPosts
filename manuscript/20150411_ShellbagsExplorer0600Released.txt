@@ -31,8 +31,6 @@ One thing to be aware of is that the NodeSlot value seen in RegEdit does NOT cor
 
 ShellBags Explorer does all of this for you, so you can just go to the corresponding Bags subkey to find the related data.
 
-{pagebreak}
-
 NOTE: Not all Shellbags have a NodeSlot value (Control Panel categories for example). In these cases, a Node Slot value of -1 will be shown in SBE.
 
 Node Slot is hidden by default in the grid, so use the field chooser to show as required.

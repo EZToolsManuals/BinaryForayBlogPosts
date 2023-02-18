@@ -42,6 +42,8 @@ Since Registry Explorer and SBE both use the same back end to parse hives, SBE n
 
 ![](20150204_ShellBagsExplorerv0520Released\SBEDeletedKeys.png)
 
+{pagebreak}
+
 Here we see the grid reflects the deleted ShellBags as well.
 
 ![](20150204_ShellBagsExplorerv0520Released\SBEDeleted2.png)

@@ -32,21 +32,21 @@ If I were to mount VSCs from the J drive (an E01 mounted via AIM), it would look
 
 ![](20180906_IntroducingVSCMount\2018-09-06_11-33-08.png)
 
+{pagebreak}
+
 which results in this:
 
 ![](20180906_IntroducingVSCMount\2018-09-06_11-33-48.png)
-
-{pagebreak}
 
 Notice however, that I still have access to the ones we did initially:
 
 ![](20180906_IntroducingVSCMount\2018-09-06_11-34-03.png)
 
+{pagebreak}
+
 The --ud option will add the VSC creation timestamp to the directory names inside the mount point, like this:
 
 ![](20180906_IntroducingVSCMount\2018-09-06_11-44-55.png)
-
-{pagebreak}
 
 Which makes it a lot easier to drill down into things based on a pivot point from a timeline, etc.
 

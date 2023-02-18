@@ -104,11 +104,11 @@ While I could change the /r/n found in the ADS, this would be changing data and 
 
 ![](20180622_IntroducingMFTECmd\z.png)
 
+{pagebreak}
+
 Because TLE allows you to group by columns, you can do things like this too:
 
 ![](20180622_IntroducingMFTECmd\isads.png)
-
-{pagebreak}
 
 Here we grouped by the HasAds column and expanded the group where this condition is true. The entries in this group are the files that have ADSs attached to them. The same could be done for the IsAds column as well (in addition to Copied, Timestomped, etc.)
 

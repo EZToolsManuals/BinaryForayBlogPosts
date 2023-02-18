@@ -330,8 +330,6 @@ The header contains things like:
 * Number of pinned DestList entries
 * Last entry number used
 
-{pagebreak}
-
 and each DestList entry contains things like:
 
 * Volume Droid ID

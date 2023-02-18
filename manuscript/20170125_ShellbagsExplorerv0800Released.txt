@@ -116,7 +116,7 @@ The first option, **Show parent tree nodes when filtering**, controls whether pa
 
 When this option is turned on, the same filter would look like this:
 
-{width: 70%}
+{width: 50%}
 ![](20170125_ShellbagsExplorerv0800Released\filter2.png)
 
 There are pros and cons to each approach. Generally, the default is what you want because once you filter down to what you are interested in you can quickly select the matching nodes to see what child bags exist, look at details, etc.

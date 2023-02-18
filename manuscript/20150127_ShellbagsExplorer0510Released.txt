@@ -17,6 +17,8 @@ CHANGE: Replace woanware Registry parsing code with [my own](https://github.com/
 
 **NOTE:** Due to the new Registry parsing code you may see additional warnings in the messages window. If they do not mention ShellBags they can be safely ignored. As always, I appreciate getting any hives that cause problems so I can take a look at tweaking things in the code.
 
+{pagebreak}
+
 ### **Elaborations**
 
 While replacing the old offline Registry parsing code with [my code](https://github.com/EricZimmerman/Registry), I got a few errors, as shown below.
@@ -27,15 +29,20 @@ After searching the Google for 0907616e-f5e6-48d8-9d61-a91c3d28106d, I found a r
 
 After using SBE and the data interpreter to look at the raw contents of the shell bag I was able to add support for the unknowns. The result is shown below.
 
+{width: 70%}
 ![](20150127_ShellbagsExplorer0510Released\SBEFixedHyperV.png)
 
 It is quite possible the new and adjusted bag types will be seen elsewhere. For now the new types and tweaks identify with being related to Hyper-V server as this is, to date, the only place these new bags have been seen.
 
 Another benefit from the new offline parsing code is its robustness. On one particular hive, the old parsing code generated 325 parsing errors related to bad nk records. My code generates no errors when processing the same hive. My code also parses hives faster as well.
 
+{pagebreak}
+
 The old code generated these results:
 
 ![](20150127_ShellbagsExplorer0510Released\oldSBECode.png)
+
+{pagebreak}
 
 My parsing code generates these results:
 

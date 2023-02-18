@@ -29,7 +29,7 @@ Over the last several years, I have collected a wide range of Registry hives. To
 
 The result of this program is shown below.
 
-{width: 70%}
+{width: 50%}
 ![](20170303_ShellbagsExplorerv0900Released\corpus.png)
 
 All told, over 65,200 unique shellbags exist in my test data.

@@ -72,6 +72,7 @@ You can also select bytes and copy them out in several formats:
 
 The tree can filter nodes via the column headers. For example, entering '.exe' into the Name column results in this being displayed:
 
+{width: 70%}
 ![](20180209_IntroducingSDBExplorer\exe.png)
 
 When filtering, if you select a node, the text is updated TO ONLY INCLUDE VISIBLE NODES. This allows you to filter for what is important for you and then copy the details out.
