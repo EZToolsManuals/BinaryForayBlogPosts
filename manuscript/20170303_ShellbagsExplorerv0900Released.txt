@@ -83,7 +83,7 @@ Now let's look at the same usrclass.dat hive in version 0.9.0.0:
 
 Here we see the MTP device. Notice we have a much more complete picture of the data available inside the shellbag.
 
-![](20170303_ShellbagsExplorerv0900Released\oldmtp(1).png)
+![](20170303_ShellbagsExplorerv0900Released\oldmtp1.png)
 
 Next, MTP storage:
 
