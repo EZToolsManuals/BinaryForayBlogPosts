@@ -29,7 +29,7 @@ The documentation has been updated to include all of these features.
 
 #### --zm output transfer
 
-In previous versions, when using the --zm option to zip module output, the resulting zip file was not transferred using SFTP. This version sends the resulting zip file using any of the transfer options (SFTP, S3, or Azure Storage). Depending on how KAPE is called, you do not even have to have the files collected via targets tranferred if you do not need them. Just omit the --vhdx | --vhd | --zip switch and include the --zm switch and KAPE will act accordingly. Should you want target and module output, include both.
+In previous versions, when using the --zm option to zip module output, the resulting zip file was not transferred using SFTP. This version sends the resulting zip file using any of the transfer options (SFTP, S3, or Azure Storage). Depending on how KAPE is called, you do not even have to have the files collected via targets transferred if you do not need them. Just omit the --vhdx | --vhd | --zip switch and include the --zm switch and KAPE will act accordingly. Should you want target and module output, include both.
 
 #### Batch mode improvements
 
