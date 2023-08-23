@@ -279,7 +279,7 @@ The --mdest switch tells KAPE where to instruct processors to save files to. Rec
 
 The --mflush option tells KAPE to delete the directory (if it exists) specified by --mdest before writing anything to it. This ensures that there are NO other files or directories in --mdest prior to modules placing files there.
 
-The --mef switch allows you to override the default processor as specificed in a module configuration. For example, if you wanted json output from the PECmd module, you can use --mef json and KAPE will select the appropriate processor from the available processors defined in the module.
+The --mef switch allows you to override the default processor as specified in a module configuration. For example, if you wanted json output from the PECmd module, you can use --mef json and KAPE will select the appropriate processor from the available processors defined in the module.
 
 Consider the following command:
 

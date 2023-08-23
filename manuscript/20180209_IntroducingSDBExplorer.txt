@@ -32,7 +32,7 @@ Selecting a node in the tree will update the textbox, as shown below. The textbo
 
 {pagebreak}
 
-In the example below, the Database node is selected. Notice how every child node's details are pulled into the text box and indented according the level they are found in the database heirarchy.
+In the example below, the Database node is selected. Notice how every child node's details are pulled into the text box and indented according the level they are found in the database hierarchy.
 
 ![](20180209_IntroducingSDBExplorer\sel.png)
 

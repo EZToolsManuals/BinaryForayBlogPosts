@@ -312,11 +312,11 @@ When this plugin runs, its output looks like this:
 
 {pagebreak}
 
-Here we can see the MRU position, executable name, and absolute path that was accessed. When an invididual value is selected in the plugin output, a new tab is displayed below the plugin output, next to the Type viewer, that looks like this:
+Here we can see the MRU position, executable name, and absolute path that was accessed. When an individual value is selected in the plugin output, a new tab is displayed below the plugin output, next to the Type viewer, that looks like this:
 
 ![](20160617_RegistryExplorer0810Released\l.png)
 
-Notice the Absolute Path column is made up from the diffferent parts of the details presented.
+Notice the Absolute Path column is made up from the different parts of the details presented.
 
 {pagebreak}
 

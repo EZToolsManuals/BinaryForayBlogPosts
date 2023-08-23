@@ -367,7 +367,7 @@ I also had some discussions on Twitter about indexing and searching in FTK, incl
 ![](20160901_LetTheBenchmarksHitTheFloorAutopsyVsEnCaseVsFTKVsXWays\image50.png)
     
 
-There were also some interesting findings related to how FTK indexes. The general concensus (which is backed up by my testing and will be explained below) is that FTK only indexes Unicode strings. Because of this, it is even more important to do a live search in order to find all non-Unicode encoded strings. As we will see, this means many hours will be added to processing a case.
+There were also some interesting findings related to how FTK indexes. The general consensus (which is backed up by my testing and will be explained below) is that FTK only indexes Unicode strings. Because of this, it is even more important to do a live search in order to find all non-Unicode encoded strings. As we will see, this means many hours will be added to processing a case.
 
 ##### Encase
 

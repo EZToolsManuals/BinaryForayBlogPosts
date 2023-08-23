@@ -26,7 +26,7 @@ NOTE: If you get an strange errors when updating or using --sync, use the --debu
 * Added ability to reference subdirectories under Targets in Target definitions. Example: To pull in all targets under Targets\Antivirus, use Path: Antivirus\*
 * Allow regex in Target FileMask spec. Example: FileMask: regex:(2019|DSC|Log).+\.(jpg|txt) tells KAPE to use the regex to match against *complete* filenames. KAPE will add \A to the beginning of the regex and \z to the end, to ensure the entire filename is matched.
 * Because of the change above, it is also now possible to do things in non-regex based FileMasks. Example: FileMask: 'Foo*.VHD'. Prior to this change, only *.VHD was possible. 
-* Added WaitTimeout to module definition as an optional property. When present, and greater than 0, signifies the number of minutes KAPE should wait for a module to finish. If this is excedded, KAPE will stop waiting and move on.
+* Added WaitTimeout to module definition as an optional property. When present, and greater than 0, signifies the number of minutes KAPE should wait for a module to finish. If this is exceeded, KAPE will stop waiting and move on.
 * Updated nuget packages
 * Updated targets
 
